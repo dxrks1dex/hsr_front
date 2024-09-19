@@ -112,6 +112,15 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
     error: timerError,
   } = useFetchTimer();
 
+  const { totalTimer, currentTimer, timerReset } = usePickTimer({
+    timer,
+    setTimer,
+    isPickStarted: isSecondPlayerBanOrPick,
+    setPenaltyTimer,
+    penaltyTimer,
+    timerData: defaultTimer,
+  });
+
   useEffect(() => {
     if (timerData && !isTimerLoading) {
       setTimer(timerData.mainTimer.minutes * 60 + timerData.mainTimer.seconds);
@@ -124,7 +133,7 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
 
       timerReset();
     }
-  }, [timerData, isTimerLoading]);
+  }, [timerData, isTimerLoading, timerReset]);
 
   const {
     data: {
@@ -134,15 +143,6 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
     },
     operations: { setCurrentPlayer, setSecondPlayerCirclePenalty },
   } = useUserDataContext();
-
-  const { totalTimer, currentTimer, timerReset } = usePickTimer({
-    timer,
-    setTimer,
-    isPickStarted: isSecondPlayerBanOrPick,
-    setPenaltyTimer,
-    penaltyTimer,
-    timerData: defaultTimer,
-  });
 
   const {
     data: dataForFirstUserFromDB,

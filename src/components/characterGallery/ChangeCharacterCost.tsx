@@ -1,6 +1,7 @@
 import React, {
   Dispatch,
   SetStateAction,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -45,26 +46,38 @@ export const ChangeCharacterCost = <T extends { id: string }>({
     setCharactersFromDB(updatedCharacters);
   };
 
-  const onChangeRankCost = ({ id }: { id: string }) => {
-    const updatedCharacters = charactersFromDB.map((character) =>
-      character.id === id
-        ? {
-            ...character,
-            rankCost: [
-              firstConstCost,
-              secondConstCost,
-              thirdConstCost,
-              fourthConstCost,
-              fifthConstCost,
-              sixConstCost,
-            ],
-          }
-        : character,
-    );
-    setCharactersFromDB(updatedCharacters);
+  const onChangeRankCost = useCallback(
+    ({ id }: { id: string }) => {
+      const updatedCharacters = charactersFromDB.map((character) =>
+        character.id === id
+          ? {
+              ...character,
+              rankCost: [
+                firstConstCost,
+                secondConstCost,
+                thirdConstCost,
+                fourthConstCost,
+                fifthConstCost,
+                sixConstCost,
+              ],
+            }
+          : character,
+      );
+      setCharactersFromDB(updatedCharacters);
 
-    console.log(updatedCharacters);
-  };
+      console.log(updatedCharacters);
+    },
+    [
+      charactersFromDB,
+      fifthConstCost,
+      firstConstCost,
+      fourthConstCost,
+      secondConstCost,
+      setCharactersFromDB,
+      sixConstCost,
+      thirdConstCost,
+    ],
+  );
 
   useEffect(() => {
     if (characterItemRef.current.rankCost) {

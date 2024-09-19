@@ -126,12 +126,12 @@ export const MainPage = () => {
         </GlobalButton>
       </StyledButtonContainer>
       <GlobalButton onClick={() => router.push("/pickedOutput")}>
-        Pick's
+        Picks
       </GlobalButton>
       <GlobalButton
         onClick={() => router.push("/pickedOutput/pickedProdOutput")}
       >
-        Pick's output
+        Picks output
       </GlobalButton>
     </StyledMainPageContainer>
   );
