@@ -1,0 +1,281 @@
+"use client";
+
+import { UploadImage } from "@/components/forProd/ImgUpload";
+import { UploadImage1 } from "@/components/forProd/ImgUpload1";
+import { UploadImage2 } from "@/components/forProd/ImgUpload2";
+import { useFetchForProd } from "@/fetch/fetch";
+import React, { useEffect, useState } from "react";
+import {
+  subscribeOnForProdUpdates,
+  subscribeOnPickAndBanUpdates,
+  unsubscribeFromUpdates,
+} from "@/fetch/api/update/update";
+import styled from "styled-components";
+import { createDataForProd } from "@/fetch/api/forProd";
+import { GlobalButton, GlobalInput } from "@/styles/userStyles";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+
+const TestPage = () => {
+  const [firstCommentator, setFirstCommentator] = useState("");
+  const [secondCommentator, setSecondCommentator] = useState("");
+  const [firstPlayerNickname, setFirstPlayerNickname] = useState("");
+  const [secondPlayerNickname, setSecondPlayerNickname] = useState("");
+  const [firstPlayerPenaltyCircle, setFirstPlayerPenaltyCircle] = useState("");
+  const [secondPlayerPenaltyCircle, setSecondPlayerPenaltyCircle] =
+    useState("");
+
+  const { data, isLoading, error, refetch } = useFetchForProd();
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      refetch();
+    };
+
+    const unsubscribe = subscribeOnForProdUpdates(handleUpdate);
+
+    return () => {
+      unsubscribeFromUpdates();
+    };
+  }, [refetch]);
+
+  const onCommentatorAdd = () => {
+    createDataForProd({
+      firstCommentator:
+        firstCommentator === "" ? data[0].firstCommentator : firstCommentator,
+      secondCommentator:
+        secondCommentator === ""
+          ? data[0].secondCommentator
+          : secondCommentator,
+    });
+
+    setFirstCommentator("");
+    setSecondCommentator("");
+  };
+
+  const onPlayersAdd = () => {
+    createDataForProd({
+      firstPlayerNickname:
+        firstPlayerNickname === ""
+          ? data[0].firstPlayerNickname
+          : firstPlayerNickname,
+      firstPlayerPenaltyCircles:
+        firstPlayerPenaltyCircle === ""
+          ? data[0].firstPlayerCirclePenalty
+          : Number(firstPlayerPenaltyCircle),
+      secondPlayerPenaltyCircles:
+        secondPlayerPenaltyCircle === ""
+          ? data[0].secondPlayerPenaltyCircles
+          : Number(secondPlayerPenaltyCircle),
+      secondPlayerNickname:
+        secondPlayerNickname === ""
+          ? data[0].secondPlayerNickname
+          : secondPlayerNickname,
+    });
+    setFirstPlayerPenaltyCircle("");
+    setFirstPlayerNickname("");
+    setSecondPlayerPenaltyCircle("");
+    setSecondPlayerNickname("");
+  };
+
+  const handleCopyToClipboard = (url: string) => {
+    navigator.clipboard.writeText(url).catch((err) => {
+      console.error("Ошибка при копировании в буфер обмена", err);
+    });
+  };
+
+  useEffect(() => {
+    document.body.style.backgroundColor = "rgba(0, 0, 0, 0)";
+
+    return () => {
+      document.body.style.backgroundColor = "";
+    };
+  }, []);
+
+  if (isLoading) return <div></div>;
+
+  console.log(data);
+
+  return (
+    <div className="w-screen h-screen bg-slate-700 text-white">
+    <StyledProdDiv>
+      <div className={`bg-slate-700 text-white`}>
+        <StyledPlayersDiv>
+          <div className="flex flex-col">
+            <div className="mr-3">
+              {data[0].firstPlayerNickname}
+            </div>
+            <Link href={`/forProd/linksToSingle/q?query=firstPlayerNickname`}>
+              <div className="my-3">
+                first Player Nickname link
+              </div>
+            </Link>
+            <StyledInputProd
+              value={firstPlayerNickname}
+              onChange={(e) => setFirstPlayerNickname(e.target.value)}
+              className="my-3"
+            />
+            <div className="mr-3">
+              {data[0]?.firstPlayerPenaltyCircles}
+            </div>
+            <Link href={`/forProd/linksToSingle/q?query=firstPlayerCircles`}>
+              <StyledProdButtonDiv>
+                first Player penalty circles link
+              </StyledProdButtonDiv>
+            </Link>
+            <StyledInputProd
+              value={firstPlayerPenaltyCircle}
+              onChange={(e) => setFirstPlayerPenaltyCircle(e.target.value)}
+            />
+          </div>
+          <StyledPlayerSquare>
+            <StyledPlayerBorder>
+              {data[0].secondPlayerNickname}
+            </StyledPlayerBorder>
+            <Link href={`/forProd/linksToSingle/q?query=secondPlayerNickname`}>
+              <StyledProdButtonDiv>
+                second Player Nickname link
+              </StyledProdButtonDiv>
+            </Link>
+            <StyledInputProd
+              value={secondPlayerNickname}
+              onChange={(e) => setSecondPlayerNickname(e.target.value)}
+            />
+
+            <StyledPlayerBorder>
+              {data[0]?.secondPlayerPenaltyCircles}
+            </StyledPlayerBorder>
+            <Link
+              href={`/forProd/linksToSingle/q?query=secondPlayerPenaltyCircle`}
+            >
+              <StyledProdButtonDiv>
+                second Player penalty circles link
+              </StyledProdButtonDiv>
+            </Link>
+            <StyledInputProd
+              value={secondPlayerPenaltyCircle}
+              onChange={(e) => setSecondPlayerPenaltyCircle(e.target.value)}
+            />
+          </StyledPlayerSquare>
+          <GlobalButton onClick={() => onPlayersAdd()}>
+            Add players to DB
+          </GlobalButton>
+        </StyledPlayersDiv>
+        <div>
+          <img
+            src={data[0].firstPicture}
+            alt="Preview"
+            onClick={() =>
+              handleCopyToClipboard(
+                `https://main--hsrtour.netlify.app/forProd/linksToSingle/q?query=firstImage`,
+              )
+            }
+          />
+          <Link href={`/forProd/linksToSingle/q?query=firstImage`}>
+            first picture
+          </Link>
+          <UploadImage1 />
+          <img
+            src={data[0].secondPicture}
+            alt="Preview"
+            onClick={() =>
+              handleCopyToClipboard(
+                `https://main--hsrtour.netlify.app/forProd/linksToSingle/q?query=secondImage`,
+              )
+            }
+          />
+          <Link href={`/forProd/linksToSingle/q?query=secondImage`}>
+            second picture
+          </Link>
+          <UploadImage2 />
+        </div>
+        <StyledPlayersDiv>
+          <StyledPlayerSquare>
+            <Link href={`/forProd/linksToSingle/q?query=firstCommentator`}>
+              first commentator
+            </Link>
+            <StyledPlayerBorder>{data[0].firstCommentator}</StyledPlayerBorder>
+            <StyledInputProd
+              value={firstCommentator}
+              onChange={(e) => setFirstCommentator(e.target.value)}
+            />
+          </StyledPlayerSquare>
+          <StyledPlayerSquare>
+            <Link href={`/forProd/linksToSingle/q?query=secondCommentator`}>
+              second commentator
+            </Link>
+            <StyledPlayerBorder>{data[0].secondCommentator}</StyledPlayerBorder>
+            <StyledInputProd
+              value={secondCommentator}
+              onChange={(e) => setSecondCommentator(e.target.value)}
+            />
+          </StyledPlayerSquare>
+          <GlobalButton onClick={() => onCommentatorAdd()}>
+            Add commentator to DB
+          </GlobalButton>
+        </StyledPlayersDiv>
+      </div>
+    </StyledProdDiv>
+    </div>
+  );
+};
+
+export default TestPage;
+
+const StyledProdDiv = styled.div`
+  font-family: src("/SDK_SC_Web.ttf");
+
+  width: 900px;
+
+  position: absolute;
+
+  left: 30%;
+  top: 2%;
+
+  border: 1px solid black;
+`;
+
+const StyledProdButtonDiv = styled.div`
+  border: 1px solid #1c6ea4;
+  border-radius: 10px;
+  background-color: #454141;
+  color: white;
+  cursor: pointer;
+
+  align-self: center;
+  justify-self: center;
+
+  height: 50px;
+  width: 70%;
+
+  &:hover {
+    border: 1px solid #1c6ea4;
+    border-radius: 10px;
+    background-color: #2e2b2b;
+    color: white;
+    transition-duration: 300ms;
+  }
+`;
+
+const StyledInputProd = styled(GlobalInput)`
+  width: 150px;
+`;
+
+const StyledPlayerBorder = styled.div`
+  border: 1px solid snow;
+
+  padding: 5px;
+`;
+
+const StyledPlayersDiv = styled.div`
+  gap: 20px;
+
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledPlayerSquare = styled.div`
+  display: flex;
+
+  justify-content: space-between;
+`;

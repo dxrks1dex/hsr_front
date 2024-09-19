@@ -1,0 +1,113 @@
+import { useQuery } from "react-query";
+import { DATA_SOURCE_URL } from "@/fetch/api/DATA_SOURCE_URL";
+
+interface IFetchData {
+  uid: string | null;
+  lang: string;
+}
+
+const fetchData = async ({ uid, lang }: IFetchData) => {
+  const response = await fetch(`/mihomo-api/${uid}?lang=${lang}`);
+  return await response.json();
+};
+
+export const useFetchData = ({ uid, lang }: IFetchData) => {
+  return useQuery(["user", uid, lang], () =>
+    fetchData({
+      uid,
+      lang,
+    }),
+  );
+};
+
+const fetchUserData = async ({ uid }: { uid: string | null }) => {
+  const response = await fetch(`${DATA_SOURCE_URL}/users/${uid}`, {
+    method: "GET",
+  });
+  return await response.json();
+};
+
+export const useFetchUserData = ({ uid }: { uid: string | null }) => {
+  return useQuery(["user", uid], () =>
+    fetchUserData({
+      uid,
+    }),
+  );
+};
+
+const fetchAllCharacters = async () => {
+  const response = await fetch(`${DATA_SOURCE_URL}/characters`, {
+    method: "GET",
+  });
+  return await response.json();
+};
+
+export const useFetchAllCharacters = () => {
+  return useQuery(["all-characters"], () => fetchAllCharacters());
+};
+
+const fetchAllCharactersForAddToDB = async () => {
+  const response = await fetch(`get-allCharacters`, {
+    method: "GET",
+  });
+  return await response.json();
+};
+
+export const useFetchAllCharactersForAddToDB = () => {
+  return useQuery(["characters-forAdd"], () => fetchAllCharactersForAddToDB());
+};
+
+const fetchLightClonesForAddToDB = async () => {
+  const response = await fetch("/get-clones", {
+    method: "GET",
+  });
+  return await response.json();
+};
+
+export const useFetchLightClonesForAddToDB = () => {
+  return useQuery(["light-clones-forAdd"], () => fetchLightClonesForAddToDB());
+};
+
+const fetchLightClones = async () => {
+  const response = await fetch(`${DATA_SOURCE_URL}/lightcones`, {
+    method: "GET",
+  });
+  return await response.json();
+};
+
+export const useFetchLightClones = () => {
+  return useQuery(["light-cones"], () => fetchLightClones());
+};
+
+const fetchPickAndBans = async () => {
+  const response = await fetch(`${DATA_SOURCE_URL}/pickAndBan`, {
+    method: "GET",
+  });
+  return await response.json();
+};
+
+export const useFetchPickAndBans = () => {
+  return useQuery(["pickAndBans"], () => fetchPickAndBans());
+};
+
+const fetchForProd = async () => {
+  const response = await fetch(`${DATA_SOURCE_URL}/forProd`, {
+    method: "GET",
+  });
+  return await response.json();
+};
+
+export const useFetchForProd = () => {
+  return useQuery(["forProd"], () => fetchForProd());
+};
+
+const fetchTimer = async () => {
+  const response = await fetch(`${DATA_SOURCE_URL}/timer`, {
+    method: "GET",
+  });
+  return await response.json();
+};
+
+export const useFetchTimer = () => {
+  return useQuery(["timer"], () => fetchTimer());
+};

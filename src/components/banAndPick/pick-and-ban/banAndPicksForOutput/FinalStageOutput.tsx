@@ -1,0 +1,620 @@
+import { CharacterData } from "@/types/interface";
+import { ICON_DEFAULT_URL } from "@/utils/ICON_DEFAULT_URL";
+import {
+  CharacterCard,
+  CharacterCost,
+  CharacterImage,
+  CharactersCard,
+  ConesForCharacters,
+  PlayerInfoSection,
+  PlusSection,
+  RankForCharacters,
+} from "@/styles/userStyles";
+import styled, { keyframes } from "styled-components";
+import React, { useEffect, useState } from "react";
+import { freeCharacter } from "@/common/freeCharacter";
+import { VerticalIndicator } from "@/components/VertecalArrow/VerticalIndicator";
+import { calculateCost } from "@/utils/cost/calculateCost";
+
+interface Props {
+  currentPlayer: number;
+  globalStage: "ban" | "pick" | "ended" | null;
+  currentPlayerForStyle: number;
+  firstUserNickname: string;
+  secondUserNickname: string;
+  player: {
+    characters: CharacterData[];
+    picked: CharacterData[];
+    banned: CharacterData[];
+    firstCircleCount: number;
+    secondCircleCount: number;
+    deathCount: number;
+  };
+}
+
+export const FinalStageOutput = ({
+  player,
+  currentPlayerForStyle,
+  currentPlayer,
+  firstUserNickname,
+  secondUserNickname,
+}: Props) => {
+  const [playerTotalCost, setPlayerTotalCost] = useState(0);
+  const [penaltyCircles, setPenaltyCircles] = useState(0);
+  const [firstCircleCount, setFirstCircleCount] = useState(0);
+  const [secondCircleCount, setSecondCircleCount] = useState(0);
+  const [deathCount, setDeathCountCount] = useState(0);
+
+  const emptyIcon = {
+    id: "empty",
+    rank: "",
+    rarity: "",
+    icon: null,
+  };
+
+  const pickedIcons = Array.from({ length: 8 }, (_, i) =>
+    player.picked[i] ? player.picked[i] : emptyIcon,
+  );
+
+  useEffect(() => {
+    calculateCost({
+      setTotalPickCost: setPlayerTotalCost,
+      playerPickedCharactersOrCones: player.picked,
+    });
+
+    console.log(player.picked);
+  }, [player.picked]);
+
+  useEffect(() => {
+    if (playerTotalCost <= 30) {
+      setPenaltyCircles(
+        player.firstCircleCount +
+          player.secondCircleCount +
+          (playerTotalCost + player.deathCount - 30) / 6,
+      );
+
+      console.log("first Player");
+    } else if (playerTotalCost > 30) {
+      setPenaltyCircles(
+        player.firstCircleCount +
+          player.secondCircleCount +
+          (playerTotalCost + player.deathCount - 30) / 4,
+      );
+
+      console.log("first Player");
+    }
+  }, [
+    playerTotalCost,
+    player.firstCircleCount,
+    player.secondCircleCount,
+    player.deathCount,
+  ]);
+
+  return (
+    <StyledPickAndBanContainer currentPlayer={currentPlayerForStyle}>
+      <StyledUserNickname playerForStyle={currentPlayerForStyle}>
+        <StyledFirstNickname>
+          {firstUserNickname.toUpperCase()}
+        </StyledFirstNickname>
+        <PlusSection>+</PlusSection>
+        <StyledSecondNickname>
+          {secondUserNickname.toUpperCase()}
+        </StyledSecondNickname>
+      </StyledUserNickname>
+      <BanAndPickContainer currentPlayer={currentPlayerForStyle}>
+        <StyledTextContainer currentPlayerForStyle={currentPlayerForStyle}>
+          <StyledVariable>
+            <div>
+              <StyledPickText>total cost</StyledPickText>
+              <StyledPickCost>{playerTotalCost}</StyledPickCost>
+            </div>
+            <div>
+              <StyledPickText>first room</StyledPickText>
+              <StyledPickCost>{player.firstCircleCount}</StyledPickCost>
+            </div>
+            <div>
+              <StyledPickText>second room</StyledPickText>
+              <StyledPickCost>{player.secondCircleCount}</StyledPickCost>
+            </div>
+            <div>
+              <StyledPickText>deaths</StyledPickText>
+              <StyledPickCost>{player.deathCount}</StyledPickCost>
+            </div>
+          </StyledVariable>
+          <div>
+            <StyledPickResultText>cycles penalty</StyledPickResultText>
+            <StyledPickResult>{penaltyCircles.toFixed(4)}</StyledPickResult>
+          </div>
+        </StyledTextContainer>
+        <PickSection currentPlayer={currentPlayerForStyle}>
+          {pickedIcons.map((character, index) => (
+            <div key={index}>
+              {character.icon && (
+                <StyledCharacterAndConeSection
+                  currentPlayerForStyled={currentPlayerForStyle}
+                >
+                  {currentPlayerForStyle === 1 && character.lightCone?.id && (
+                    <StyledCharacterConeContainer>
+                      <StyledRankForCone currentPlayer={currentPlayer}>
+                        {character.lightCone.rank}
+                      </StyledRankForCone>
+                      <StyledCharacterCone
+                        playerForStyle={currentPlayerForStyle}
+                        src={`${ICON_DEFAULT_URL}/image/light_cone_portrait/${character.lightCone?.id}.png`}
+                      />
+                      <StyledConeCost>
+                        {character.lightCone?.rank === 0
+                          ? character.lightCone?.cost
+                          : character.lightCone?.rankCost &&
+                            character.lightCone?.rankCost[character.rank - 1]}
+                      </StyledConeCost>
+                    </StyledCharacterConeContainer>
+                  )}
+                  <StyledCharactersCard
+                    playerForStyle={currentPlayerForStyle}
+                    index={index}
+                  >
+                    <div>
+                      <RankForPickedOrBannedCharacters
+                        currentPlayer={currentPlayer}
+                      >
+                        {character.rank}
+                      </RankForPickedOrBannedCharacters>
+                      <StyledCharacterCard
+                        playerForStyle={currentPlayerForStyle}
+                        characterRarity={character.rarity}
+                        src={`${ICON_DEFAULT_URL}/${character.icon}`}
+                        onError={(e) =>
+                          (e.currentTarget.src = freeCharacter.icon)
+                        }
+                      />
+
+                      <StyledCharacterCost>
+                        {character.rank === 0
+                          ? character.cost
+                          : character.rankCost[character.rank - 1]}
+                      </StyledCharacterCost>
+                    </div>
+                  </StyledCharactersCard>
+                  {currentPlayerForStyle === 2 && character.lightCone?.id && (
+                    <StyledCharacterConeContainer>
+                      <StyledRankForCone currentPlayer={currentPlayer}>
+                        {character.lightCone.rank}
+                      </StyledRankForCone>
+                      <StyledCharacterCone
+                        playerForStyle={currentPlayerForStyle}
+                        src={`${ICON_DEFAULT_URL}/image/light_cone_portrait/${character.lightCone?.id}.png`}
+                      />
+                      <StyledConeCost>
+                        {character.lightCone?.rank === 0
+                          ? character.lightCone?.cost
+                          : character.lightCone?.rankCost &&
+                            character.lightCone?.rankCost[character.rank - 1]}
+                      </StyledConeCost>
+                    </StyledCharacterConeContainer>
+                  )}
+                </StyledCharacterAndConeSection>
+              )}
+            </div>
+          ))}
+        </PickSection>
+      </BanAndPickContainer>
+    </StyledPickAndBanContainer>
+  );
+};
+
+const StyledFlexStart = styled.div<{ currentPlayerForStyle: number }>`
+  display: flex;
+  justify-content: ${({ currentPlayerForStyle }) =>
+    currentPlayerForStyle === 1 ? "flex-end" : "flex-end"};
+`;
+
+const StyledCharacterConeContainer = styled.div``;
+
+const StyledCharacterAndConeSection = styled.div<{
+  currentPlayerForStyled: number;
+}>`
+  display: flex;
+  align-items: end;
+  justify-content: ${({ currentPlayerForStyled }) =>
+    currentPlayerForStyled === 1 ? "flex-end" : "flex-start"};
+  position: relative;
+
+  margin-bottom: 5px;
+`;
+
+const StyledTextContainer = styled.div<{ currentPlayerForStyle: number }>`
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+
+  color: #ffffff;
+
+  text-align: ${({ currentPlayerForStyle }) =>
+    currentPlayerForStyle === 1 ? "left" : "right"};
+`;
+
+const StyledVariable = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+
+  margin-top: 15%;
+`;
+
+const StyledPickText = styled.div`
+  font-size: 24px;
+  font-weight: 500;
+  opacity: 80%;
+`;
+
+const StyledPickCost = styled.div`
+  font-size: 24px;
+  font-weight: 700;
+`;
+
+const StyledPickResultText = styled.div`
+  font-size: 24px;
+  font-weight: 500;
+`;
+
+const StyledPickResult = styled.div`
+  font-size: 70px;
+  font-weight: 700;
+`;
+
+const StyledCharactersCard = styled(CharactersCard)<{
+  playerForStyle: number;
+  index: number;
+}>`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const StyledCharacterCost = styled(CharacterCost)`
+  transform: translate(15%, -200%);
+
+  font-size: 20px;
+
+  background-color: #000000;
+  padding: 2px;
+`;
+
+const StyledRow = styled.div<{ playerForStyle: number }>`
+  background-color: ${(props) =>
+    props.playerForStyle === 1 ? "#ffa8a3" : "#acafff"};
+  width: 100%;
+  height: 2px;
+
+  margin-top: 17px;
+  margin-bottom: 13px;
+  margin-left: -10px;
+`;
+
+const StyledUserNickname = styled.div<{ playerForStyle: number }>`
+  display: flex;
+
+  font-weight: bold;
+
+  justify-content: ${({ playerForStyle }) =>
+    playerForStyle === 1 ? "flex-start" : "flex-end"};
+  align-content: center;
+
+  margin-left: ${({ playerForStyle }) => (playerForStyle === 1 ? "3%" : "0%")};
+  margin-right: ${({ playerForStyle }) => (playerForStyle === 1 ? "0%" : "3%")};
+`;
+
+const StyledFirstNickname = styled.div`
+  color: #000000;
+
+  align-self: center;
+  font-size: 24px;
+
+  margin-right: 2%;
+`;
+
+const StyledSecondNickname = styled.div`
+  color: #ffffff;
+
+  align-self: center;
+
+  font-size: 24px;
+
+  margin-left: 2%;
+`;
+
+const StyledCharacterCone = styled(ConesForCharacters)<{
+  playerForStyle: number;
+}>`
+  //position: absolute;
+  //
+  //margin-top: 0;
+  //margin-left: 0;
+  //
+  //transform: translate(150%, -60%);
+
+  //position: absolute;
+  //
+  //margin-top: 0;
+  //margin-left: 0;
+  //
+  //width: 70px;
+  //height: 70px;
+  //
+  //transform: translate(85%, -80%);
+  border-top-left-radius: ${({ playerForStyle }) =>
+    playerForStyle === 1 && "10px"};
+  border-top-right-radius: ${({ playerForStyle }) =>
+    playerForStyle === 2 && "10px"};
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+
+  border: 2px solid #fff;
+
+  margin-top: 0;
+  margin-right: 10px;
+
+  width: 120px;
+  height: 60px;
+
+  //transform: translate(85%, -80%);
+
+  box-shadow: 0 5px 45px rgba(0, 0, 150, 0.1);
+
+  //border-bottom-left-radius: 5px;
+  //border-bottom-right-radius: 5px;
+
+  //box-shadow: 0 5px 45px rgba(0, 0, 150, 0.1);
+`;
+
+const roundAnimation = keyframes`
+  0% {
+    border-color: transparent transparent transparent green;
+  }
+  25% {
+    border-color: transparent transparent green transparent;
+  }
+  50% {
+    border-color: transparent green transparent transparent;
+  }
+  75% {
+    border-color: green transparent transparent transparent;
+  }
+  100% {
+    border-color: transparent transparent transparent green;
+  }
+`;
+
+const pulseAnimation = keyframes`
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(126, 255, 73, 6);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(116, 255, 118, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(116, 255, 118, 0);
+  }
+`;
+
+const StyledCharactersBanCard = styled(CharacterCard)`
+  margin: 0;
+`;
+
+const StyledCharacterCard = styled.img<{
+  playerForStyle: number;
+  characterRarity: number;
+}>`
+  width: 139px;
+  height: 70px;
+
+  border-top-left-radius: ${({ playerForStyle }) =>
+    playerForStyle === 2 && "10px"};
+  border-top-right-radius: ${({ playerForStyle }) =>
+    playerForStyle === 1 && "10px"};
+
+  border: 2px solid #fff;
+
+  // background-color: {(props) =>
+  //   props.characterRarity === 4
+  //     ? "rgba(128, 0, 128, 0.25)"
+  //     : "rgba(207,181,59, 0.25)"};
+  backdrop-filter: blur(12px);
+  //
+  //border-top-left-radius: 8px;
+  //border-top-right-radius: 8px;
+
+  // box-shadow: 0px 0px 5px 2px
+  //   {(props) =>
+  //     props.characterRarity === 4 ? "#54458560" : "rgba(207,181,59, 0.25)"};
+`;
+
+const StyledPickAndBanContainer = styled.div<{ currentPlayer: number }>`
+  //position: absolute;
+
+  //--tw-translate-y: 50%;
+  //transform: translate(var(--tw-translate-x), var(--tw-translate-y))
+  //  rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y))
+  //  scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  //
+  //--tw-translate-x: 50%;
+
+  //left: 50%;
+
+  // top: {(props) => (props.currentPlayer === 1 ? "420px" : "700px")};
+
+  // display: flex;
+  // flex-direction: {({ currentPlayer }) =>
+  //   currentPlayer === 1 ? "row-reverse" : "row"};
+
+  align-self: center;
+
+  background-color: ${({ currentPlayer }) =>
+    currentPlayer === 1 ? "#31a8ff" : "#c84a32"};
+
+  border-radius: 10px;
+  margin-top: 4%;
+
+  padding-bottom: 3%;
+`;
+
+const BanAndPickContainer = styled.section<{ currentPlayer: number }>`
+  //gap: 25px;
+  //width: 100%;
+  //margin-left: ${(props) => (props.currentPlayer === 1 ? "50px" : "auto")};
+
+  //margin-right: ${(props) => (props.currentPlayer === 2 ? "40%" : "auto")};
+
+  //margin-bottom: 2%;
+  //direction: ${(props) => (props.currentPlayer === 1 ? "rtl" : "ltr")};
+
+  // transform: {({ currentPlayer }) =>
+  //   currentPlayer === 1 ? "scaleX(-1)" : "none"};
+  display: flex;
+  justify-content: space-between;
+
+  flex-direction: ${({ currentPlayer }) =>
+    currentPlayer === 1 ? "row" : "row-reverse"};
+
+  margin-left: ${({ currentPlayer }) => (currentPlayer === 1 ? "3%" : "9%")};
+  margin-right: ${({ currentPlayer }) => (currentPlayer === 1 ? "9%" : "3%")};
+`;
+
+const RankForPickedOrBannedCharacters = styled(RankForCharacters)<{
+  currentPlayer: number;
+}>`
+  position: absolute;
+
+  z-index: 10;
+  //margin-top: 3.9%;
+  //margin-left: 0;
+
+  transform: translate(580%, 100%);
+
+  font-size: 20px;
+
+  background-color: #000000;
+  padding: 2px;
+`;
+
+const RankForPickedOrBannedCharacters2 = styled(RankForCharacters)<{
+  currentPlayer: number;
+}>`
+  //margin-top: 3.9%;
+  //margin-left: 0;
+  --tw-backdrop-blur: blur(12px);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness)
+    var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale)
+    var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert)
+    var(--tw-backdrop-opacity) var(--tw-backdrop-saturate)
+    var(--tw-backdrop-sepia);
+
+  z-index: 10;
+  transform: translate(300%, -10%);
+
+  font-size: 20px;
+`;
+
+const PickSection = styled.div<{ currentPlayer: number }>``;
+
+const BanSection = styled.div<{ currentPlayer: number }>`
+  position: absolute;
+
+  display: flex;
+  flex-direction: row;
+
+  margin-bottom: 2rem;
+
+  width: 208px;
+  justify-content: space-between;
+
+  > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(1rem * var(--tw-space-x-reverse));
+    margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
+  }
+
+  --tw-grayscale: grayscale(100%);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+    var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate)
+    var(--tw-sepia) var(--tw-drop-shadow);
+
+  top: ${(props) => (props.currentPlayer === 1 ? "-110px" : "-389px")};
+  left: ${(props) => (props.currentPlayer === 1 ? "785px" : "0")};
+`;
+
+const StyledPickedOrBannedCharacter = styled(CharacterImage)`
+  height: 80px;
+  width: 80px;
+
+  border-radius: 50px;
+
+  --tw-backdrop-blur: blur(12px);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness)
+    var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale)
+    var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert)
+    var(--tw-backdrop-opacity) var(--tw-backdrop-saturate)
+    var(--tw-backdrop-sepia);
+`;
+
+const StyledDefaultPicksOrBans = styled.div`
+  height: 230px;
+  width: 110px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(255 255 255 / 0.15);
+  border-radius: 0.375rem /* 6px */;
+  background-color: rgb(241 245 249 / 0.05);
+
+  margin-right: 16px;
+
+  --tw-backdrop-blur: blur(12px);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness)
+    var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale)
+    var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert)
+    var(--tw-backdrop-opacity) var(--tw-backdrop-saturate)
+    var(--tw-backdrop-sepia);
+`;
+
+const StyledDefaultPicksOrBans2 = styled.div`
+  height: 80px;
+  width: 80px;
+  border-radius: 50px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(255 255 255 / 0.15);
+  background-color: rgb(241 245 249 / 0.05);
+  --tw-backdrop-blur: blur(12px);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness)
+    var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale)
+    var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert)
+    var(--tw-backdrop-opacity) var(--tw-backdrop-saturate)
+    var(--tw-backdrop-sepia);
+`;
+
+const StyledAnimatedPicksOrBans = styled(StyledDefaultPicksOrBans)`
+  animation: ${pulseAnimation} 1.5s infinite ease-in-out;
+`;
+
+const StyledAnimatedPicksOrBans2 = styled(StyledDefaultPicksOrBans2)`
+  animation: ${pulseAnimation} 1.5s infinite ease-in-out;
+`;
+
+const StyledRankForCone = styled(RankForPickedOrBannedCharacters)`
+  transform: translate(450%, 90%);
+
+  font-size: 18px;
+`;
+
+const StyledConeCost = styled(StyledCharacterCost)`
+  transform: translate(10%, -190%);
+
+  font-size: 18px;
+`;
