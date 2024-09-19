@@ -19,6 +19,7 @@ export const ChangeUserName = ({
   return (
     <StyledNameContainer>
       <GlobalInput
+        team={1}
         value={newNickname}
         placeholder={"input new nickname"}
         onChange={(e) => setNewNickname(e.target.value)}

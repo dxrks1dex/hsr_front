@@ -354,7 +354,7 @@ const StyledCharacterCone = styled(ConesForCharacters)<{
 const BanAndPickContainer = styled.section<{ currentPlayer: number }>`
   //gap: 25px;
   //width: 100%;
-  //margin-left: ${(props) => (props.currentPlayer === 1 ? "50px" : "auto")};
+  margin-left: ${(props) => (props.currentPlayer === 1 ? "45%" : "-45%")};
 
   //margin-right: ${(props) => (props.currentPlayer === 2 ? "40%" : "auto")};
 
