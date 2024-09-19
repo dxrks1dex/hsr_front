@@ -143,6 +143,7 @@ export const FirstUser = ({ firstUserData, secondUserData }: Props) => {
     firstUserData,
     secondPlayerPickOrBan,
     setCurrentPlayer,
+    timerReset,
   ]);
 
   useEffect(() => {

@@ -85,7 +85,7 @@ export const PlayerToPick = ({
 
       setFilteredCharacters(picked);
     }
-  }, [picked]);
+  }, [picked, uid]);
 
   useEffect(() => {
     if (secondCircleCountFromDb && firstCircleCountFromDb && deathCountFromDb) {

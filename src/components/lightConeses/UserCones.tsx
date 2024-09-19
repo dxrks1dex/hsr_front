@@ -72,7 +72,7 @@ export const UserCones = ({
       updateDataForPlayers();
       setIsLightConesOpen(false);
     }
-  }, [selectedCone]);
+  }, [selectedCone, updateDataForPlayers]);
 
   const onConesClicked = async (coneData: LightConeData) => {
     console.log("cone", coneData);

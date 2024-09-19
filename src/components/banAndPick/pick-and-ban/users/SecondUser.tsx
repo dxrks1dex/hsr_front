@@ -164,6 +164,7 @@ export const SecondUser = ({ secondUserData, firstUserData }: Props) => {
     secondUserData.banned,
     secondUserData.picked,
     setCurrentPlayer,
+    timerReset,
   ]);
 
   useEffect(() => {

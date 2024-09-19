@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { MainTimerTextStyle, TimerSection } from "@/styles/userStyles";
 import { PenaltyTimerText } from "@/components/styled/userStyles";
 import { applyTimer } from "@/fetch/api/timer/timerUpdate";
@@ -27,28 +27,9 @@ export const ChangeTimer = ({ isPickStarted }: Props) => {
       setPenaltyMinutes(data.penaltyTimer.minutes);
       setPenaltySeconds(data.penaltyTimer.seconds);
     }
-  }, [data]);
+  }, [data, isLoading]);
 
-  useEffect(() => {
-    let mainTimer: NodeJS.Timeout | null = null;
-    if (isPickStarted && (mainMinutes > 0 || mainSeconds > 0)) {
-      mainTimer = setInterval(() => {
-        if (mainSeconds > 0) {
-          setMainSeconds((prevSeconds) => prevSeconds - 1);
-        } else if (mainMinutes > 0) {
-          setMainMinutes((prevMinutes) => prevMinutes - 1);
-          setMainSeconds(59);
-        }
-      }, 1000);
-    } else if (mainMinutes === 0 && mainSeconds === 0 && isPickStarted) {
-      clearInterval(mainTimer!);
-      startPenaltyTimer(); // Запускаем штрафной таймер
-    }
-
-    return () => clearInterval(mainTimer!);
-  }, [isPickStarted, mainMinutes, mainSeconds]);
-
-  const startPenaltyTimer = () => {
+  const startPenaltyTimer = useCallback(() => {
     let penaltyTimer: NodeJS.Timeout | null = null;
     if (penaltyMinutes > 0 || penaltySeconds > 0) {
       penaltyTimer = setInterval(() => {
@@ -64,7 +45,26 @@ export const ChangeTimer = ({ isPickStarted }: Props) => {
     }
 
     return () => clearInterval(penaltyTimer!);
-  };
+  }, [penaltyMinutes, penaltySeconds]);
+
+  useEffect(() => {
+    let mainTimer: NodeJS.Timeout | null = null;
+    if (isPickStarted && (mainMinutes > 0 || mainSeconds > 0)) {
+      mainTimer = setInterval(() => {
+        if (mainSeconds > 0) {
+          setMainSeconds((prevSeconds) => prevSeconds - 1);
+        } else if (mainMinutes > 0) {
+          setMainMinutes((prevMinutes) => prevMinutes - 1);
+          setMainSeconds(59);
+        }
+      }, 1000);
+    } else if (mainMinutes === 0 && mainSeconds === 0 && isPickStarted) {
+      clearInterval(mainTimer!);
+      startPenaltyTimer();
+    }
+
+    return () => clearInterval(mainTimer!);
+  }, [isPickStarted, mainMinutes, mainSeconds, startPenaltyTimer]);
 
   const handleStart = () => {};
 

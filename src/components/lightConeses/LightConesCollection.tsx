@@ -50,7 +50,7 @@ export const LightConesCollection = () => {
 
   useEffect(() => {
     setConeFromDB(data);
-  }, [data]);
+  }, [data, setConeFromDB]);
 
   const onAddAllConesToDB = () => {
     mutate(dataToAdd, {

@@ -30,7 +30,7 @@ export const usePickTimer = ({
     setTimer(timerData);
 
     console.log("timer data: ", timerData);
-  }, [setTimer]);
+  }, [setTimer, timerData]);
 
   useEffect(() => {
     if (isPickStarted) {
@@ -58,7 +58,7 @@ export const usePickTimer = ({
 
       return () => clearInterval(totalTimer);
     }
-  }, [isPickStarted, timer, penaltyTimer]);
+  }, [isPickStarted, timer, penaltyTimer, setPenaltyTimer]);
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);

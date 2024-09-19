@@ -87,6 +87,8 @@ export const UserDataContextWrapper: FC<{ children: ReactNode }> = ({
       userName,
       firstUserUid,
       secondUserUid,
+      thirdUserUid,
+      fourthUserUid,
       stage,
       newUserUid,
       currentPlayer,

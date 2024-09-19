@@ -33,7 +33,7 @@ export const MainPage = () => {
       setConeForUser([]);
       setCharactersForUser([]);
     }
-  }, [pathname]);
+  }, [pathname, setCharactersForUser, setConeForUser]);
 
   return (
     <StyledMainPageContainer>

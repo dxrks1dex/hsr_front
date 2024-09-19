@@ -195,6 +195,7 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
     secondPlayerBannedCharacters,
     secondPlayerPickOrBan,
     secondPlayerPickedCharacters,
+    setCurrentPlayer,
   ]);
 
   useEffect(() => {
@@ -213,7 +214,14 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
     ) {
       setFourthPlayerFilteredCharacters(dataForFirstUserFromDB.characters);
     }
-  }, [dataForFirstUserFromDB, dataForSecondUserFromDB]);
+  }, [
+    dataForFirstUserFromDB,
+    dataForSecondUserFromDB,
+    isLoadingForFirstUserFromDB,
+    isLoadingForSecondUserFromDB,
+    setFourthPlayerFilteredCharacters,
+    setSecondPlayerFilteredCharacters,
+  ]);
 
   useEffect(() => {
     if (secondPlayerPickedCharacters.length === 4 && stage === "ban") {
@@ -352,6 +360,10 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
     firstUid,
     dataForSecondUserFromDB,
     dataForFirstUserFromDB,
+    isLoadingForFirstUserFromDB,
+    isLoadingForSecondUserFromDB,
+    fourthPlayerFilteredCharacters,
+    secondUid,
   ]);
 
   useEffect(() => {

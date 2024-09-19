@@ -150,6 +150,7 @@ export const CharactersContextWrapper: FC<{ children: ReactNode }> = ({
       firstPlayerFilteredCharacters,
       firstPlayerPickedCharacters,
       firstPlayerTotalCost,
+      fourthPlayerFilteredCharacters,
       globalStage,
       isFirstPlayerBanOrPick,
       isSecondPlayerBanOrPick,
@@ -157,6 +158,7 @@ export const CharactersContextWrapper: FC<{ children: ReactNode }> = ({
       secondPlayerFilteredCharacters,
       secondPlayerPickedCharacters,
       secondPlayerTotalCost,
+      thirdPlayerFilteredCharacters,
     ],
   );
 

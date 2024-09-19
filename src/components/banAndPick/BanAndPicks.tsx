@@ -101,7 +101,7 @@ export const BanAndPicks = ({
         timerData.penaltyTimer.minutes * 60 - timerData.penaltyTimer.seconds,
       );
     }
-  }, [timerData, isTimerLoading]);
+  }, [timerData, isTimerLoading, setPenaltyTimer]);
 
   const { totalTimer, currentTimer, timerReset } = usePickTimer({
     timer,

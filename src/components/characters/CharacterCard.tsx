@@ -50,7 +50,7 @@ export const CharacterCard = ({
     if (pendingCharacterId !== null) {
       updateDataForPlayers();
     }
-  }, [pendingCharacterId]);
+  }, [pendingCharacterId, updateDataForPlayers]);
 
   const characterRankRef = useRef(characterRank);
   characterRankRef.current = characterRank;
