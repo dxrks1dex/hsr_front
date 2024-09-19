@@ -108,12 +108,6 @@ export const CharacterCollectionForAdding = () => {
 
   if (error) return <>An error has occurred: {(error as Error).message}</>;
 
-  const onAddCharactersToDB = () => {
-    console.log(charactersFromDB);
-
-    mutate();
-  };
-
   const onFilterByElement = (element: string) => {
     setFilterByElement(
       charactersFromDB.filter(
@@ -177,7 +171,7 @@ export const CharacterCollectionForAdding = () => {
           </div>
         ))}
       </CharactersContainer>
-      <LightConeCollectionForAdding />
+      {/*<LightConeCollectionForAdding />*/}
       <MainContainer>
         {operation === "addNewUser" ? (
           <AddNewUser
