@@ -102,6 +102,7 @@ export const LightConeCollectionForAdding = () => {
   return (
     <StyledConeContainer>
       <StyledFilterInput
+        team={1}
         value={coneName}
         onChange={(e) => setConeName(e.target.value)}
         placeholder="Filter by name"
