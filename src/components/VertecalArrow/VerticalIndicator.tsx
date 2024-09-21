@@ -405,7 +405,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={firstPlayerBannedLength >= 1 ? "0.7" : "0.4"}>
               <path
                 d="M54.8209 16L45.4209 20.1538V23.3043H50.6431V32.6957H45.4209V35.8462L54.8209 40V16Z"
                 fill="#E31D1D"
@@ -437,7 +437,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={firstPlayerBannedLength >= 2 ? "0.7" : "0.4"}>
               <path
                 d="M54.8209 320L45.4209 324.158V327.311H50.6431V336.711H45.4209V339.865L54.8209 344.022V320Z"
                 fill="#E31D1D"
@@ -469,7 +469,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={firstPlayerPickedLength >= 1 ? "0.7" : "0.4"}>
               <path
                 d="M54.8209 108L45.4209 112.154V115.304H50.6431V124.696H45.4209V127.846L54.8209 132V108Z"
                 fill="#18FFCB"
@@ -503,7 +503,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={firstPlayerPickedLength >= 3 ? "0.7" : "0.4"}>
               <path
                 d="M54.8209 412L45.4209 416.158V419.311H50.6431V428.711H45.4209V431.865L54.8209 436.022V412Z"
                 fill="#18FFCB"
@@ -535,7 +535,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={firstPlayerPickedLength >= 5 ? "0.7" : "0.4"}>
               <path
                 d="M54.8209 596L45.4209 600.158V603.311H50.6431V612.711H45.4209V615.865L54.8209 620.022V596Z"
                 fill="#18FFCB"
@@ -567,7 +567,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={firstPlayerPickedLength >= 7 ? "0.7" : "0.4"}>
               <path
                 d="M54.8209 780L45.4209 784.158V787.311H50.6431V796.711H45.4209V799.865L54.8209 804.022V780Z"
                 fill="#18FFCB"
@@ -599,7 +599,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={firstPlayerPickedLength >= 2 ? "0.7" : "0.4"}>
               <path
                 d="M54.8209 232L45.4209 236.158V239.311H50.6431V248.711H45.4209V251.865L54.8209 256.022V232Z"
                 fill="#18FFCB"
@@ -631,7 +631,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={firstPlayerPickedLength >= 6 ? "0.7" : "0.4"}>
               <path
                 d="M54.8209 655L45.4209 659.158V662.311H50.6431V671.711H45.4209V674.865L54.8209 679.022V655Z"
                 fill="#18FFCB"
@@ -663,7 +663,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={firstPlayerPickedLength >= 8 ? "0.7" : "0.4"}>
               <path
                 d="M54.8209 839L45.4209 843.158V846.311H50.6431V855.711H45.4209V858.865L54.8209 863.022V839Z"
                 fill="#18FFCB"
@@ -693,7 +693,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={secondPlayerBannedLength >= 1 ? "0.7" : "0.4"}>
               <path
                 d="M68.265 55L77.665 59.1538V62.3043H72.4428V71.6957H77.665V74.8462L68.265 79V55Z"
                 fill="#E31D1D"
@@ -727,7 +727,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={secondPlayerBannedLength >= 2 ? "0.7" : "0.4"}>
               <path
                 d="M68.265 287L77.665 291.158V294.311H72.4428V303.711H77.665V306.865L68.265 311.022V287Z"
                 fill="#E31D1D"
@@ -761,7 +761,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={firstPlayerPickedLength >= 1 ? "0.7" : "0.4"}>
               <path
                 d="M68.265 141L77.665 145.158V148.311H72.4428V157.711H77.665V160.865L68.265 165.022V141Z"
                 fill="#18FFCB"
@@ -795,7 +795,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={secondPlayerPickedLength >= 2 ? "0.7" : "0.4"}>
               <path
                 d="M68.265 196L77.665 200.158V203.311H72.4428V212.711H77.665V215.865L68.265 220.022V196Z"
                 fill="#18FFCB"
@@ -829,7 +829,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={secondPlayerPickedLength >= 3 ? "0.7" : "0.4"}>
               <path
                 d="M68.265 378L77.665 382.158V385.311H72.4428V394.711H77.665V397.865L68.265 402.022V378Z"
                 fill="#18FFCB"
@@ -863,7 +863,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={secondPlayerPickedLength >= 5 ? "0.7" : "0.4"}>
               <path
                 d="M68.265 562L77.665 566.158V569.311H72.4428V578.711H77.665V581.865L68.265 586.022V562Z"
                 fill="#18FFCB"
@@ -897,7 +897,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={secondPlayerPickedLength >= 7 ? "0.7" : "0.4"}>
               <path
                 d="M68.265 746L77.665 750.158V753.311H72.4428V762.711H77.665V765.865L68.265 770.022V746Z"
                 fill="#18FFCB"
@@ -931,7 +931,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={secondPlayerPickedLength >= 4 ? "0.7" : "0.4"}>
               <path
                 d="M68.265 509L77.665 513.158V516.311H72.4428V525.711H77.665V528.865L68.265 533.022V509Z"
                 fill="#18FFCB"
@@ -965,7 +965,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={secondPlayerPickedLength >= 7 ? "0.7" : "0.4"}>
               <path
                 d="M68.265 693L77.665 697.158V700.311H72.4428V709.711H77.665V712.865L68.265 717.022V693Z"
                 fill="#18FFCB"
@@ -999,7 +999,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={secondPlayerPickedLength >= 8 ? "0.7" : "0.4"}>
               <path
                 d="M68.265 877L77.665 881.158V884.311H72.4428V893.711H77.665V896.865L68.265 901.022V877Z"
                 fill="#18FFCB"
@@ -1032,7 +1032,7 @@ export function VerticalIndicator({
               />
             </>
           ) : (
-            <g opacity="0.4">
+            <g opacity={firstPlayerPickedLength >= 4 ? "0.7" : "0.4"}>
               <path
                 d="M53.3619 475L42.4805 479.158V482.311H48.5257V491.711H42.4805V494.865L53.3619 499.022V475Z"
                 fill="#18FFCB"

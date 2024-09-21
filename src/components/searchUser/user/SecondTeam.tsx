@@ -49,6 +49,7 @@ import {
 import { getCharacter } from "@/fetch/api/characters";
 import timerImage from "@/pic/Timer.png";
 import { useRouter } from "next/navigation";
+import { useTimerContext } from "@/context/useTimerContext";
 
 interface Props {
   firstUid: string | null;
@@ -77,6 +78,11 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
   const [pickedItems, setPickedItems] = useState<
     Record<string, { cost: number }>
   >({});
+
+  const {
+    data: { mainTimer },
+    operations: { resetMainTimer },
+  } = useTimerContext();
 
   const queryClient = useQueryClient();
 
@@ -292,6 +298,7 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
       });
     }
     timerReset();
+    resetMainTimer();
   };
 
   useEffect(() => {
@@ -384,8 +391,7 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
   //   ) {
   //     secondPlayerPickOrBan(true);
   //
-  //     if (timer === 0) {
-  //       timerReset();
+  //     if (timer === 1) {
   //       secondPlayerPickOrBan(false);
   //     }
   //   }
@@ -407,7 +413,7 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
           next stage
         </StyledNextStageButton>
       )}
-      <div className="HUMAN flex flex-row-reverse">
+      <div className="HUMAN flex flex-row-reverse justify-between">
         <div>
           <TimerSection>
             <div>total cost: {secondPlayerTotalCost}</div>
@@ -533,12 +539,16 @@ const CharacterCard = styled.div`
 `;
 
 const StyledPlayerBanAndPick = styled.div`
-  position: absolute;
+  //position: absolute;
+  //
+  //left: 59.5%;
+  //top: 5%;
+  //
+  //z-index: 1;
 
-  left: 59.5%;
-  top: 5%;
+  margin-top: 4%;
 
-  z-index: 1;
+  //align-items: flex-start;
 `;
 
 const StyledCircleInput = styled(GlobalInput)`

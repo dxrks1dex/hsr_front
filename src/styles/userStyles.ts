@@ -19,7 +19,7 @@ export const PlayerInfo = styled.div`
   justify-content: space-between;
   //justify-items: center;
   align-items: center;
-
+  width: 100%;
   gap: 10px;
 
   margin-bottom: 2%;
@@ -61,9 +61,21 @@ export const PlayerName = styled.h1<{ player: number }>`
 
   display: flex;
   gap: 10px;
+  ${({ player }) =>
+    player === 1
+      ? "justify-content: flex-start; text-align: left;"
+      : "justify-content: flex-end; text-align: right;"}
   width: 45%;
 
-  justify-content: center;
+  //justify-content: center;
+
+  margin-right: 2%;
+  margin-left: 2%;
+  align-items: center;
+`;
+
+export const PlayerDisplay = styled.div`
+  display: flex;
   align-items: center;
 `;
 
@@ -72,6 +84,9 @@ export const PlusSection = styled.h1`
 
   font-size: 35px;
   opacity: 60%;
+
+  width: 10%;
+  text-align: center;
 `;
 
 export const CharactersContainer = styled.section`

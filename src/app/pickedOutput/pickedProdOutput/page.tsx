@@ -180,8 +180,8 @@ export default PickedProdOutput;
 
 const StyledPickOutputContainer = styled.div`
   display: grid;
-  grid-template-columns: 40% 40%;
-  grid-gap: 13%;
+  grid-template-columns: 42% 42%;
+  grid-gap: 11%;
   grid-template-rows: auto;
   height: 100vh;
   justify-content: center;

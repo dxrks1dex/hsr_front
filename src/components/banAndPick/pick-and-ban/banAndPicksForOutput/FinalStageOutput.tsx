@@ -45,6 +45,8 @@ export const FinalStageOutput = ({
   const [secondCircleCount, setSecondCircleCount] = useState(0);
   const [deathCount, setDeathCountCount] = useState(0);
 
+  const [charactersArray, setCharactersArray] = useState<CharacterData[]>([]);
+
   const emptyIcon = {
     id: "empty",
     rank: "",
@@ -52,8 +54,40 @@ export const FinalStageOutput = ({
     icon: null,
   };
 
-  const pickedIcons = Array.from({ length: 8 }, (_, i) =>
-    player.picked[i] ? player.picked[i] : emptyIcon,
+  useEffect(() => {
+    const mergedArray: CharacterData[] = [];
+    let bannedIndex = 0;
+    let pickedIndex = 0;
+
+    if (player.banned[bannedIndex]) {
+      mergedArray.push(player.banned[bannedIndex]);
+      bannedIndex++;
+    }
+
+    for (let i = 0; i < 2; i++) {
+      if (player.picked[pickedIndex]) {
+        mergedArray.push(player.picked[pickedIndex]);
+        pickedIndex++;
+      }
+    }
+
+    if (player.banned[bannedIndex]) {
+      mergedArray.push(player.banned[bannedIndex]);
+      bannedIndex++;
+    }
+
+    for (let i = 0; i < 6; i++) {
+      if (player.picked[pickedIndex]) {
+        mergedArray.push(player.picked[pickedIndex]);
+        pickedIndex++;
+      }
+    }
+
+    setCharactersArray(mergedArray);
+  }, [player.picked, player.banned]);
+
+  const charactersIcons = Array.from({ length: 10 }, (_, i) =>
+    charactersArray[i] ? charactersArray[i] : emptyIcon,
   );
 
   useEffect(() => {
@@ -127,7 +161,7 @@ export const FinalStageOutput = ({
           </div>
         </StyledTextContainer>
         <PickSection currentPlayer={currentPlayerForStyle}>
-          {pickedIcons.map((character, index) => (
+          {charactersIcons.map((character, index) => (
             <div key={index}>
               {character.icon && (
                 <StyledCharacterAndConeSection
@@ -142,7 +176,7 @@ export const FinalStageOutput = ({
                         playerForStyle={currentPlayerForStyle}
                         src={`${ICON_DEFAULT_URL}/image/light_cone_portrait/${character.lightCone?.id}.png`}
                       />
-                      <StyledConeCost>
+                      <StyledConeCost currentPlayer={currentPlayerForStyle}>
                         {character.lightCone?.rank === 0
                           ? character.lightCone?.cost
                           : character.lightCone?.rankCost &&
@@ -155,11 +189,14 @@ export const FinalStageOutput = ({
                     index={index}
                   >
                     <div>
-                      <RankForPickedOrBannedCharacters
-                        currentPlayer={currentPlayer}
-                      >
-                        {character.rank}
-                      </RankForPickedOrBannedCharacters>
+                      {index === 0 || index === 3 ? null : (
+                        <RankForPickedOrBannedCharacters
+                          currentPlayer={currentPlayer}
+                        >
+                          E{character.rank}
+                        </RankForPickedOrBannedCharacters>
+                      )}
+
                       <StyledCharacterCard
                         playerForStyle={currentPlayerForStyle}
                         characterRarity={character.rarity}
@@ -169,11 +206,15 @@ export const FinalStageOutput = ({
                         }
                       />
 
-                      <StyledCharacterCost>
-                        {character.rank === 0
-                          ? character.cost
-                          : character.rankCost[character.rank - 1]}
-                      </StyledCharacterCost>
+                      {index === 0 || index === 3 ? null : (
+                        <StyledCharacterCost
+                          currentPlayer={currentPlayerForStyle}
+                        >
+                          {character.rank === 0
+                            ? character.cost
+                            : character.rankCost[character.rank - 1]}
+                        </StyledCharacterCost>
+                      )}
                     </div>
                   </StyledCharactersCard>
                   {currentPlayerForStyle === 2 && character.lightCone?.id && (
@@ -185,7 +226,7 @@ export const FinalStageOutput = ({
                         playerForStyle={currentPlayerForStyle}
                         src={`${ICON_DEFAULT_URL}/image/light_cone_portrait/${character.lightCone?.id}.png`}
                       />
-                      <StyledConeCost>
+                      <StyledConeCost currentPlayer={currentPlayerForStyle}>
                         {character.lightCone?.rank === 0
                           ? character.lightCone?.cost
                           : character.lightCone?.rankCost &&
@@ -245,23 +286,25 @@ const StyledVariable = styled.div`
 `;
 
 const StyledPickText = styled.div`
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 500;
   opacity: 80%;
 `;
 
 const StyledPickCost = styled.div`
-  font-size: 24px;
+  font-size: 32px;
+
   font-weight: 700;
 `;
 
 const StyledPickResultText = styled.div`
-  font-size: 24px;
+  font-size: 46px;
+
   font-weight: 500;
 `;
 
 const StyledPickResult = styled.div`
-  font-size: 70px;
+  font-size: 120px;
   font-weight: 700;
 `;
 
@@ -271,12 +314,29 @@ const StyledCharactersCard = styled(CharactersCard)<{
 }>`
   display: flex;
   justify-content: space-between;
-`;
 
-const StyledCharacterCost = styled(CharacterCost)`
+  filter: ${({ index }) =>
+    index === 0 || index === 3 ? "grayscale(100%)" : "none"};
+
+  svg {
+    filter: none;
+  }
+`;
+//  ${({ currentPlayer }) =>
+//     currentPlayer === 1 ? "translate(15%, -200%)" : "translate(10%, -200%)"};
+const StyledCharacterCost = styled(CharacterCost)<{ currentPlayer: number }>`
+  font-size: 20px;
   transform: translate(15%, -200%);
 
-  font-size: 20px;
+  display: flex;
+  flex-direction: ${({ currentPlayer }) =>
+    currentPlayer === 1
+      ? "row"
+      : "row-reverse"}; /* Направление для игрока 2 справа налево */
+  align-items: ${({ currentPlayer }) =>
+    currentPlayer === 1 ? "flex-start" : "flex-end"};
+
+  max-width: 42px;
 
   background-color: #000000;
   padding: 2px;
@@ -310,7 +370,7 @@ const StyledFirstNickname = styled.div`
   color: #000000;
 
   align-self: center;
-  font-size: 24px;
+  font-size: 32px;
 
   margin-right: 2%;
 `;
@@ -320,7 +380,7 @@ const StyledSecondNickname = styled.div`
 
   align-self: center;
 
-  font-size: 24px;
+  font-size: 32px;
 
   margin-left: 2%;
 `;
@@ -345,9 +405,9 @@ const StyledCharacterCone = styled(ConesForCharacters)<{
   //
   //transform: translate(85%, -80%);
   border-top-left-radius: ${({ playerForStyle }) =>
-    playerForStyle === 1 && "10px"};
+    playerForStyle === 1 && "20px"};
   border-top-right-radius: ${({ playerForStyle }) =>
-    playerForStyle === 2 && "10px"};
+    playerForStyle === 2 && "20px"};
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
 
@@ -487,6 +547,8 @@ const BanAndPickContainer = styled.section<{ currentPlayer: number }>`
   margin-right: ${({ currentPlayer }) => (currentPlayer === 1 ? "9%" : "3%")};
 `;
 
+//     ${({ currentPlayer }) =>
+//     currentPlayer === 1 ? "translate(300%, 100%)" : "translate(10%, 100%)"};
 const RankForPickedOrBannedCharacters = styled(RankForCharacters)<{
   currentPlayer: number;
 }>`
@@ -496,10 +558,11 @@ const RankForPickedOrBannedCharacters = styled(RankForCharacters)<{
   //margin-top: 3.9%;
   //margin-left: 0;
 
-  transform: translate(580%, 100%);
+  transform: translate(300%, 100%);
 
   font-size: 20px;
 
+  width: 34px;
   background-color: #000000;
   padding: 2px;
 `;
@@ -608,13 +671,15 @@ const StyledAnimatedPicksOrBans2 = styled(StyledDefaultPicksOrBans2)`
 `;
 
 const StyledRankForCone = styled(RankForPickedOrBannedCharacters)`
-  transform: translate(450%, 90%);
+  transform: translate(370%, 90%);
 
   font-size: 18px;
+
+  width: 24px;
 `;
 
 const StyledConeCost = styled(StyledCharacterCost)`
-  transform: translate(10%, -190%);
+  transform: translate(40%, -190%);
 
   font-size: 18px;
 `;

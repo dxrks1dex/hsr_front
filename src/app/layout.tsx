@@ -7,6 +7,7 @@ import { LightConeContextWrapper } from "@/context/useLightConeContext";
 import { LoginDataContextWrapper } from "@/context/useLoginDataContext";
 import "@/styles/globals.css";
 import { ForProdContextWrapper } from "@/context/useForProdContext";
+import { TimerContextWrapper } from "@/context/useTimerContext";
 
 export default function RootLayout({
   children,
@@ -22,7 +23,9 @@ export default function RootLayout({
               <LightConeContextWrapper>
                 <LoginDataContextWrapper>
                   <ForProdContextWrapper>
-                    <body>{children}</body>
+                    <TimerContextWrapper>
+                      <body>{children}</body>
+                    </TimerContextWrapper>
                   </ForProdContextWrapper>
                 </LoginDataContextWrapper>
               </LightConeContextWrapper>

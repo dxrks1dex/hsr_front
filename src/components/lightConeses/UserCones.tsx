@@ -77,7 +77,7 @@ export const UserCones = ({
   const onConesClicked = async (coneData: LightConeData) => {
     console.log("cone", coneData);
 
-    addLightCone({ coneRank, coneData, setCharactersForUser, characterId });
+    addLightCone({ coneRank: 1, coneData, setCharactersForUser, characterId });
     setSelectedCone(coneData);
 
     setIsLightConesOpen(false);
@@ -147,6 +147,7 @@ export const UserCones = ({
 
       {isConeChangeRankOpen && (
         <ChangeConeRank
+          isCone={true}
           onRankChoose={onRankChoose}
           coneRank={coneRank}
           onRankChange={onRankChange}
@@ -157,7 +158,7 @@ export const UserCones = ({
         {isLightConesOpen ? (
           <StyledConesContainer
             currentPlayer={currentPlayer}
-            className="bg-slate-700 p-2 text-white rounded-md flex flex-col absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 overflow-y-auto"
+            className="bg-slate-700 p-2 text-white rounded-md flex flex-col absolute left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-y-auto"
             ref={wrapperRef}
           >
             <input
@@ -280,7 +281,7 @@ const StyledCones = styled.button``;
 const StyledConesContainer = styled.section<{
   currentPlayer: number;
 }>`
-  z-index: 20;
+  z-index: 999;
 
   //top: ${(props) => (props.currentPlayer === 1 ? "10px" : "-250px")};
 

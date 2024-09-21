@@ -53,6 +53,7 @@ import { getCharacter } from "@/fetch/api/characters";
 import timerImage from "@/pic/Timer.png";
 import plusImage from "@/pic/plus.jpg";
 import { ChangeTimer } from "@/utils/timer/ChangeTimer";
+import { useTimerContext } from "@/context/useTimerContext";
 
 interface Props {
   firstUid: string | null;
@@ -77,6 +78,11 @@ export const FirstTeam = ({ firstUid, secondUid }: Props) => {
   const [defaultTimer, setDefaultTimer] = useState(0);
 
   const queryClient = useQueryClient();
+
+  const {
+    data: { mainTimer },
+    operations: { resetMainTimer },
+  } = useTimerContext();
 
   const {
     data: {
@@ -279,6 +285,7 @@ export const FirstTeam = ({ firstUid, secondUid }: Props) => {
       });
     }
     timerReset();
+    resetMainTimer();
 
     // const firstPickAndBansData = {
     //   characters: firstPlayerFilteredCharacters,
@@ -394,9 +401,9 @@ export const FirstTeam = ({ firstUid, secondUid }: Props) => {
   //   ) {
   //     firstPlayerPickOrBan(true);
   //
-  //     if (timer === 0) {
-  //       timerReset();
+  //     if (timer === 1) {
   //       firstPlayerPickOrBan(false);
+  //       setTimer((prevState) => prevState - 1);
   //     }
   //   }
   // }, [timer, firstPlayerPickOrBan, secondPlayerBannedCharacters, timerReset]);
@@ -409,7 +416,7 @@ export const FirstTeam = ({ firstUid, secondUid }: Props) => {
 
   return (
     <div className="p-5 duration-300">
-      <div className="flex flex-row ">
+      <div className="flex flex-row justify-between">
         <div>
           <TimerSection>
             <TimerSection>
@@ -583,10 +590,12 @@ export const FirstTeam = ({ firstUid, secondUid }: Props) => {
 };
 
 const StyledBanAndPickSection = styled.div`
-  position: absolute;
+  //position: absolute;
+  //
+  //left: 30%;
+  //top: 5%;
 
-  left: 30%;
-  top: 5%;
+  margin-top: 4%;
 `;
 
 const StyledCircleInput = styled(GlobalInput)`

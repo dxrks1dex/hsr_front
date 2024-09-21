@@ -66,7 +66,7 @@ export const usePickTimer = ({
 
   return {
     totalTimer: formatTime(penaltyTimer),
-    currentTimer: formatTime(timer),
+    currentTimer: timer,
     timerReset,
   };
 };

@@ -13,6 +13,7 @@ import { CharacterData } from "@/types/interface";
 import { freeCharacter } from "@/common/freeCharacter";
 import { useFetchTimer } from "@/fetch/fetch";
 import { usePickTimer } from "@/utils/timer/pickTimer";
+import { useTimerContext } from "@/context/useTimerContext";
 
 interface Props {
   charactersForFirstPlayer: CharacterData[];
@@ -101,6 +102,11 @@ export const BanAndPicks = ({
     setPenaltyTimer,
     timerData: timerData,
   });
+
+  const {
+    data: { mainTimer },
+    operations: { setMainTimer },
+  } = useTimerContext();
 
   const findFirstPlayerCharacterById = (charId: string) => {
     return charactersForFirstPlayer.find(

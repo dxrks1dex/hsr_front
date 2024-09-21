@@ -4,6 +4,7 @@ import { useOutsideDetect } from "@/utils/useOutsideDetect";
 
 interface Props {
   onRankChoose: () => void;
+  isCone: boolean;
 
   coneRank: number;
   onRankChange: (value: number) => void;
@@ -15,23 +16,24 @@ export const ChangeConeRank = ({
   coneRank,
   onRankChange,
   setIsConeChangeRankOpen,
+  isCone,
 }: Props) => {
   const wrapperRef = useRef(null);
   useOutsideDetect({ ref: wrapperRef, setIsOpen: setIsConeChangeRankOpen });
 
   return (
     <SliderContainer ref={wrapperRef}>
-      <h3>Select Eidolon</h3>
+      <h3>Select {isCone ? "Superimposition" : "Eidolon"}</h3>
       <StyledSlider
         type="range"
         min="0"
-        max="6"
+        max={`${isCone ? 5 : 6}`}
         value={coneRank}
         onChange={(e) => onRankChange(Number(e.target.value))}
       />
       <LabelsContainer>
-        {Array.from({ length: 7 }, (_, i) => (
-          <Label key={i}>{`E${i}`}</Label>
+        {Array.from({ length: isCone ? 5 : 7 }, (_, i) => (
+          <Label key={i}>{`${isCone ? `S${i + 1}` : `E${i}`}`}</Label>
         ))}
       </LabelsContainer>
       <ButtonContainer>

@@ -240,10 +240,14 @@ export const SecondUser = ({ secondUserData, firstUserData }: Props) => {
 
   return (
     <div className="p-5 duration-300">
-      <div className="HUMAN flex flex-row-reverse">
+      <div className="HUMAN flex flex-row-reverse justify-between">
         <div>
           <TimerSection>
+            <div>total cost: {secondPlayerTotalCost}</div>
+
             <TimerSection>
+              <div>reserve time</div>
+
               <svg
                 width="15"
                 height="23"
@@ -260,9 +264,7 @@ export const SecondUser = ({ secondUserData, firstUserData }: Props) => {
               </svg>
 
               <MainTimerTextStyle>{totalTimer}</MainTimerTextStyle>
-              <div>reserve time</div>
             </TimerSection>
-            <div>total cost: {secondPlayerTotalCost}</div>
             {/*<PenaltyTimerText className="text-white text-lg mt-5 font-bold">*/}
             {/*  Pick value: {secondPlayerTotalCost}*/}
             {/*</PenaltyTimerText>*/}
@@ -325,12 +327,14 @@ export const SecondUser = ({ secondUserData, firstUserData }: Props) => {
 };
 
 const StyledPlayerBanAndPick = styled.div`
-  position: absolute;
+  //position: absolute;
+  //
+  //left: 59.5%;
+  //top: 5%;
+  //
+  //z-index: 1;
 
-  left: 59.5%;
-  top: 5%;
-
-  z-index: 1;
+  margin-top: 4%;
 `;
 
 const StyledCircleInput = styled(GlobalInput)`

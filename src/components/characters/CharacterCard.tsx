@@ -84,6 +84,7 @@ export const CharacterCard = ({
     <StyledCharacterAndConeSection currentPlayerForStyled={playerForStyle}>
       {isCharacterChangeRankOpen && (
         <ChangeConeRank
+          isCone={false}
           onRankChoose={onRankChoose}
           coneRank={characterRank}
           onRankChange={onRankChange}

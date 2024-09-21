@@ -227,7 +227,7 @@ export const FirstUser = ({ firstUserData, secondUserData }: Props) => {
 
   return (
     <div className="p-5 duration-300">
-      <div className="HUMAN flex flex-row">
+      <div className="HUMAN flex flex-row justify-between">
         <div>
           <TimerSection>
             <TimerSection>
@@ -349,10 +349,12 @@ export const FirstUser = ({ firstUserData, secondUserData }: Props) => {
 };
 
 const StyledBanAndPickSection = styled.div`
-  position: absolute;
+  //position: absolute;
+  //
+  //left: 30%;
+  //top: 5%;
 
-  left: 30%;
-  top: 5%;
+  margin-top: 4%;
 `;
 
 const StyledPlayerInputContainer = styled.div`
