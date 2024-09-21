@@ -74,6 +74,7 @@ export const ChangeCharacterLightCones = ({
               lightCone: {
                 id: coneData.id,
                 name: coneData.name,
+                secondName: coneData.secondName,
                 rarity: coneData.rarity,
                 cost: coneData.cost,
                 icon: coneData.icon,
