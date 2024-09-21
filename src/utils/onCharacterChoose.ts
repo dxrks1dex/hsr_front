@@ -38,7 +38,9 @@ export const onCharacterChoose = ({
     return;
   }
 
-  setCharactersForUser((prevState) => [...prevState, selectedCharacter]);
+  const characterWithLevel = { ...selectedCharacter, level: 80 };
+
+  setCharactersForUser((prevState) => [...prevState, characterWithLevel]);
 
   const updatedCharacters = charactersFromDB.filter(
     (char) => char.id !== characterId,

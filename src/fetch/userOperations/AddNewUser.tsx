@@ -14,12 +14,12 @@ import {
   UsersContainerToAdd,
 } from "@/components/styled/userStyles";
 import { ICON_DEFAULT_URL } from "@/utils/ICON_DEFAULT_URL";
-import { ChangeCharacterOrConeRankForNewUser } from "@/components/characterGallery/ChangeCharacterOrConeRankForNewUser";
 import { CharacterData, LightConeData, User } from "@/types/interface";
 import { onCharacterDelete } from "@/utils/onCharacterDelete";
 import { ChangeCharacterLightCones } from "@/components/lightConeses/ChangeCharacterLightConeses";
 import { useLightConeContext } from "@/context/useLightConeContext";
 import styled from "styled-components";
+import { ChangeCharacterOrConeRankAndLevelForNewUser } from "@/components/characterGallery/ChangeCharacterOrConeRankForNewUser";
 
 interface ICharacterData {
   [key: string]: {
@@ -118,7 +118,7 @@ export const AddNewUser = ({
         </div>
         <CharactersContainer>
           {charactersForUser.map((character) => (
-            <div key={character.id}>
+            <StyledCharacterContainer key={character.id}>
               <CharacterImage
                 characterRarity={character.rarity}
                 onClick={() =>
@@ -133,37 +133,38 @@ export const AddNewUser = ({
                 alt={`Character ${character.id}`}
                 className="character-icon"
               />
-              <ChangeCharacterOrConeRankForNewUser
+              <ChangeCharacterOrConeRankAndLevelForNewUser
+                newLevel={character.level}
                 characterId={character.id}
                 newRank={character.rank}
                 setCharactersForUser={setCharactersForUser}
               />
-            </div>
+            </StyledCharacterContainer>
           ))}
         </CharactersContainer>
-        <CharactersContainer>
-          {coneForUser.map((cone, index) => (
-            <div key={cone.id}>
-              <CharacterImage
-                onClick={() =>
-                  onCharacterDelete({
-                    characterId: cone.id,
-                    setCharactersForUser: setConeForUser,
-                    setCharactersFromDB: setConeFromDB,
-                    charactersForUser: coneForUser,
-                  })
-                }
-                characterRarity={cone.rarity}
-                src={`${ICON_DEFAULT_URL}/icon/light_cone/${cone?.id}.png`}
-              />
-              <ChangeCharacterOrConeRankForNewUser
-                setCharactersForUser={setConeForUser}
-                characterId={cone.id}
-                newRank={cone.rank}
-              />
-            </div>
-          ))}
-        </CharactersContainer>
+        {/*<CharactersContainer>*/}
+        {/*  {coneForUser.map((cone, index) => (*/}
+        {/*    <div key={cone.id}>*/}
+        {/*      <CharacterImage*/}
+        {/*        onClick={() =>*/}
+        {/*          onCharacterDelete({*/}
+        {/*            characterId: cone.id,*/}
+        {/*            setCharactersForUser: setConeForUser,*/}
+        {/*            setCharactersFromDB: setConeFromDB,*/}
+        {/*            charactersForUser: coneForUser,*/}
+        {/*          })*/}
+        {/*        }*/}
+        {/*        characterRarity={cone.rarity}*/}
+        {/*        src={`${ICON_DEFAULT_URL}/icon/light_cone/${cone?.id}.png`}*/}
+        {/*      />*/}
+        {/*      <ChangeCharacterOrConeRankForNewUser*/}
+        {/*        setCharactersForUser={setConeForUser}*/}
+        {/*        characterId={cone.id}*/}
+        {/*        newRank={cone.rank}*/}
+        {/*      />*/}
+        {/*    </div>*/}
+        {/*  ))}*/}
+        {/*</CharactersContainer>*/}
       </div>
       <AddButton onClick={() => addCharacterToBd()} disabled={isMutateLoading}>
         ADD USER
@@ -171,3 +172,10 @@ export const AddNewUser = ({
     </UsersContainerToAdd>
   );
 };
+
+const StyledCharacterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;

@@ -14,6 +14,8 @@ interface ICharacterPlayerCard {
   character: CharacterData | undefined;
   secondPlayerRank: number;
   fourthPlayerRank: number;
+  secondPlayerLevel: number | undefined;
+  fourthPlayerLevel: number | undefined;
   fn?: (character: CharacterData) => void;
   index?: number;
 }
@@ -28,6 +30,8 @@ export const CharacterPlayerCard = ({
   character,
   secondPlayerRank,
   fourthPlayerRank,
+  secondPlayerLevel,
+  fourthPlayerLevel,
   fn,
   index,
 }: ICharacterPlayerCard) => {
@@ -39,7 +43,6 @@ export const CharacterPlayerCard = ({
         characterRarity={character.rarity}
       >
         <RankWrapper>
-          {/* Если ранг -1, отображаем пустую секцию для игрока */}
           {secondPlayerRank !== -1 ? (
             <PlayerRank player={1}>
               <div>{`E${secondPlayerRank}`}</div>
@@ -62,6 +65,23 @@ export const CharacterPlayerCard = ({
             fn && fn(character);
           }}
         />
+        <LevelWrapper>
+          {/* Отображаем уровни */}
+          {secondPlayerLevel !== undefined ? (
+            <PlayerRank player={1}>
+              <div>{`Lv${secondPlayerLevel}`}</div>
+            </PlayerRank>
+          ) : (
+            <EmptyPlayerSection player={1} />
+          )}
+          {fourthPlayerLevel !== undefined ? (
+            <PlayerRank player={2}>
+              <div>{`Lv${fourthPlayerLevel}`}</div>
+            </PlayerRank>
+          ) : (
+            <EmptyPlayerSection player={2} />
+          )}
+        </LevelWrapper>
       </CharacterCard>
     );
 };
@@ -87,8 +107,16 @@ export const CharactersDisplay = ({
     const character = secondPlayerCharacter || fourthPlayerCharacter;
     const secondPlayerRank = secondPlayerCharacter?.rank ?? -1;
     const fourthPlayerRank = fourthPlayerCharacter?.rank ?? -1;
+    const secondPlayerLevel = secondPlayerCharacter?.level;
+    const fourthPlayerLevel = fourthPlayerCharacter?.level;
 
-    return { character, secondPlayerRank, fourthPlayerRank };
+    return {
+      character,
+      secondPlayerRank,
+      fourthPlayerRank,
+      secondPlayerLevel,
+      fourthPlayerLevel,
+    };
   });
 
   return (
@@ -99,19 +127,45 @@ export const CharactersDisplay = ({
             a.character?.element || "",
           ),
         )
-        .map(({ character, secondPlayerRank, fourthPlayerRank }, index) => (
-          <CharacterPlayerCard
-            key={character?.id}
-            index={index}
-            character={character}
-            secondPlayerRank={secondPlayerRank}
-            fourthPlayerRank={fourthPlayerRank}
-            fn={onCharacterClick}
-          />
-        ))}
+        .map(
+          (
+            {
+              character,
+              secondPlayerRank,
+              fourthPlayerRank,
+              secondPlayerLevel,
+              fourthPlayerLevel,
+            },
+            index,
+          ) => (
+            <CharacterPlayerCard
+              key={character?.id}
+              index={index}
+              character={character}
+              secondPlayerRank={secondPlayerRank}
+              fourthPlayerRank={fourthPlayerRank}
+              secondPlayerLevel={secondPlayerLevel}
+              fourthPlayerLevel={fourthPlayerLevel}
+              fn={onCharacterClick}
+            />
+          ),
+        )}
     </CharacterGrid>
   );
 };
+
+const LevelWrapper = styled.div`
+  position: absolute;
+  bottom: 3px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 3px;
+
+  z-index: 92;
+
+  font-weight: bold;
+`;
 
 const EmptyPlayerSection = styled.div<{ player: number }>`
   background-color: ${({ player }) =>

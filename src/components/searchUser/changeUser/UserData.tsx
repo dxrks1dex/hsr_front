@@ -11,12 +11,12 @@ import {
 } from "@/components/styled/userStyles";
 import { ICON_DEFAULT_URL } from "@/utils/ICON_DEFAULT_URL";
 import { ChangeUserName } from "@/components/searchUser/changeUser/ChangeUserName";
-import { ChangeCharacterOrConeRankForNewUser } from "@/components/characterGallery/ChangeCharacterOrConeRankForNewUser";
 import { useMutation, useQueryClient } from "react-query";
 import { onCharacterDelete } from "@/utils/onCharacterDelete";
 import { CharacterData } from "@/types/interface";
 import { useLightConeContext } from "@/context/useLightConeContext";
 import styled from "styled-components";
+import { ChangeCharacterOrConeRankAndLevelForNewUser } from "@/components/characterGallery/ChangeCharacterOrConeRankForNewUser";
 
 interface Props {
   charactersForUser: CharacterData[];
@@ -104,7 +104,7 @@ export const UserData = ({
       />
       <CharactersContainer>
         {charactersForUser.map((character) => (
-          <div key={character.id}>
+          <StyledCharacterContainer key={character.id}>
             <CharacterImage
               characterRarity={character.rarity}
               src={`${ICON_DEFAULT_URL}/${character?.icon}`}
@@ -127,36 +127,44 @@ export const UserData = ({
                   src={`${ICON_DEFAULT_URL}/icon/light_cone/${character?.lightCone?.id}.png`}
                 />
               ))}
-            <ChangeCharacterOrConeRankForNewUser
+            <ChangeCharacterOrConeRankAndLevelForNewUser
+              newLevel={character.level}
               setCharactersForUser={setCharactersForUser}
               newRank={character.rank}
               characterId={character.id}
             />
-          </div>
+          </StyledCharacterContainer>
         ))}
       </CharactersContainer>
-      <CharactersContainer>
-        {coneForUser.map((cone) => (
-          <div key={cone.id}>
-            <CharacterImage
-              onClick={() => onConeDelete(cone.id)}
-              characterRarity={cone.rarity}
-              src={`${ICON_DEFAULT_URL}/icon/light_cone/${cone?.id}.png`}
-            />
-            <ChangeCharacterOrConeRankForNewUser
-              setCharactersForUser={setConeForUser}
-              characterId={cone.id}
-              newRank={cone.rank}
-            />
-          </div>
-        ))}
-      </CharactersContainer>
+      {/*<CharactersContainer>*/}
+      {/*  {coneForUser.map((cone) => (*/}
+      {/*    <div key={cone.id}>*/}
+      {/*      <CharacterImage*/}
+      {/*        onClick={() => onConeDelete(cone.id)}*/}
+      {/*        characterRarity={cone.rarity}*/}
+      {/*        src={`${ICON_DEFAULT_URL}/icon/light_cone/${cone?.id}.png`}*/}
+      {/*      />*/}
+      {/*      <ChangeCharacterOrConeRankForNewUser*/}
+      {/*        setCharactersForUser={setConeForUser}*/}
+      {/*        characterId={cone.id}*/}
+      {/*        newRank={cone.rank}*/}
+      {/*      />*/}
+      {/*    </div>*/}
+      {/*  ))}*/}
+      {/*</CharactersContainer>*/}
       <StyledAddButton onClick={onCharactersAddToDB} disabled={isMutate}>
         Add characters for user
       </StyledAddButton>
     </UsersContainerToAdd>
   );
 };
+
+const StyledCharacterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 const StyledAddButton = styled(AddButton)`
   width: 10%;

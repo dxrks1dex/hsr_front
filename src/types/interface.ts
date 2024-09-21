@@ -13,6 +13,7 @@ export interface Player {
 
 export interface CharacterData {
   id: string;
+  level?: number;
   rarity: number;
   rank: number;
   icon: string;

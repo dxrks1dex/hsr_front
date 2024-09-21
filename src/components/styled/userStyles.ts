@@ -111,12 +111,12 @@ export const RankForCharacters = styled.div`
 `;
 
 export const ChangeRankForCharacters = styled.input`
-  position: absolute;
+  //position: absolute;
 
   margin-top: -0.4%;
   margin-left: 1%;
 
-  width: 30px;
+  width: 40px;
 
   border: 1px solid;
   border-radius: 5px;
