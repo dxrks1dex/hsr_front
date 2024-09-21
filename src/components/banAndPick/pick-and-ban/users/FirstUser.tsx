@@ -332,7 +332,7 @@ export const FirstUser = ({ firstUserData, secondUserData }: Props) => {
             />
           </div>
         </div>
-        <div>
+        <StyledBanAndPickSection>
           <BanAndPicksForOutput
             mainTimer={timer}
             userNickname={dataFromDB.nickname}
@@ -342,11 +342,18 @@ export const FirstUser = ({ firstUserData, secondUserData }: Props) => {
             currentStage={firstUserData.stage}
             globalStage={globalStage}
           />
-        </div>
+        </StyledBanAndPickSection>
       </div>
     </div>
   );
 };
+
+const StyledBanAndPickSection = styled.div`
+  position: absolute;
+
+  left: 30%;
+  top: 5%;
+`;
 
 const StyledPlayerInputContainer = styled.div`
   display: flex;

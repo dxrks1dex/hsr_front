@@ -118,7 +118,6 @@ export const FirstTeam = ({ firstUid, secondUid }: Props) => {
 
   useEffect(() => {
     if (timerData && !isTimerLoading) {
-      setTimer(timerData.mainTimer.minutes * 60 + timerData.mainTimer.seconds);
       setDefaultTimer(
         timerData.mainTimer.minutes * 60 + timerData.mainTimer.seconds,
       );
@@ -388,36 +387,19 @@ export const FirstTeam = ({ firstUid, secondUid }: Props) => {
   const wrapperRef = useRef(null);
   useOutsideDetect({ ref: wrapperRef, setIsOpen: setIsCircleOpen });
 
-  useEffect(() => {
-    if (globalStage === "ended") {
-      if (firstPlayerTotalCost <= 30) {
-        setFirstPlayerCirclePenalty(
-          firstCircleCount +
-            secondCircleCount +
-            (firstPlayerTotalCost + deathCount - 30) / 6,
-        );
-        setCirclePenaltyColor("green");
-
-        console.log("first Player");
-      } else if (firstPlayerTotalCost > 30) {
-        setFirstPlayerCirclePenalty(
-          firstCircleCount +
-            secondCircleCount +
-            (firstPlayerTotalCost + deathCount - 30) / 4,
-        );
-        setCirclePenaltyColor("red");
-
-        console.log("first Player");
-      }
-    }
-  }, [
-    globalStage,
-    firstPlayerTotalCost,
-    setFirstPlayerCirclePenalty,
-    firstCircleCount,
-    secondCircleCount,
-    deathCount,
-  ]);
+  // useEffect(() => {
+  //   if (
+  //     secondPlayerBannedCharacters.length === 1 ||
+  //     secondPlayerBannedCharacters.length === 2
+  //   ) {
+  //     firstPlayerPickOrBan(true);
+  //
+  //     if (timer === 0) {
+  //       timerReset();
+  //       firstPlayerPickOrBan(false);
+  //     }
+  //   }
+  // }, [timer, firstPlayerPickOrBan, secondPlayerBannedCharacters, timerReset]);
 
   if (isLoadingForFirstUserFromDB || isLoadingForSecondUserFromDB)
     return <div>Loading...</div>;
@@ -427,7 +409,7 @@ export const FirstTeam = ({ firstUid, secondUid }: Props) => {
 
   return (
     <div className="p-5 duration-300">
-      <div className="flex flex-row">
+      <div className="flex flex-row ">
         <div>
           <TimerSection>
             <TimerSection>
@@ -565,38 +547,46 @@ export const FirstTeam = ({ firstUid, secondUid }: Props) => {
             {/*  ))}*/}
           </div>
         </div>
-        <BanAndPicks
-          setPenaltyTimer={setPenaltyTimer}
-          penaltyTimer={timer}
-          isPickOrBan={isFirstPlayerBanOrPick}
-          userNickname={dataForFirstUserFromDB.nickname}
-          userUid={firstUid}
-          globalStage={globalStage}
-          currentPlayerForStyle={1}
-          currentStage={stage}
-          currentPlayer={currentPlayer}
-          charactersForFirstPlayer={dataForFirstUserFromDB.characters}
-          charactersForSecondPlayer={dataForSecondUserFromDB.characters}
-          bannedCharacters={firstPlayerBannedCharacters}
-          pickedCharacters={firstPlayerPickedCharacters}
-          setFirstPlayerFilteredCharacters={setFirstPlayerFilteredCharacters}
-          setSecondPlayerFilteredCharacters={setSecondPlayerFilteredCharacters}
-          setFourthPlayerFilteredCharacters={setFourthPlayerFilteredCharacters}
-          setThirdPlayerFilteredCharacters={setThirdPlayerFilteredCharacters}
-          setBannedCharacters={setFirstPlayerBannedCharacters}
-          setPickedCharacters={setFirstPlayerPickedCharacters}
-          setBanCount={setBanCount}
-          setPickCount={setPickCount}
-          setStage={setStage}
-        />
+        <StyledBanAndPickSection>
+          <BanAndPicks
+            setPenaltyTimer={setPenaltyTimer}
+            penaltyTimer={timer}
+            isPickOrBan={isFirstPlayerBanOrPick}
+            userNickname={dataForFirstUserFromDB.nickname}
+            userUid={firstUid}
+            globalStage={globalStage}
+            currentPlayerForStyle={1}
+            currentStage={stage}
+            currentPlayer={currentPlayer}
+            charactersForFirstPlayer={dataForFirstUserFromDB.characters}
+            charactersForSecondPlayer={dataForSecondUserFromDB.characters}
+            bannedCharacters={firstPlayerBannedCharacters}
+            pickedCharacters={firstPlayerPickedCharacters}
+            setFirstPlayerFilteredCharacters={setFirstPlayerFilteredCharacters}
+            setSecondPlayerFilteredCharacters={
+              setSecondPlayerFilteredCharacters
+            }
+            setFourthPlayerFilteredCharacters={
+              setFourthPlayerFilteredCharacters
+            }
+            setThirdPlayerFilteredCharacters={setThirdPlayerFilteredCharacters}
+            setBannedCharacters={setFirstPlayerBannedCharacters}
+            setPickedCharacters={setFirstPlayerPickedCharacters}
+            setBanCount={setBanCount}
+            setPickCount={setPickCount}
+            setStage={setStage}
+          />
+        </StyledBanAndPickSection>
       </div>
     </div>
   );
 };
 
-const StyledPlayerInputContainer = styled.div`
-  display: flex;
-  flex-direction: row;
+const StyledBanAndPickSection = styled.div`
+  position: absolute;
+
+  left: 30%;
+  top: 5%;
 `;
 
 const StyledCircleInput = styled(GlobalInput)`

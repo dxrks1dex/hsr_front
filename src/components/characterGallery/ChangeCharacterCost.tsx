@@ -12,6 +12,7 @@ import { ChangeRankForCharacters } from "@/components/styled/userStyles";
 import { useOutsideDetect } from "@/utils/useOutsideDetect";
 import { useMutation } from "react-query";
 import { updateCharactersCost } from "@/fetch/api/characters";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface Props<T> {
   characterItem: CharacterData | LightConeData;
@@ -32,6 +33,8 @@ export const ChangeCharacterCost = <T extends { id: string }>({
   const [sixConstCost, setSixConstCost] = useState(0);
 
   const [isCharacterCostOpen, setIsCharacterCostOpen] = useState(false);
+
+  const pathname = usePathname();
 
   const wrapperRef = useRef(null);
   useOutsideDetect({ ref: wrapperRef, setIsOpen: setIsCharacterCostOpen });
@@ -91,7 +94,19 @@ export const ChangeCharacterCost = <T extends { id: string }>({
   }, []);
 
   useEffect(() => {
-    onChangeRankCost({ id: characterItem.id });
+    if (
+      characterItem.rankCost &&
+      !(
+        characterItem.rankCost[0] === firstConstCost &&
+        characterItem.rankCost[1] === secondConstCost &&
+        characterItem.rankCost[2] === thirdConstCost &&
+        characterItem.rankCost[3] === fourthConstCost &&
+        characterItem.rankCost[4] === fifthConstCost &&
+        characterItem.rankCost[5] === sixConstCost
+      )
+    ) {
+      onChangeRankCost({ id: characterItem.id });
+    }
   }, [
     firstConstCost,
     secondConstCost,
@@ -101,6 +116,7 @@ export const ChangeCharacterCost = <T extends { id: string }>({
     sixConstCost,
     onChangeRankCost,
     characterItem.id,
+    characterItem.rankCost,
   ]);
 
   return (
@@ -151,11 +167,13 @@ export const ChangeCharacterCost = <T extends { id: string }>({
             type="number"
             onChange={(e) => setFifthConstCost(Number(e.target.value))}
           />
-          <StyledCharactersCostInput
-            placeholder="six const cost"
-            type="number"
-            onChange={(e) => setSixConstCost(Number(e.target.value))}
-          />
+          {pathname === "/changeLightCone" ? null : (
+            <StyledCharactersCostInput
+              placeholder="six const cost"
+              type="number"
+              onChange={(e) => setSixConstCost(Number(e.target.value))}
+            />
+          )}
         </div>
       )}
     </div>

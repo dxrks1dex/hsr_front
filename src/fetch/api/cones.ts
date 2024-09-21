@@ -18,6 +18,43 @@ interface LightConesToAddData {
   [id: string]: LightConeToAdd;
 }
 
+const coneNamesMap: Record<string, string> = {
+  "Scent Alone Stays True": "lingsha",
+  "I Venture Forth to Hunt": "feixiao",
+  "Dance at Sunset": "yunli",
+  "Those Many Springs": "jiaoqiu",
+  "Yet Hope Is Priceless": "Jade",
+  "Sailing Towards a Second Life": "Boothill BH",
+  "Flowing Nightglow": "Robin",
+  "Whereabouts Should Dreams Rest": "Fierfly FF",
+  "Baptism of Pure Thought": "Dr.Ratio",
+  "Past Self in Mirror": "Ruan Mei",
+  "An Instant Before A Gaze": "Argenti",
+  "Night of Fright": "HuoHuo HH",
+  "Worrisome, Blissful": "Topaz and Numby",
+  "Brighter Than the Sun": "Dan Heng Imbibitor lunae DHIL",
+  "I Shall Be My Own Sword": "Jingliu JL",
+  "Time Waits for No One": "Bailu",
+  "Along the Passing Shore": "Acheron",
+  "Inherently Unjust Destiny": "Aventurine",
+  "Reforged Remembrance": "Black Swan BS",
+  "Earthly Escapade": "Sparkle Hanabi",
+  "Sleep Like the Dead": "Yanching",
+  "She Already Shut Her Eyes": "Fu Xuan FX",
+  "Before Dawn": "Jing Yuan JY",
+  "The Unreachable Side": "Blade",
+  "Echoes of the Coffin": "Luocha",
+  "Incessant Rain": "Silver Wolf SW",
+  "Patience Is All You Need": "Kafka",
+  "Moment of Victory": "Gepard",
+  "In the Name of the World": "Welt",
+  "But the Battle Isn't Over": "Bronya",
+  "Something Irreplaceable": "Clara",
+  "In the Night": "Seele",
+  "Night on the Milky Way": "Himeko",
+  "Dance! Dance! Dance!": "DDD",
+};
+
 export const getLightCone = async (id: string | null) => {
   try {
     const response = await fetch(`${DATA_SOURCE_URL}/lightcone/${id}`, {
@@ -80,9 +117,13 @@ export const addAllCones = async (data: LightConesToAddData) => {
         coneData.id = "23024";
       }
 
+      const secondName = coneNamesMap[coneData.en] || "";
+
+      console.log(`Cone: ${coneData.en}, Second name: ${secondName}`);
       await createNewCones({
         id: coneId,
         name: coneData.en,
+        secondName: secondName,
         rarity: coneData.rarity,
         rankCost: [0, 0, 0, 0, 0],
         rank: 0,

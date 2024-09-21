@@ -50,15 +50,6 @@ interface CharacterAction {
   setCharacterPickOrBanList: Dispatch<SetStateAction<CharacterData[]>>;
 }
 
-const checkImageExists = (url: string): Promise<boolean> => {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => resolve(true);
-    img.onerror = () => resolve(false);
-    img.src = url;
-  });
-};
-
 export const BanAndPicks = ({
   charactersForFirstPlayer,
   charactersForSecondPlayer,
@@ -96,7 +87,6 @@ export const BanAndPicks = ({
 
   useEffect(() => {
     if (timerData && !isTimerLoading) {
-      setTimer(timerData.mainTimer.minutes * 60 + timerData.mainTimer.seconds);
       setPenaltyTimer(
         timerData.penaltyTimer.minutes * 60 - timerData.penaltyTimer.seconds,
       );
@@ -376,21 +366,23 @@ export const BanAndPicks = ({
                   playerForStyle={currentPlayerForStyle}
                 >
                   <div className="flex">
-                    <svg
-                      width="15"
-                      height="23"
-                      viewBox="0 0 15 23"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M14.9487 0.135254H0V1.80599H2.19824V6.2467C2.19824 8.55762 3.6717 10.5244 5.73038 11.2588C3.6717 11.9932 2.19824 13.96 2.19824 16.2709V19.8322V20.7118H0V22.3825H14.9487V20.7118H12.8382V19.8322V16.2709C12.8382 13.96 11.3648 11.9932 9.30608 11.2588C11.3648 10.5244 12.8382 8.55762 12.8382 6.2467V1.80599H14.9487V0.135254ZM3.78105 16.2709V19.8322H11.2554V16.2709C11.2554 14.2069 9.58222 12.5337 7.51823 12.5337C5.45424 12.5337 3.78105 14.2069 3.78105 16.2709Z"
-                        fill="white"
-                      />
-                    </svg>
-                    {totalTimer}
+                    <StyledTimerSection>
+                      <svg
+                        width="15"
+                        height="23"
+                        viewBox="0 0 15 23"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M14.9487 0.135254H0V1.80599H2.19824V6.2467C2.19824 8.55762 3.6717 10.5244 5.73038 11.2588C3.6717 11.9932 2.19824 13.96 2.19824 16.2709V19.8322V20.7118H0V22.3825H14.9487V20.7118H12.8382V19.8322V16.2709C12.8382 13.96 11.3648 11.9932 9.30608 11.2588C11.3648 10.5244 12.8382 8.55762 12.8382 6.2467V1.80599H14.9487V0.135254ZM3.78105 16.2709V19.8322H11.2554V16.2709C11.2554 14.2069 9.58222 12.5337 7.51823 12.5337C5.45424 12.5337 3.78105 14.2069 3.78105 16.2709Z"
+                          fill="white"
+                        />
+                      </svg>
+                      {totalTimer}
+                    </StyledTimerSection>
                   </div>
                   <div>ban</div>
                 </StyledDefaultPicksOrBans>
@@ -402,21 +394,23 @@ export const BanAndPicks = ({
                   playerForStyle={currentPlayerForStyle}
                 >
                   <div className="flex">
-                    <svg
-                      width="15"
-                      height="23"
-                      viewBox="0 0 15 23"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M14.9487 0.135254H0V1.80599H2.19824V6.2467C2.19824 8.55762 3.6717 10.5244 5.73038 11.2588C3.6717 11.9932 2.19824 13.96 2.19824 16.2709V19.8322V20.7118H0V22.3825H14.9487V20.7118H12.8382V19.8322V16.2709C12.8382 13.96 11.3648 11.9932 9.30608 11.2588C11.3648 10.5244 12.8382 8.55762 12.8382 6.2467V1.80599H14.9487V0.135254ZM3.78105 16.2709V19.8322H11.2554V16.2709C11.2554 14.2069 9.58222 12.5337 7.51823 12.5337C5.45424 12.5337 3.78105 14.2069 3.78105 16.2709Z"
-                        fill="white"
-                      />
-                    </svg>
-                    {totalTimer}
+                    <StyledTimerSection>
+                      <svg
+                        width="15"
+                        height="23"
+                        viewBox="0 0 15 23"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M14.9487 0.135254H0V1.80599H2.19824V6.2467C2.19824 8.55762 3.6717 10.5244 5.73038 11.2588C3.6717 11.9932 2.19824 13.96 2.19824 16.2709V19.8322V20.7118H0V22.3825H14.9487V20.7118H12.8382V19.8322V16.2709C12.8382 13.96 11.3648 11.9932 9.30608 11.2588C11.3648 10.5244 12.8382 8.55762 12.8382 6.2467V1.80599H14.9487V0.135254ZM3.78105 16.2709V19.8322H11.2554V16.2709C11.2554 14.2069 9.58222 12.5337 7.51823 12.5337C5.45424 12.5337 3.78105 14.2069 3.78105 16.2709Z"
+                          fill="white"
+                        />
+                      </svg>
+                      {totalTimer}
+                    </StyledTimerSection>
                   </div>
                   pick
                 </StyledDefaultPicksOrBans>
@@ -654,7 +648,6 @@ const StyledCharacterCard = styled.img<{
 
 const StyledPickAndBanContainer = styled.div<{ currentPlayer: number }>`
   //position: absolute;
-
   // --tw-translate-y: -50%;
   // transform: translate(var(--tw-translate-x), var(--tw-translate-y))
   //   rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y))
@@ -738,7 +731,7 @@ const BanSection = styled.div<{ currentPlayer: number }>`
   justify-content: space-between;
   align-items: center;
 
-  gap: 10px;
+  gap: 12px;
 
   //> :not([hidden]) ~ :not([hidden]) {
   //  --tw-space-x-reverse: 0;
@@ -777,7 +770,7 @@ const StyledPickedOrBannedCharacter = styled(CharacterImage)<{
   playerForStyle: number;
   characterRarity: number;
 }>`
-  height: 60px;
+  height: 79px;
   width: 158px;
   border: 3px solid white;
 
@@ -800,8 +793,14 @@ const StyledPickedOrBannedCharacter = styled(CharacterImage)<{
     rgba(0, 0, 0, 0.9) 0px 18px 36px -18px inset;
 `;
 
+const StyledTimerSection = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const StyledDefaultPicksOrBans = styled.div<{ playerForStyle: number }>`
-  height: 60px;
+  height: 79px;
   width: 158px;
   border: 3px solid rgb(255 255 255 / 0.15);
   //border-style: solid;
@@ -827,10 +826,14 @@ const StyledDefaultPicksOrBans = styled.div<{ playerForStyle: number }>`
   color: snow;
   display: flex;
   justify-content: space-between;
+  flex-direction: ${({ playerForStyle }) =>
+    playerForStyle === 1 ? "row-reverse" : "row"};
   align-items: end;
 
   padding-right: 10px;
   padding-left: 10px;
+
+  font-size: 24px;
 `;
 
 const StyledDefaultPicksOrBansForBan = styled.div`

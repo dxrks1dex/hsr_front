@@ -171,27 +171,20 @@ export const BanAndPicksForOutput = ({
   );
 };
 
-const StyledCharactersIcons = styled(CharacterCard)<{
+const StyledCharactersOperationSvg = styled.svg<{
   playerForStyle: number;
-  index: number;
+  stage: "pick" | "ban";
 }>`
-  height: 60px;
-  width: 60px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: rgb(255 255 255 / 0.15);
-  border-radius: 50px;
-  background-color: rgb(241 245 249 / 0.05);
-  margin-right: 16px;
+  z-index: 99;
+  position: absolute;
+  display: flex;
 
-  border-top-left-radius: ${({ playerForStyle }) =>
-    playerForStyle === 1 && "10px"};
-  border-top-right-radius: ${({ playerForStyle }) =>
-    playerForStyle === 2 && "10px"};
+  flex-direction: ${({ playerForStyle }) =>
+    playerForStyle === 1 ? "row-reverse" : "row-reverse"};
 
-  /* Применение grayscale для 1-го и 4-го элементов */
-  filter: ${({ index }) =>
-    index === 0 || index === 3 ? "grayscale(100%)" : "none"};
+  path {
+    fill: ${({ stage }) => (stage === "ban" ? "#E31D1D" : "#00FF00")};
+  }
 `;
 
 const StyledArrowContainer = styled.div`
@@ -289,6 +282,10 @@ const StyledCharactersBanCard = styled(CharacterCard)<{
   filter: ${({ index }) =>
     index === 0 || index === 3 ? "grayscale(100%)" : "none"};
 
+  svg {
+    filter: none;
+  }
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -327,7 +324,6 @@ const StyledCharacterCard = styled.img<{
 
 const StyledPickAndBanContainer = styled.div<{ currentPlayer: number }>`
   //position: absolute;
-
   // --tw-translate-y: -50%;
   // transform: translate(var(--tw-translate-x), var(--tw-translate-y))
   //   rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y))
@@ -336,8 +332,7 @@ const StyledPickAndBanContainer = styled.div<{ currentPlayer: number }>`
   // --tw-translate-x: -50%;
   //
   // left: 50%;
-  //
-  // top: ${(props) => (props.currentPlayer === 1 ? "420px" : "700px")};
+  //// top: ${(props) => (props.currentPlayer === 1 ? "420px" : "700px")};
 `;
 
 const StyledCharacterCone = styled(ConesForCharacters)<{
@@ -355,8 +350,6 @@ const BanAndPickContainer = styled.section<{ currentPlayer: number }>`
   //gap: 25px;
   //width: 100%;
   margin-left: ${(props) => (props.currentPlayer === 1 ? "45%" : "-45%")};
-
-  //margin-right: ${(props) => (props.currentPlayer === 2 ? "40%" : "auto")};
 
   //margin-bottom: 2%;
   //direction: ${(props) => (props.currentPlayer === 1 ? "rtl" : "ltr")};
@@ -414,7 +407,7 @@ const BanSection = styled.div<{ currentPlayer: number }>`
   justify-content: space-between;
   align-items: center;
 
-  gap: 10px;
+  gap: 12px;
 
   //> :not([hidden]) ~ :not([hidden]) {
   //  --tw-space-x-reverse: 0;
@@ -453,7 +446,7 @@ const StyledPickedOrBannedCharacter = styled(CharacterImage)<{
   playerForStyle: number;
   characterRarity: number;
 }>`
-  height: 60px;
+  height: 79px;
   width: 158px;
   border: 3px solid white;
 
@@ -476,8 +469,14 @@ const StyledPickedOrBannedCharacter = styled(CharacterImage)<{
     rgba(0, 0, 0, 0.9) 0px 18px 36px -18px inset;
 `;
 
+const StyledTimerSection = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const StyledDefaultPicksOrBans = styled.div<{ playerForStyle: number }>`
-  height: 60px;
+  height: 79px;
   width: 158px;
   border: 3px solid rgb(255 255 255 / 0.15);
   //border-style: solid;
@@ -502,8 +501,15 @@ const StyledDefaultPicksOrBans = styled.div<{ playerForStyle: number }>`
 
   color: snow;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  flex-direction: ${({ playerForStyle }) =>
+    playerForStyle === 1 ? "row-reverse" : "row"};
+  align-items: end;
+
+  padding-right: 10px;
+  padding-left: 10px;
+
+  font-size: 24px;
 `;
 
 const StyledDefaultPicksOrBansForBan = styled.div`

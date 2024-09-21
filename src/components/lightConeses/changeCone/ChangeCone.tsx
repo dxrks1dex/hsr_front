@@ -35,6 +35,8 @@ export const ChangeLightCone = ({
     });
   };
 
+  if (isLoading) return <div>Updating...</div>;
+
   return (
     <div>
       <ChangeCharacterCost

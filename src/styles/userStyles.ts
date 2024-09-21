@@ -105,8 +105,8 @@ export const TeamDisplay = styled.div<{ player: number }>`
 `;
 
 export const CharacterImage = styled.img<{ characterRarity: number }>`
-  height: 60px;
-  width: 60px;
+  height: 116px;
+  width: 99px;
   position: relative;
   border-radius: 5px;
   cursor: pointer;

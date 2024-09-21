@@ -27,10 +27,8 @@ export const usePickTimer = ({
   timerData,
 }: Props) => {
   const timerReset = useCallback(() => {
-    setTimer(timerData);
-
-    console.log("timer data: ", timerData);
-  }, [setTimer, timerData]);
+    setTimer(30);
+  }, [setTimer]);
 
   useEffect(() => {
     if (isPickStarted) {

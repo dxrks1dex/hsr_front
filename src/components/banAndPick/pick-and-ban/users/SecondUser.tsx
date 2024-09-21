@@ -308,7 +308,7 @@ export const SecondUser = ({ secondUserData, firstUserData }: Props) => {
             />
           </div>
         </div>
-        <div>
+        <StyledPlayerBanAndPick>
           <BanAndPicksForOutput
             mainTimer={timer}
             userNickname={dataFromDB.nickname}
@@ -318,11 +318,20 @@ export const SecondUser = ({ secondUserData, firstUserData }: Props) => {
             currentPlayerForStyle={2}
             player={secondUserData}
           />
-        </div>
+        </StyledPlayerBanAndPick>
       </div>
     </div>
   );
 };
+
+const StyledPlayerBanAndPick = styled.div`
+  position: absolute;
+
+  left: 59.5%;
+  top: 5%;
+
+  z-index: 1;
+`;
 
 const StyledCircleInput = styled(GlobalInput)`
   height: 25px;

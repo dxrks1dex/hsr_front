@@ -48,6 +48,7 @@ import {
 } from "@/components/characterGallery/CharacterPlayerCard";
 import { getCharacter } from "@/fetch/api/characters";
 import timerImage from "@/pic/Timer.png";
+import { useRouter } from "next/navigation";
 
 interface Props {
   firstUid: string | null;
@@ -212,7 +213,7 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
       dataForSecondUserFromDB.characters &&
       !isLoadingForSecondUserFromDB
     ) {
-      setFourthPlayerFilteredCharacters(dataForFirstUserFromDB.characters);
+      setFourthPlayerFilteredCharacters(dataForSecondUserFromDB.characters);
     }
   }, [
     dataForFirstUserFromDB,
@@ -376,36 +377,21 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
   const wrapperRef = useRef(null);
   useOutsideDetect({ ref: wrapperRef, setIsOpen: setIsCircleOpen });
 
-  useEffect(() => {
-    if (globalStage === "ended") {
-      if (secondPlayerTotalCost <= 30) {
-        setSecondPlayerCirclePenalty(
-          firstCircleCount +
-            secondCircleCount +
-            (secondPlayerTotalCost - 30) / 6,
-        );
-        setCirclePenaltyColor("green");
+  // useEffect(() => {
+  //   if (
+  //     firstPlayerBannedCharacters.length === 1 ||
+  //     firstPlayerBannedCharacters.length === 2
+  //   ) {
+  //     secondPlayerPickOrBan(true);
+  //
+  //     if (timer === 0) {
+  //       timerReset();
+  //       secondPlayerPickOrBan(false);
+  //     }
+  //   }
+  // }, [firstPlayerBannedCharacters, secondPlayerPickOrBan, timer, timerReset]);
 
-        console.log("first Player");
-      } else if (secondPlayerTotalCost > 30) {
-        setSecondPlayerCirclePenalty(
-          firstCircleCount +
-            secondCircleCount +
-            (secondPlayerTotalCost - 30) / 4,
-        );
-        setCirclePenaltyColor("red");
-
-        console.log("first Player");
-      }
-    }
-  }, [
-    globalStage,
-    secondPlayerTotalCost,
-    setSecondPlayerCirclePenalty,
-    firstCircleCount,
-    secondCircleCount,
-    deathCount,
-  ]);
+  const router = useRouter();
 
   if (isLoadingForFirstUserFromDB || isLoadingForSecondUserFromDB)
     return <div>Loading...</div>;
@@ -416,10 +402,19 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
 
   return (
     <div className="p-5 duration-300">
+      {secondPlayerPickedCharacters.length === 8 && (
+        <StyledNextStageButton onClick={() => router.push("/pickedOutput")}>
+          next stage
+        </StyledNextStageButton>
+      )}
       <div className="HUMAN flex flex-row-reverse">
         <div>
           <TimerSection>
+            <div>total cost: {secondPlayerTotalCost}</div>
+
             <TimerSection>
+              <div>reserve time</div>
+
               <svg
                 width="15"
                 height="23"
@@ -436,9 +431,7 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
               </svg>
 
               <MainTimerTextStyle>{totalTimer}</MainTimerTextStyle>
-              <div>reserve time</div>
             </TimerSection>
-            <div>total cost: {secondPlayerTotalCost}</div>
             {/*<PenaltyTimerText className="text-white text-lg mt-5 font-bold">*/}
             {/*  Pick value: {secondPlayerTotalCost}*/}
             {/*</PenaltyTimerText>*/}
@@ -540,8 +533,12 @@ const CharacterCard = styled.div`
 `;
 
 const StyledPlayerBanAndPick = styled.div`
-  //display: flex;
-  //flex-direction: column;
+  position: absolute;
+
+  left: 59.5%;
+  top: 5%;
+
+  z-index: 1;
 `;
 
 const StyledCircleInput = styled(GlobalInput)`
@@ -560,5 +557,24 @@ const StyledCircleButton = styled(GlobalButton)`
     width: 30px;
     scale: 1.1;
     border: none;
+  }
+`;
+
+const StyledNextStageButton = styled(GlobalButton)`
+  position: absolute;
+
+  left: 45%;
+
+  width: 10%;
+
+  background-color: #c84a32;
+
+  &:hover {
+    width: 10%;
+    border: 1px solid #1c6ea4;
+    border-radius: 10px;
+    background-color: #31a8ff;
+    color: #000000;
+    transition-duration: 300ms;
   }
 `;

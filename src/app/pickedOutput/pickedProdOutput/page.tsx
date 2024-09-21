@@ -182,7 +182,8 @@ const StyledPickOutputContainer = styled.div`
   display: grid;
   grid-template-columns: 40% 40%;
   grid-gap: 13%;
-
+  grid-template-rows: auto;
+  height: 100vh;
   justify-content: center;
   align-items: center;
 
@@ -193,7 +194,8 @@ const StyledPickOutputContainer = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url(${backgroundImage.src});
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url(${backgroundImage.src});
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

@@ -24,6 +24,7 @@ export interface CharacterData {
 export interface LightConeData {
   id: string;
   name: string;
+  secondName: string;
   rarity: number;
   cost: number;
   icon: string;

@@ -44,23 +44,38 @@ export const Output = () => {
 
   const firstPlayer = data[0]?.firstPlayer || {};
   const secondPlayer = data[0]?.secondPlayer || {};
+  const thirdPlayer = data[0]?.thirdPlayer || {};
+  const fourthPlayer = data[0]?.fourthPlayer || {};
 
   return (
     <StyledUsersSection>
-      <FirstUser firstUserData={firstPlayer} secondUserData={secondPlayer} />
+      <FirstUser firstUserData={firstPlayer} secondUserData={thirdPlayer} />
       <VerticalIndicator currentPlayer={1} />
-      <SecondUser secondUserData={secondPlayer} firstUserData={firstPlayer} />
+      <SecondUser secondUserData={secondPlayer} firstUserData={fourthPlayer} />
+      <ScreenOverlay />
+
       {/*<VideoBackground src="/bg.mp4" autoPlay loop muted />*/}
     </StyledUsersSection>
   );
 };
+
+const ScreenOverlay = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 224px;
+  background: linear-gradient(to top, black, rgba(0, 0, 0, 0));
+  pointer-events: none;
+  z-index: 999;
+`;
 
 const StyledUsersSection = styled.section`
   display: grid;
   grid-template-columns: 40% 10% 40%;
   grid-gap: 20px;
 
-  align-items: center;
+  //align-items: center;
   justify-content: center;
 
   &::before {
@@ -70,7 +85,8 @@ const StyledUsersSection = styled.section`
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url(${backgroundImage.src});
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url(${backgroundImage.src});
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

@@ -79,8 +79,12 @@ export const LightConesCollection = () => {
       <ConesContainer>
         {coneFromDB &&
           coneFromDB
-            .filter((cone: LightConeData) =>
-              cone?.name?.toLowerCase().includes(coneName.toLowerCase()),
+            .filter(
+              (cone: LightConeData) =>
+                cone?.name?.toLowerCase().includes(coneName.toLowerCase()) ||
+                cone?.secondName
+                  ?.toLowerCase()
+                  .includes(coneName.toLowerCase()),
             )
             .map((coneData: LightConeData) => (
               <StyledConeCardContainer key={coneData.id}>

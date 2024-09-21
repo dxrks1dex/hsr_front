@@ -39,8 +39,21 @@ export const CharacterPlayerCard = ({
         characterRarity={character.rarity}
       >
         <RankWrapper>
-          <PlayerRank player={1}>{`E${secondPlayerRank}`}</PlayerRank>
-          <PlayerRank player={2}>{`E${fourthPlayerRank}`}</PlayerRank>
+          {/* Если ранг -1, отображаем пустую секцию для игрока */}
+          {secondPlayerRank !== -1 ? (
+            <PlayerRank player={1}>
+              <div>{`E${secondPlayerRank}`}</div>
+            </PlayerRank>
+          ) : (
+            <EmptyPlayerSection player={1} />
+          )}
+          {fourthPlayerRank !== -1 ? (
+            <PlayerRank player={2}>
+              <div>{`E${fourthPlayerRank}`}</div>
+            </PlayerRank>
+          ) : (
+            <EmptyPlayerSection player={2} />
+          )}
         </RankWrapper>
         <CharacterImage
           characterRarity={character.rarity}
@@ -72,8 +85,8 @@ export const CharactersDisplay = ({
     );
 
     const character = secondPlayerCharacter || fourthPlayerCharacter;
-    const secondPlayerRank = secondPlayerCharacter?.rank || 0;
-    const fourthPlayerRank = fourthPlayerCharacter?.rank || 0;
+    const secondPlayerRank = secondPlayerCharacter?.rank ?? -1;
+    const fourthPlayerRank = fourthPlayerCharacter?.rank ?? -1;
 
     return { character, secondPlayerRank, fourthPlayerRank };
   });
@@ -81,7 +94,11 @@ export const CharactersDisplay = ({
   return (
     <CharacterGrid>
       {combinedCharacters
-        .sort((a, b) => Number(b?.character?.id) - Number(a?.character?.id))
+        .sort((a, b) =>
+          (b.character?.element || "").localeCompare(
+            a.character?.element || "",
+          ),
+        )
         .map(({ character, secondPlayerRank, fourthPlayerRank }, index) => (
           <CharacterPlayerCard
             key={character?.id}
@@ -96,10 +113,35 @@ export const CharactersDisplay = ({
   );
 };
 
+const EmptyPlayerSection = styled.div<{ player: number }>`
+  background-color: ${({ player }) =>
+    player === 1 ? "rgba(0, 0, 0, 0.7)" : "white"};
+  width: 30px; /* Опционально: подбираешь ширину под свои нужды */
+  height: 18px; /* Опционально: подбираешь высоту */
+  border-radius: 3px;
+
+  opacity: 0;
+`;
+
 const CharacterGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
+
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  //height: 200px;
 `;
 
 const RankWrapper = styled.div`
@@ -111,26 +153,34 @@ const RankWrapper = styled.div`
   padding: 0 3px;
 
   z-index: 92;
+
+  font-weight: bold;
 `;
 
 const PlayerRank = styled.div<{ player: number }>`
   background-color: ${({ player }) =>
     player === 1 ? "rgba(0, 0, 0, 0.7)" : "white"};
   color: ${({ player }) => (player === 1 ? "white" : "rgba(0, 0, 0, 0.7)")};
-  font-size: 12px;
+  font-size: 14px;
   padding: 1px 4px;
   border-radius: 3px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const CharacterCard = styled.div<{
   index: number | undefined;
   characterRarity: number;
 }>`
-  border-top-right-radius: 10px;
+  border-top-right-radius: 20px;
   position: relative;
   display: flex;
   align-items: center;
   gap: 5px;
   background-image: url(${({ characterRarity }) =>
     characterRarity === 5 ? legendaryImage.src : epicImage.src});
+
+  z-index: 2;
 `;

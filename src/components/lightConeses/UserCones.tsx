@@ -167,8 +167,12 @@ export const UserCones = ({
               placeholder="Filter by name"
             />
             {data
-              .filter((cone: LightConeData) =>
-                cone.name.toLowerCase().includes(filter.toLowerCase()),
+              .filter(
+                (cone: LightConeData) =>
+                  cone.name.toLowerCase().includes(filter.toLowerCase()) ||
+                  cone?.secondName
+                    ?.toLowerCase()
+                    .includes(filter.toLowerCase()),
               )
               .map((coneData: LightConeData) => (
                 <StyledConeCard
