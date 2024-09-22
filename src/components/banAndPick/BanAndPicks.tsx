@@ -14,6 +14,7 @@ import { freeCharacter } from "@/common/freeCharacter";
 import { useFetchTimer } from "@/fetch/fetch";
 import { usePickTimer } from "@/utils/timer/pickTimer";
 import { useTimerContext } from "@/context/useTimerContext";
+import { white } from "next/dist/lib/picocolors";
 
 interface Props {
   charactersForFirstPlayer: CharacterData[];
@@ -79,34 +80,49 @@ export const BanAndPicks = ({
   const [pickNumber, setPickNumber] = useState(0);
   const [timer, setTimer] = useState(30);
   const [charactersArray, setCharactersArray] = useState<CharacterData[]>([]);
-
-  const {
-    data: timerData,
-    isLoading: isTimerLoading,
-    error: timerError,
-  } = useFetchTimer();
-
-  useEffect(() => {
-    if (timerData && !isTimerLoading) {
-      setPenaltyTimer(
-        timerData.penaltyTimer.minutes * 60 - timerData.penaltyTimer.seconds,
-      );
-    }
-  }, [timerData, isTimerLoading, setPenaltyTimer]);
-
-  const { totalTimer, currentTimer, timerReset } = usePickTimer({
-    timer,
-    setTimer,
-    isPickStarted: isPickOrBan,
-    penaltyTimer,
-    setPenaltyTimer,
-    timerData: timerData,
-  });
+  const [timerColor, setTimerColor] = useState("white");
 
   const {
     data: { mainTimer },
     operations: { setMainTimer },
   } = useTimerContext();
+
+  // const {
+  //   data: timerData,
+  //   isLoading: isTimerLoading,
+  //   error: timerError,
+  // } = useFetchTimer();
+
+  // useEffect(() => {
+  //   if (timerData && !isTimerLoading) {
+  //     setPenaltyTimer(
+  //       timerData.penaltyTimer.minutes * 60 - timerData.penaltyTimer.seconds,
+  //     );
+  //   }
+  // }, [timerData, isTimerLoading, setPenaltyTimer]);
+
+  useEffect(() => {
+    if (isPickOrBan) {
+      const pickTime = setInterval(() => {
+        setMainTimer((prevSeconds) => prevSeconds - 1);
+      }, 1000);
+
+      if (mainTimer === 0) {
+        clearInterval(pickTime);
+      }
+
+      return () => clearInterval(pickTime);
+    }
+  }, [isPickOrBan, setMainTimer, mainTimer]);
+
+  // const { totalTimer, currentTimer, timerReset } = usePickTimer({
+  //   timer,
+  //   setTimer,
+  //   isPickStarted: isPickOrBan,
+  //   penaltyTimer,
+  //   setPenaltyTimer,
+  //   timerData: timerData,
+  // });
 
   const findFirstPlayerCharacterById = (charId: string) => {
     return charactersForFirstPlayer.find(
@@ -181,6 +197,14 @@ export const BanAndPicks = ({
   const charactersIcons = Array.from({ length: 10 }, (_, i) =>
     charactersArray[i] ? charactersArray[i] : emptyIcon,
   );
+
+  useEffect(() => {
+    if (mainTimer <= 5) {
+      setTimerColor("#C84A32");
+    } else {
+      setTimerColor("white");
+    }
+  }, [mainTimer]);
 
   const onCharacterClick = ({
     charId,
@@ -312,7 +336,7 @@ export const BanAndPicks = ({
     }
   };
 
-  if (isTimerLoading) return <div>Timer loading...</div>;
+  // if (isTimerLoading) return <div>Timer loading...</div>;
 
   return (
     <StyledPickAndBanContainer currentPlayer={currentPlayerForStyle}>
@@ -368,10 +392,10 @@ export const BanAndPicks = ({
                 globalStage !== "pick" &&
                 (index === 0 ||
                   (index === 3 && bannedCharacters.length === 1)) ? (
-                <StyledDefaultPicksOrBans
+                <StyledAnimatedPicksOrBans
                   playerForStyle={currentPlayerForStyle}
                 >
-                  <div className="flex">
+                  <div className="flex mb-1">
                     <StyledTimerSection>
                       <svg
                         width="15"
@@ -384,22 +408,24 @@ export const BanAndPicks = ({
                           fill-rule="evenodd"
                           clip-rule="evenodd"
                           d="M14.9487 0.135254H0V1.80599H2.19824V6.2467C2.19824 8.55762 3.6717 10.5244 5.73038 11.2588C3.6717 11.9932 2.19824 13.96 2.19824 16.2709V19.8322V20.7118H0V22.3825H14.9487V20.7118H12.8382V19.8322V16.2709C12.8382 13.96 11.3648 11.9932 9.30608 11.2588C11.3648 10.5244 12.8382 8.55762 12.8382 6.2467V1.80599H14.9487V0.135254ZM3.78105 16.2709V19.8322H11.2554V16.2709C11.2554 14.2069 9.58222 12.5337 7.51823 12.5337C5.45424 12.5337 3.78105 14.2069 3.78105 16.2709Z"
-                          fill="white"
+                          fill={timerColor}
                         />
                       </svg>
-                      {totalTimer}
+                      <StyledTimerText timerColor={timerColor}>
+                        {mainTimer}
+                      </StyledTimerText>
                     </StyledTimerSection>
                   </div>
-                  <div>ban</div>
-                </StyledDefaultPicksOrBans>
+                  <div className="mb-1">ban</div>
+                </StyledAnimatedPicksOrBans>
               ) : currentPlayerForStyle === currentPlayer &&
                 currentStage === "pick" &&
                 globalStage === "pick" &&
                 index === pickedCharacters.length + bannedCharacters.length ? (
-                <StyledDefaultPicksOrBans
+                <StyledAnimatedPicksOrBans
                   playerForStyle={currentPlayerForStyle}
                 >
-                  <div className="flex">
+                  <div className="flex mb-1">
                     <StyledTimerSection>
                       <svg
                         width="15"
@@ -412,14 +438,16 @@ export const BanAndPicks = ({
                           fill-rule="evenodd"
                           clip-rule="evenodd"
                           d="M14.9487 0.135254H0V1.80599H2.19824V6.2467C2.19824 8.55762 3.6717 10.5244 5.73038 11.2588C3.6717 11.9932 2.19824 13.96 2.19824 16.2709V19.8322V20.7118H0V22.3825H14.9487V20.7118H12.8382V19.8322V16.2709C12.8382 13.96 11.3648 11.9932 9.30608 11.2588C11.3648 10.5244 12.8382 8.55762 12.8382 6.2467V1.80599H14.9487V0.135254ZM3.78105 16.2709V19.8322H11.2554V16.2709C11.2554 14.2069 9.58222 12.5337 7.51823 12.5337C5.45424 12.5337 3.78105 14.2069 3.78105 16.2709Z"
-                          fill="white"
+                          fill={timerColor}
                         />
                       </svg>
-                      {totalTimer}
+                      <StyledTimerText timerColor={timerColor}>
+                        {mainTimer}
+                      </StyledTimerText>
                     </StyledTimerSection>
                   </div>
-                  pick
-                </StyledDefaultPicksOrBans>
+                  <div className="mb-1">pick</div>
+                </StyledAnimatedPicksOrBans>
               ) : (
                 <StyledDefaultPicksOrBans
                   playerForStyle={currentPlayerForStyle}
@@ -501,6 +529,14 @@ export const BanAndPicks = ({
     </StyledPickAndBanContainer>
   );
 };
+const StyledTimerText = styled.div<{ timerColor: string }>`
+  font-size: 30px;
+
+  color: ${({ timerColor }) => timerColor};
+
+  padding-left: 5px;
+`;
+
 const StyledCharactersOperationSvg = styled.svg<{
   playerForStyle: number;
   stage: "pick" | "ban";
@@ -571,7 +607,7 @@ const StyledUserNickname = styled.div<{ playerForStyle: number }>`
 const pulseAnimation = keyframes`
   0% {
     transform: scale(0.95);
-    box-shadow: 0 0 0 0 #ffee28;
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6);
   }
 
   70% {
@@ -839,7 +875,7 @@ const StyledDefaultPicksOrBans = styled.div<{ playerForStyle: number }>`
   padding-right: 10px;
   padding-left: 10px;
 
-  font-size: 24px;
+  font-size: 25px;
 `;
 
 const StyledDefaultPicksOrBansForBan = styled.div`
@@ -861,8 +897,20 @@ const StyledDefaultPicksOrBansForBan = styled.div`
     var(--tw-backdrop-sepia);
 `;
 
+const rotate = keyframes`  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }`;
+
 const StyledAnimatedPicksOrBans = styled(StyledDefaultPicksOrBans)`
-  animation: ${pulseAnimation} 1.5s infinite ease-in-out;
+  border: 3px solid #e4dac3;
+
+  ::before {
+    animation: ${pulseAnimation} 1.5s infinite ease-in-out;
+  }
 `;
 
 const StyledAnimatedPicksOrBansForBan = styled(StyledDefaultPicksOrBansForBan)`

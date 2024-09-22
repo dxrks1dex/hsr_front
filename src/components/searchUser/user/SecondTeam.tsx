@@ -120,7 +120,7 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
   } = useFetchTimer();
 
   const { totalTimer, currentTimer, timerReset } = usePickTimer({
-    timer,
+    timer: mainTimer,
     setTimer,
     isPickStarted: isSecondPlayerBanOrPick,
     setPenaltyTimer,

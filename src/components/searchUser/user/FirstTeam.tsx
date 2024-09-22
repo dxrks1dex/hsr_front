@@ -134,7 +134,7 @@ export const FirstTeam = ({ firstUid, secondUid }: Props) => {
   }, [timerData, isTimerLoading]);
 
   const { totalTimer, currentTimer, timerReset } = usePickTimer({
-    timer,
+    timer: mainTimer,
     setTimer,
     isPickStarted: isFirstPlayerBanOrPick,
     penaltyTimer,
