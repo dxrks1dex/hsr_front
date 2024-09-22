@@ -8,6 +8,8 @@ import styled from "styled-components";
 import { FirstTeam } from "@/components/searchUser/user/FirstTeam";
 import { useUserDataContext } from "@/context/userDataContext";
 import { VerticalIndicator } from "@/components/VertecalArrow/VerticalIndicator";
+import { ChangeTimer } from "@/utils/timer/ChangeTimer";
+import React from "react";
 export const SearchUser = () => {
   const {
     data: { globalStage },
@@ -28,6 +30,8 @@ export const SearchUser = () => {
       <VerticalIndicator currentPlayer={currentPlayer} />
       <SecondTeam firstUid={user2Uid} secondUid={user4Uid} currentPlayer={2} />
       {/*<VideoBackground src="/bg.mp4" autoPlay loop muted />*/}
+      {/*  <ChangeTimer isPickStarted={isFirstPlayerBanOrPick} />*/}
+
       <ScreenOverlay />
     </StyledUsersSection>
   );

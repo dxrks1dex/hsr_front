@@ -51,7 +51,7 @@ export const MainPage = () => {
               team={1}
               type={"number"}
               placeholder={"Third Uid"}
-              onChange={(e) => setThirdUserUid(e.target.value)}
+              onChange={(e) => setSecondUserUid(e.target.value)}
               inputMode={"text"}
             />
           </StyledTeamInputContainer>
@@ -60,7 +60,7 @@ export const MainPage = () => {
               team={2}
               type={"number"}
               placeholder={"Second Uid"}
-              onChange={(e) => setSecondUserUid(e.target.value)}
+              onChange={(e) => setThirdUserUid(e.target.value)}
               inputMode={"text"}
             />
             <GlobalInput

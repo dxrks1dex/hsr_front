@@ -3,8 +3,6 @@ import { DATA_SOURCE_URL } from "@/fetch/api/DATA_SOURCE_URL";
 export const applyTimer = async (
   penaltyMinutes: number,
   penaltySeconds: number,
-  mainMinutes: number,
-  mainSeconds: number,
 ) => {
   try {
     const response = await fetch(`${DATA_SOURCE_URL}/timer/update`, {
@@ -16,10 +14,6 @@ export const applyTimer = async (
         penaltyTimer: {
           minutes: penaltyMinutes,
           seconds: penaltySeconds,
-        },
-        mainTimer: {
-          minutes: mainMinutes,
-          seconds: mainSeconds,
         },
       }),
     });

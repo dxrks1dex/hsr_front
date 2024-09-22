@@ -443,8 +443,6 @@ export const FirstTeam = ({ firstUid, secondUid }: Props) => {
             {/*<PenaltyTimerText className="text-white text-lg mt-5 font-bold">*/}
             {/*  Pick value: {secondPlayerTotalCost}*/}
             {/*</PenaltyTimerText>*/}
-
-            {/*<ChangeTimer isPickStarted={isFirstPlayerBanOrPick} />*/}
           </TimerSection>
 
           <TeamDisplay player={1}>

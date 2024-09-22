@@ -21,8 +21,8 @@ export const ChangeTimer = ({ isPickStarted }: Props) => {
 
   useEffect(() => {
     if (data && !isLoading) {
-      setMainMinutes(data.mainTimer.minutes);
-      setMainSeconds(data.mainTimer.seconds);
+      // setMainMinutes(data.mainTimer.minutes);
+      // setMainSeconds(data.mainTimer.seconds);
 
       setPenaltyMinutes(data.penaltyTimer.minutes);
       setPenaltySeconds(data.penaltyTimer.seconds);
@@ -81,7 +81,7 @@ export const ChangeTimer = ({ isPickStarted }: Props) => {
   };
 
   const handleUpdate = async () => {
-    await applyTimer(penaltyMinutes, penaltySeconds, mainMinutes, mainSeconds);
+    await applyTimer(penaltyMinutes, penaltySeconds);
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -89,13 +89,11 @@ export const ChangeTimer = ({ isPickStarted }: Props) => {
   return (
     <TimerSection>
       <PenaltyTimerText>
-        {String(mainMinutes).padStart(2, "0")}:
-        {String(mainSeconds).padStart(2, "0")}
         {String(penaltyMinutes).padStart(2, "0")}:
         {String(penaltySeconds).padStart(2, "0")}
       </PenaltyTimerText>
       <div>
-        <h2>Штрафной таймер</h2>
+        <h2>Penalty timer</h2>
         <input
           type="number"
           value={penaltyMinutes}
@@ -109,25 +107,22 @@ export const ChangeTimer = ({ isPickStarted }: Props) => {
           placeholder="Секунды"
         />
       </div>
-      <div>
-        <h2>Основной таймер</h2>
-        <input
-          type="number"
-          value={mainMinutes}
-          onChange={(e) => setMainMinutes(Number(e.target.value))}
-          placeholder="Минуты"
-        />
-        <input
-          type="number"
-          value={mainSeconds}
-          onChange={(e) => setMainSeconds(Number(e.target.value))}
-          placeholder="Секунды"
-        />
-      </div>
-      <button onClick={handleUpdate}>Обновить таймеры</button>
-      <button onClick={handleStart}>Старт</button>
-      <button onClick={handleStop}>Стоп</button>
-      <button onClick={handleReset}>Сброс</button>
+      {/*<div>*/}
+      {/*  <h2>Основной таймер</h2>*/}
+      {/*  <input*/}
+      {/*    type="number"*/}
+      {/*    value={mainMinutes}*/}
+      {/*    onChange={(e) => setMainMinutes(Number(e.target.value))}*/}
+      {/*    placeholder="Минуты"*/}
+      {/*  />*/}
+      {/*  <input*/}
+      {/*    type="number"*/}
+      {/*    value={mainSeconds}*/}
+      {/*    onChange={(e) => setMainSeconds(Number(e.target.value))}*/}
+      {/*    placeholder="Секунды"*/}
+      {/*  />*/}
+      {/*</div>*/}
+      <button onClick={handleUpdate}>Update timer</button>
     </TimerSection>
   );
 };
