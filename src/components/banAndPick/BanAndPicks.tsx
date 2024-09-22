@@ -908,9 +908,9 @@ const rotate = keyframes`  from {
 const StyledAnimatedPicksOrBans = styled(StyledDefaultPicksOrBans)`
   border: 3px solid #e4dac3;
 
-  ::before {
-    animation: ${pulseAnimation} 1.5s infinite ease-in-out;
-  }
+  //::before {
+  animation: ${pulseAnimation} 1.5s infinite ease-in-out;
+  //}
 `;
 
 const StyledAnimatedPicksOrBansForBan = styled(StyledDefaultPicksOrBansForBan)`

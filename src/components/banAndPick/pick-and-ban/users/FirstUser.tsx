@@ -41,6 +41,7 @@ import { useForProdContext } from "@/context/useForProdContext";
 import { createDataForProd } from "@/fetch/api/forProd";
 import { freeCharacter } from "@/common/freeCharacter";
 import { CharactersDisplay } from "@/components/characterGallery/CharacterPlayerCard";
+import { useTimerContext } from "@/context/useTimerContext";
 
 interface Props {
   firstUserData: {
@@ -65,9 +66,24 @@ interface Props {
     uid: string | null;
     nickname: string;
   };
+  secondTeamForResetTimer: {
+    characters: CharacterData[];
+    picked: CharacterData[];
+    banned: CharacterData[];
+    firstCircleCount: number;
+    secondCircleCount: number;
+    deathCount: number;
+    stage: "pick" | "ban" | null;
+    uid: string | null;
+    nickname: string;
+  };
 }
 
-export const FirstUser = ({ firstUserData, secondUserData }: Props) => {
+export const FirstUser = ({
+  firstUserData,
+  secondUserData,
+  secondTeamForResetTimer,
+}: Props) => {
   const [circlePenaltyColor, setCirclePenaltyColor] = useState("");
   const [stage, setStage] = useState<"ban" | "pick" | "ended">("ban");
 
@@ -83,6 +99,11 @@ export const FirstUser = ({ firstUserData, secondUserData }: Props) => {
       setGlobalStage,
     },
   } = useCharactersContext();
+
+  const {
+    data: { mainTimer },
+    operations: { resetMainTimer },
+  } = useTimerContext();
 
   const {
     operations: { setFirstPlayerNickname },
@@ -101,7 +122,6 @@ export const FirstUser = ({ firstUserData, secondUserData }: Props) => {
 
   useEffect(() => {
     if (timerData && !isTimerLoading) {
-      setTimer(timerData.mainTimer.minutes * 60 + timerData.mainTimer.seconds);
       setPenaltyTimer(
         timerData.penaltyTimer.minutes * 60 - timerData.penaltyTimer.seconds,
       );
@@ -109,7 +129,7 @@ export const FirstUser = ({ firstUserData, secondUserData }: Props) => {
   }, [timerData, isTimerLoading]);
 
   const { totalTimer, currentTimer, timerReset } = usePickTimer({
-    timer,
+    timer: mainTimer,
     setTimer,
     isPickStarted: isFirstPlayerBanOrPick,
     penaltyTimer,
@@ -127,23 +147,30 @@ export const FirstUser = ({ firstUserData, secondUserData }: Props) => {
 
   useEffect(() => {
     isTimerStart({
-      pickedCharactersSecondPlayer: secondUserData.picked,
-      bannedCharactersSecondPlayer: secondUserData.banned,
+      pickedCharactersSecondPlayer: secondTeamForResetTimer.picked,
+      bannedCharactersSecondPlayer: secondTeamForResetTimer.banned,
       bannedCharactersFirstPlayer: firstUserData.banned,
       pickedCharactersFirstPlayer: firstUserData.picked,
       startPickOrBanForFirstPlayer: firstPlayerPickOrBan,
       startPickOrBanForSecondPlayer: secondPlayerPickOrBan,
       setCurrentPlayer: setCurrentPlayer,
     });
-
-    timerReset();
   }, [
-    secondUserData,
     firstPlayerPickOrBan,
-    firstUserData,
+    firstUserData.banned,
+    firstUserData.picked,
     secondPlayerPickOrBan,
+    secondTeamForResetTimer.banned,
+    secondTeamForResetTimer.picked,
     setCurrentPlayer,
-    timerReset,
+  ]);
+
+  useEffect(() => {
+    resetMainTimer();
+  }, [
+    firstUserData.characters.length,
+    resetMainTimer,
+    secondTeamForResetTimer.characters.length,
   ]);
 
   useEffect(() => {
@@ -162,37 +189,6 @@ export const FirstUser = ({ firstUserData, secondUserData }: Props) => {
       playerPickedCharactersOrCones: firstUserData.picked,
     });
   }, [firstUserData.picked, setFirstPlayerTotalCost]);
-
-  useEffect(() => {
-    if (globalStage === "ended") {
-      if (firstPlayerTotalCost <= 30) {
-        setFirstPlayerCirclePenalty(
-          firstUserData.firstCircleCount +
-            firstUserData.secondCircleCount +
-            (firstPlayerTotalCost + firstUserData.deathCount - 30) / 6,
-        );
-        setCirclePenaltyColor("green");
-
-        console.log("first Player");
-      } else if (firstPlayerTotalCost > 30) {
-        setFirstPlayerCirclePenalty(
-          firstUserData.firstCircleCount +
-            firstUserData.secondCircleCount +
-            (firstPlayerTotalCost + firstUserData.deathCount - 30) / 4,
-        );
-        setCirclePenaltyColor("red");
-
-        console.log("first Player");
-      }
-    }
-  }, [
-    firstPlayerTotalCost,
-    firstUserData.deathCount,
-    firstUserData.firstCircleCount,
-    firstUserData.secondCircleCount,
-    globalStage,
-    setFirstPlayerCirclePenalty,
-  ]);
 
   useEffect(() => {
     if (
@@ -331,9 +327,11 @@ export const FirstUser = ({ firstUserData, secondUserData }: Props) => {
               fourthPlayerFilteredCharacters={secondUserData.characters}
             />
           </div>
+          <ScreenOverlay />
         </div>
         <StyledBanAndPickSection>
           <BanAndPicksForOutput
+            isPickOrBan={isFirstPlayerBanOrPick}
             mainTimer={timer}
             userNickname={dataFromDB.nickname}
             currentPlayerForStyle={1}
@@ -354,7 +352,7 @@ const StyledBanAndPickSection = styled.div`
   //left: 30%;
   //top: 5%;
 
-  margin-top: 4%;
+  margin-top: 10%;
 `;
 
 const StyledPlayerInputContainer = styled.div`
@@ -385,4 +383,15 @@ const StyledCircleButton = styled(GlobalButton)`
     scale: 1.1;
     border: none;
   }
+`;
+
+const ScreenOverlay = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 32%;
+  height: 224px;
+  background: linear-gradient(to top, black, rgba(0, 0, 0, 0));
+  pointer-events: none;
+  z-index: 999;
 `;

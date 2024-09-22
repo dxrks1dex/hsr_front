@@ -122,11 +122,22 @@ export const CharactersDisplay = ({
   return (
     <CharacterGrid>
       {combinedCharacters
-        .sort((a, b) =>
-          (b.character?.element || "").localeCompare(
-            a.character?.element || "",
-          ),
-        )
+        .sort((a, b) => {
+          const rarityA = a.character?.rarity ?? 0; // Если rank не определен, использовать 0
+          const rarityB = b.character?.rarity ?? 0;
+
+          const rankComparison = rarityB - rarityA;
+
+          if (rankComparison === 0) {
+            const elementA = a.character?.element ?? ""; // Если element не определен, использовать пустую строку
+            const elementB = b.character?.element ?? "";
+
+            return elementA.localeCompare(elementB);
+          }
+
+          return rankComparison;
+        })
+
         .map(
           (
             {

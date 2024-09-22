@@ -546,7 +546,7 @@ const StyledPlayerBanAndPick = styled.div`
   //
   //z-index: 1;
 
-  margin-top: 4%;
+  margin-top: 10%;
 
   //align-items: flex-start;
 `;

@@ -5,6 +5,7 @@ import {
   FC,
   ReactNode,
   SetStateAction,
+  useCallback,
   useContext,
   useMemo,
   useState,
@@ -27,9 +28,9 @@ export const TimerContextWrapper: FC<{ children: ReactNode }> = ({
 }) => {
   const [mainTimer, setMainTimer] = useState(30);
 
-  const resetMainTimer = () => {
+  const resetMainTimer = useCallback(() => {
     setMainTimer(30);
-  };
+  }, []);
 
   const context: ITimer = useMemo(
     () => ({

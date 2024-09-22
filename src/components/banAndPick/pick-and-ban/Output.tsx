@@ -49,26 +49,22 @@ export const Output = () => {
 
   return (
     <StyledUsersSection>
-      <FirstUser firstUserData={firstPlayer} secondUserData={thirdPlayer} />
+      <FirstUser
+        firstUserData={firstPlayer}
+        secondUserData={thirdPlayer}
+        secondTeamForResetTimer={secondPlayer}
+      />
       <VerticalIndicator currentPlayer={1} />
-      <SecondUser secondUserData={secondPlayer} firstUserData={fourthPlayer} />
-      <ScreenOverlay />
+      <SecondUser
+        secondUserData={fourthPlayer}
+        firstUserData={secondPlayer}
+        firstTeamForResetTimer={firstPlayer}
+      />
 
       {/*<VideoBackground src="/bg.mp4" autoPlay loop muted />*/}
     </StyledUsersSection>
   );
 };
-
-const ScreenOverlay = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 224px;
-  background: linear-gradient(to top, black, rgba(0, 0, 0, 0));
-  pointer-events: none;
-  z-index: 999;
-`;
 
 const StyledUsersSection = styled.section`
   display: grid;

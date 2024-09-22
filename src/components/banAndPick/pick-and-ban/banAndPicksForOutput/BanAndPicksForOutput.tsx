@@ -11,6 +11,7 @@ import {
 import styled, { keyframes } from "styled-components";
 import React, { useEffect, useState } from "react";
 import { freeCharacter } from "@/common/freeCharacter";
+import { useTimerContext } from "@/context/useTimerContext";
 
 interface Props {
   currentPlayer: number;
@@ -18,6 +19,7 @@ interface Props {
   globalStage: "ban" | "pick" | "ended" | null;
   currentPlayerForStyle: number;
   userNickname: string;
+  isPickOrBan: boolean;
   player: {
     characters: CharacterData[];
     picked: CharacterData[];
@@ -33,9 +35,15 @@ export const BanAndPicksForOutput = ({
   currentPlayer,
   userNickname,
   globalStage,
-  mainTimer,
+  isPickOrBan,
 }: Props) => {
   const [charactersArray, setCharactersArray] = useState<CharacterData[]>([]);
+  const [timerColor, setTimerColor] = useState("white");
+
+  const {
+    data: { mainTimer },
+    operations: { setMainTimer },
+  } = useTimerContext();
 
   const emptyIcon = {
     id: "empty",
@@ -43,6 +51,19 @@ export const BanAndPicksForOutput = ({
     rarity: "",
     icon: null,
   };
+  useEffect(() => {
+    if (isPickOrBan) {
+      const pickTime = setInterval(() => {
+        setMainTimer((prevSeconds) => prevSeconds - 1);
+      }, 1000);
+
+      if (mainTimer === 0) {
+        clearInterval(pickTime);
+      }
+
+      return () => clearInterval(pickTime);
+    }
+  }, [isPickOrBan, setMainTimer, mainTimer]);
 
   useEffect(() => {
     const mergedArray: CharacterData[] = [];
@@ -76,6 +97,14 @@ export const BanAndPicksForOutput = ({
     setCharactersArray(mergedArray);
   }, [player.picked, player.banned]);
 
+  useEffect(() => {
+    if (mainTimer <= 5) {
+      setTimerColor("#C84A32");
+    } else {
+      setTimerColor("white");
+    }
+  }, [mainTimer]);
+
   const bannedIcons = Array.from({ length: 2 }, (_, i) =>
     player.banned[i] ? player.banned[i] : emptyIcon,
   );
@@ -95,8 +124,8 @@ export const BanAndPicksForOutput = ({
             <div key={index}>
               {character.icon ? (
                 <StyledCharactersBanCard
-                  playerForStyle={currentPlayerForStyle}
                   index={index}
+                  playerForStyle={currentPlayerForStyle}
                 >
                   {/*<RankForPickedOrBannedCharacters2*/}
                   {/*  currentPlayer={currentPlayer}*/}
@@ -113,49 +142,62 @@ export const BanAndPicksForOutput = ({
               ) : currentPlayerForStyle !== currentPlayer &&
                 globalStage !== "pick" &&
                 (index === 0 || (index === 3 && player.banned.length === 1)) ? (
-                <StyledDefaultPicksOrBans
+                <StyledAnimatedPicksOrBans
                   playerForStyle={currentPlayerForStyle}
                 >
-                  <svg
-                    width="15"
-                    height="23"
-                    viewBox="0 0 15 23"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M14.9487 0.135254H0V1.80599H2.19824V6.2467C2.19824 8.55762 3.6717 10.5244 5.73038 11.2588C3.6717 11.9932 2.19824 13.96 2.19824 16.2709V19.8322V20.7118H0V22.3825H14.9487V20.7118H12.8382V19.8322V16.2709C12.8382 13.96 11.3648 11.9932 9.30608 11.2588C11.3648 10.5244 12.8382 8.55762 12.8382 6.2467V1.80599H14.9487V0.135254ZM3.78105 16.2709V19.8322H11.2554V16.2709C11.2554 14.2069 9.58222 12.5337 7.51823 12.5337C5.45424 12.5337 3.78105 14.2069 3.78105 16.2709Z"
-                      fill="white"
-                    />
-                  </svg>
-
-                  {currentPlayerForStyle !== currentPlayer && mainTimer}
-                </StyledDefaultPicksOrBans>
+                  <div className="flex mb-1">
+                    <StyledTimerSection>
+                      <svg
+                        width="15"
+                        height="23"
+                        viewBox="0 0 15 23"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M14.9487 0.135254H0V1.80599H2.19824V6.2467C2.19824 8.55762 3.6717 10.5244 5.73038 11.2588C3.6717 11.9932 2.19824 13.96 2.19824 16.2709V19.8322V20.7118H0V22.3825H14.9487V20.7118H12.8382V19.8322V16.2709C12.8382 13.96 11.3648 11.9932 9.30608 11.2588C11.3648 10.5244 12.8382 8.55762 12.8382 6.2467V1.80599H14.9487V0.135254ZM3.78105 16.2709V19.8322H11.2554V16.2709C11.2554 14.2069 9.58222 12.5337 7.51823 12.5337C5.45424 12.5337 3.78105 14.2069 3.78105 16.2709Z"
+                          fill={timerColor}
+                        />
+                      </svg>
+                      <StyledTimerText timerColor={timerColor}>
+                        {mainTimer}
+                      </StyledTimerText>
+                    </StyledTimerSection>
+                  </div>
+                  <div className="mb-1">ban</div>
+                </StyledAnimatedPicksOrBans>
               ) : currentPlayerForStyle === currentPlayer &&
                 currentStage === "pick" &&
                 globalStage === "pick" &&
                 index === player.picked.length + player.banned.length ? (
-                <StyledDefaultPicksOrBans
+                <StyledAnimatedPicksOrBans
                   playerForStyle={currentPlayerForStyle}
                 >
-                  <svg
-                    width="15"
-                    height="23"
-                    viewBox="0 0 15 23"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M14.9487 0.135254H0V1.80599H2.19824V6.2467C2.19824 8.55762 3.6717 10.5244 5.73038 11.2588C3.6717 11.9932 2.19824 13.96 2.19824 16.2709V19.8322V20.7118H0V22.3825H14.9487V20.7118H12.8382V19.8322V16.2709C12.8382 13.96 11.3648 11.9932 9.30608 11.2588C11.3648 10.5244 12.8382 8.55762 12.8382 6.2467V1.80599H14.9487V0.135254ZM3.78105 16.2709V19.8322H11.2554V16.2709C11.2554 14.2069 9.58222 12.5337 7.51823 12.5337C5.45424 12.5337 3.78105 14.2069 3.78105 16.2709Z"
-                      fill="white"
-                    />
-                  </svg>
-                  {currentPlayerForStyle === currentPlayer && mainTimer}
-                </StyledDefaultPicksOrBans>
+                  <div className="flex mb-1">
+                    <StyledTimerSection>
+                      <svg
+                        width="15"
+                        height="23"
+                        viewBox="0 0 15 23"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M14.9487 0.135254H0V1.80599H2.19824V6.2467C2.19824 8.55762 3.6717 10.5244 5.73038 11.2588C3.6717 11.9932 2.19824 13.96 2.19824 16.2709V19.8322V20.7118H0V22.3825H14.9487V20.7118H12.8382V19.8322V16.2709C12.8382 13.96 11.3648 11.9932 9.30608 11.2588C11.3648 10.5244 12.8382 8.55762 12.8382 6.2467V1.80599H14.9487V0.135254ZM3.78105 16.2709V19.8322H11.2554V16.2709C11.2554 14.2069 9.58222 12.5337 7.51823 12.5337C5.45424 12.5337 3.78105 14.2069 3.78105 16.2709Z"
+                          fill={timerColor}
+                        />
+                      </svg>
+                      <StyledTimerText timerColor={timerColor}>
+                        {mainTimer}
+                      </StyledTimerText>
+                    </StyledTimerSection>
+                  </div>
+                  <div className="mb-1">pick</div>
+                </StyledAnimatedPicksOrBans>
               ) : (
                 <StyledDefaultPicksOrBans
                   playerForStyle={currentPlayerForStyle}
@@ -170,6 +212,14 @@ export const BanAndPicksForOutput = ({
     </StyledPickAndBanContainer>
   );
 };
+
+const StyledTimerText = styled.div<{ timerColor: string }>`
+  font-size: 30px;
+
+  color: ${({ timerColor }) => timerColor};
+
+  padding-left: 5px;
+`;
 
 const StyledCharactersOperationSvg = styled.svg<{
   playerForStyle: number;
@@ -241,7 +291,7 @@ const StyledUserNickname = styled.div<{ playerForStyle: number }>`
 const pulseAnimation = keyframes`
   0% {
     transform: scale(0.95);
-    box-shadow: 0 0 0 0 #ffee28;
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6);
   }
 
   70% {
@@ -509,7 +559,7 @@ const StyledDefaultPicksOrBans = styled.div<{ playerForStyle: number }>`
   padding-right: 10px;
   padding-left: 10px;
 
-  font-size: 24px;
+  font-size: 25px;
 `;
 
 const StyledDefaultPicksOrBansForBan = styled.div`
@@ -531,8 +581,20 @@ const StyledDefaultPicksOrBansForBan = styled.div`
     var(--tw-backdrop-sepia);
 `;
 
+const rotate = keyframes`  from {
+                             transform: rotate(0);
+                           }
+
+                             to {
+                               transform: rotate(360deg);
+                             }`;
+
 const StyledAnimatedPicksOrBans = styled(StyledDefaultPicksOrBans)`
+  border: 3px solid #e4dac3;
+
+  //::before {
   animation: ${pulseAnimation} 1.5s infinite ease-in-out;
+  //}
 `;
 
 const StyledAnimatedPicksOrBansForBan = styled(StyledDefaultPicksOrBansForBan)`

@@ -5,6 +5,7 @@ import {
   FC,
   ReactNode,
   SetStateAction,
+  useCallback,
   useContext,
   useMemo,
   useState,
@@ -96,13 +97,13 @@ export const CharactersContextWrapper: FC<{ children: ReactNode }> = ({
     "ban" | "pick" | "ended" | null
   >(null);
 
-  const firstPlayerPickOrBan = (isStarted: boolean) => {
+  const firstPlayerPickOrBan = useCallback((isStarted: boolean) => {
     setIsFirstPlayerBanOrPick(isStarted);
-  };
+  }, []);
 
-  const secondPlayerPickOrBan = (isStarted: boolean) => {
+  const secondPlayerPickOrBan = useCallback((isStarted: boolean) => {
     setIsSecondPlayerBanOrPick(isStarted);
-  };
+  }, []);
 
   const context: ICharactersContext = useMemo(
     () => ({

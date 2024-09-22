@@ -77,7 +77,7 @@ export const UserCones = ({
   const onConesClicked = async (coneData: LightConeData) => {
     console.log("cone", coneData);
 
-    addLightCone({ coneRank: 1, coneData, setCharactersForUser, characterId });
+    addLightCone({ coneRank: 0, coneData, setCharactersForUser, characterId });
     setSelectedCone(coneData);
 
     setIsLightConesOpen(false);
@@ -128,7 +128,7 @@ export const UserCones = ({
               onClick={() => onConeRankClick()}
               currentPlayer={currentPlayer}
             >
-              S{characterCone.rank}
+              S{characterCone.rank + 1}
             </StyledConeRankContainer>
             <StyledCharacterCone
               playerForStyle={currentPlayer}
@@ -139,7 +139,7 @@ export const UserCones = ({
               {characterCone?.rank === 0
                 ? characterCone?.cost
                 : characterCone?.rankCost &&
-                  characterCone?.rankCost[characterRank - 1]}
+                  characterCone?.rankCost[characterCone?.rank]}
             </StyledConeCost>
           </StyledConeContainer>
         </div>

@@ -38,6 +38,7 @@ import { useForProdContext } from "@/context/useForProdContext";
 import { createDataForProd } from "@/fetch/api/forProd";
 import { freeCharacter } from "@/common/freeCharacter";
 import { CharactersDisplay } from "@/components/characterGallery/CharacterPlayerCard";
+import { useTimerContext } from "@/context/useTimerContext";
 
 interface Props {
   firstUserData: {
@@ -62,13 +63,33 @@ interface Props {
     uid: string | null;
     nickname: string;
   };
+  firstTeamForResetTimer: {
+    characters: CharacterData[];
+    picked: CharacterData[];
+    banned: CharacterData[];
+    firstCircleCount: number;
+    secondCircleCount: number;
+    deathCount: number;
+    stage: "pick" | "ban" | null;
+    uid: string | null;
+    nickname: string;
+  };
 }
-export const SecondUser = ({ secondUserData, firstUserData }: Props) => {
+export const SecondUser = ({
+  secondUserData,
+  firstUserData,
+  firstTeamForResetTimer,
+}: Props) => {
   const [circlePenaltyColor, setCirclePenaltyColor] = useState("");
   const [stage, setStage] = useState<"ban" | "pick" | "ended">("ban");
 
   const [timer, setTimer] = useState(30);
   const [penaltyTimer, setPenaltyTimer] = useState(120);
+
+  const {
+    data: { mainTimer },
+    operations: { resetMainTimer },
+  } = useTimerContext();
 
   const {
     data: { isSecondPlayerBanOrPick, secondPlayerTotalCost, globalStage },
@@ -110,7 +131,7 @@ export const SecondUser = ({ secondUserData, firstUserData }: Props) => {
   }, [timerData, isTimerLoading]);
 
   const { totalTimer, currentTimer, timerReset } = usePickTimer({
-    timer,
+    timer: mainTimer,
     setTimer,
     isPickStarted: isSecondPlayerBanOrPick,
     setPenaltyTimer,
@@ -129,42 +150,47 @@ export const SecondUser = ({ secondUserData, firstUserData }: Props) => {
   useEffect(() => {
     setGlobalStage(
       checkGlobalStage({
-        firstPlayerPickedCharacters: firstUserData.picked,
+        firstPlayerPickedCharacters: firstTeamForResetTimer.picked,
         secondPlayerPickedCharacters: secondUserData.picked,
         secondPlayerBannedCharacters: secondUserData.banned,
-        firstPlayerBannedCharacters: firstUserData.banned,
+        firstPlayerBannedCharacters: firstTeamForResetTimer.banned,
       }),
     );
   }, [
-    stage,
-    setGlobalStage,
-    firstUserData.picked,
-    firstUserData.banned,
-    secondUserData.picked,
+    firstTeamForResetTimer.banned,
+    firstTeamForResetTimer.picked,
     secondUserData.banned,
+    secondUserData.picked,
+    setGlobalStage,
+    stage,
   ]);
 
   useEffect(() => {
     isTimerStart({
       pickedCharactersSecondPlayer: secondUserData.picked,
       bannedCharactersSecondPlayer: secondUserData.banned,
-      bannedCharactersFirstPlayer: firstUserData.banned,
-      pickedCharactersFirstPlayer: firstUserData.picked,
+      bannedCharactersFirstPlayer: firstTeamForResetTimer.banned,
+      pickedCharactersFirstPlayer: firstTeamForResetTimer.picked,
       startPickOrBanForSecondPlayer: secondPlayerPickOrBan,
       startPickOrBanForFirstPlayer: firstPlayerPickOrBan,
       setCurrentPlayer: setCurrentPlayer,
     });
-
-    timerReset();
   }, [
     firstPlayerPickOrBan,
-    firstUserData.banned,
-    firstUserData.picked,
+    firstTeamForResetTimer.banned,
+    firstTeamForResetTimer.picked,
     secondPlayerPickOrBan,
     secondUserData.banned,
     secondUserData.picked,
     setCurrentPlayer,
-    timerReset,
+  ]);
+
+  useEffect(() => {
+    resetMainTimer();
+  }, [
+    firstUserData.characters.length,
+    resetMainTimer,
+    firstTeamForResetTimer.characters.length,
   ]);
 
   useEffect(() => {
@@ -179,37 +205,6 @@ export const SecondUser = ({ secondUserData, firstUserData }: Props) => {
       playerPickedCharactersOrCones: secondUserData.picked,
     });
   }, [secondUserData.picked, setSecondPlayerTotalCost]);
-
-  useEffect(() => {
-    if (globalStage === "ended") {
-      if (secondPlayerTotalCost <= 30) {
-        setSecondPlayerCirclePenalty(
-          secondUserData.firstCircleCount +
-            secondUserData.secondCircleCount +
-            (secondPlayerTotalCost + secondUserData.deathCount - 30) / 6,
-        );
-        setCirclePenaltyColor("green");
-
-        console.log("first Player");
-      } else if (secondPlayerTotalCost > 30) {
-        setSecondPlayerCirclePenalty(
-          secondUserData.firstCircleCount +
-            secondUserData.secondCircleCount +
-            (secondPlayerTotalCost + secondUserData.deathCount - 30) / 4,
-        );
-        setCirclePenaltyColor("red");
-
-        console.log("first Player");
-      }
-    }
-  }, [
-    globalStage,
-    secondPlayerTotalCost,
-    secondUserData.deathCount,
-    secondUserData.firstCircleCount,
-    secondUserData.secondCircleCount,
-    setSecondPlayerCirclePenalty,
-  ]);
 
   useEffect(() => {
     if (
@@ -309,9 +304,11 @@ export const SecondUser = ({ secondUserData, firstUserData }: Props) => {
               fourthPlayerFilteredCharacters={secondUserData.characters}
             />
           </div>
+          <ScreenOverlay />
         </div>
         <StyledPlayerBanAndPick>
           <BanAndPicksForOutput
+            isPickOrBan={isSecondPlayerBanOrPick}
             mainTimer={timer}
             userNickname={dataFromDB.nickname}
             currentPlayer={currentPlayer}
@@ -334,7 +331,7 @@ const StyledPlayerBanAndPick = styled.div`
   //
   //z-index: 1;
 
-  margin-top: 4%;
+  margin-top: 10%;
 `;
 
 const StyledCircleInput = styled(GlobalInput)`
@@ -354,4 +351,15 @@ const StyledCircleButton = styled(GlobalButton)`
     scale: 1.1;
     border: none;
   }
+`;
+
+const ScreenOverlay = styled.div`
+  position: fixed;
+  bottom: 0;
+  //left: 0;
+  width: 40%;
+  height: 224px;
+  background: linear-gradient(to top, black, rgba(0, 0, 0, 0));
+  pointer-events: none;
+  z-index: 999;
 `;

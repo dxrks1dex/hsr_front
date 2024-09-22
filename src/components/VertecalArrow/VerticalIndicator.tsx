@@ -1071,5 +1071,5 @@ const LineDiv = styled.div`
   //justify-self: center;
   //justify-content: center;
 
-  margin-top: 22%;
+  margin-top: 45%;
 `;

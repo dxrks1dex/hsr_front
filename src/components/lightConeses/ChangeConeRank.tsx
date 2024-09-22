@@ -27,7 +27,7 @@ export const ChangeConeRank = ({
       <StyledSlider
         type="range"
         min="0"
-        max={`${isCone ? 5 : 6}`}
+        max={`${isCone ? 4 : 6}`}
         value={coneRank}
         onChange={(e) => onRankChange(Number(e.target.value))}
       />
@@ -37,7 +37,7 @@ export const ChangeConeRank = ({
         ))}
       </LabelsContainer>
       <ButtonContainer>
-        <Button onClick={() => onRankChoose()}>Cancel</Button>
+        <Button onClick={() => setIsConeChangeRankOpen(false)}>Cancel</Button>
         <Button onClick={() => onRankChoose()}>Confirm</Button>
       </ButtonContainer>
     </SliderContainer>

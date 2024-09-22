@@ -595,7 +595,7 @@ const StyledBanAndPickSection = styled.div`
   //left: 30%;
   //top: 5%;
 
-  margin-top: 4%;
+  margin-top: 10%;
 `;
 
 const StyledCircleInput = styled(GlobalInput)`

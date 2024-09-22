@@ -170,7 +170,7 @@ export const FinalStageOutput = ({
                   {currentPlayerForStyle === 1 && character.lightCone?.id && (
                     <StyledCharacterConeContainer>
                       <StyledRankForCone currentPlayer={currentPlayer}>
-                        {character.lightCone.rank}
+                        S{character.lightCone.rank + 1}
                       </StyledRankForCone>
                       <StyledCharacterCone
                         playerForStyle={currentPlayerForStyle}
@@ -180,7 +180,9 @@ export const FinalStageOutput = ({
                         {character.lightCone?.rank === 0
                           ? character.lightCone?.cost
                           : character.lightCone?.rankCost &&
-                            character.lightCone?.rankCost[character.rank - 1]}
+                            character.lightCone?.rankCost[
+                              character.lightCone.rank
+                            ]}
                       </StyledConeCost>
                     </StyledCharacterConeContainer>
                   )}
@@ -220,7 +222,7 @@ export const FinalStageOutput = ({
                   {currentPlayerForStyle === 2 && character.lightCone?.id && (
                     <StyledCharacterConeContainer>
                       <StyledRankForCone currentPlayer={currentPlayer}>
-                        {character.lightCone.rank}
+                        S{character.lightCone.rank + 1}
                       </StyledRankForCone>
                       <StyledCharacterCone
                         playerForStyle={currentPlayerForStyle}
@@ -230,7 +232,9 @@ export const FinalStageOutput = ({
                         {character.lightCone?.rank === 0
                           ? character.lightCone?.cost
                           : character.lightCone?.rankCost &&
-                            character.lightCone?.rankCost[character.rank - 1]}
+                            character.lightCone?.rankCost[
+                              character.lightCone.rank
+                            ]}
                       </StyledConeCost>
                     </StyledCharacterConeContainer>
                   )}
@@ -326,7 +330,7 @@ const StyledCharactersCard = styled(CharactersCard)<{
 //     currentPlayer === 1 ? "translate(15%, -200%)" : "translate(10%, -200%)"};
 const StyledCharacterCost = styled(CharacterCost)<{ currentPlayer: number }>`
   font-size: 20px;
-  transform: translate(15%, -200%);
+  transform: translate(15%, -190%);
 
   display: flex;
   flex-direction: ${({ currentPlayer }) =>
@@ -336,7 +340,7 @@ const StyledCharacterCost = styled(CharacterCost)<{ currentPlayer: number }>`
   align-items: ${({ currentPlayer }) =>
     currentPlayer === 1 ? "flex-start" : "flex-end"};
 
-  max-width: 42px;
+  width: 42px;
 
   background-color: #000000;
   padding: 2px;
@@ -558,7 +562,7 @@ const RankForPickedOrBannedCharacters = styled(RankForCharacters)<{
   //margin-top: 3.9%;
   //margin-left: 0;
 
-  transform: translate(300%, 100%);
+  transform: translate(290%, 90%);
 
   font-size: 20px;
 
@@ -671,15 +675,17 @@ const StyledAnimatedPicksOrBans2 = styled(StyledDefaultPicksOrBans2)`
 `;
 
 const StyledRankForCone = styled(RankForPickedOrBannedCharacters)`
-  transform: translate(370%, 90%);
+  transform: translate(290%, 90%);
 
-  font-size: 18px;
+  font-size: 16px;
 
-  width: 24px;
+  width: 28px;
 `;
 
 const StyledConeCost = styled(StyledCharacterCost)`
-  transform: translate(40%, -190%);
+  transform: translate(10%, -200%);
 
-  font-size: 18px;
+  font-size: 16px;
+
+  width: 34px;
 `;
