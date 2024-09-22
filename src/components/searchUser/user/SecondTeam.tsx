@@ -416,10 +416,12 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
       <div className="HUMAN flex flex-row-reverse justify-between">
         <div>
           <TimerSection>
-            <div>total cost: {secondPlayerTotalCost}</div>
+            <div className="self-end mb-1.5">
+              total cost: {secondPlayerTotalCost}
+            </div>
 
             <TimerSection>
-              <div>reserve time</div>
+              <div className="self-end mb-1.5 mr-1.5">reserve time</div>
 
               <svg
                 width="15"

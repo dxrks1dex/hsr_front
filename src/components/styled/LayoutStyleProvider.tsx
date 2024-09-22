@@ -7,7 +7,7 @@ export const LayoutStyleProvider = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <LayoutStyle className={"seb body"}>
+    <LayoutStyle>
       <GlobalStyle />
       {children}
     </LayoutStyle>
@@ -20,14 +20,23 @@ const LayoutStyle = styled.body`
   background-color: #c48353;
 `;
 const GlobalStyle = createGlobalStyle`
-  @font-face {
-    font-family: "prodfont";
-    src: url("/SDK_SC_Web.ttf") format("truetype");
+  //@font-face {
+  //  font-family: "prodfont";
+  //  src: url("/SDK_SC_Web.ttf") format("truetype");
+  //}
+
+  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700&display=swap');
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
-  
-  body{
-    font-family: "Montserrat", sans-serif
-  };
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background-color: #f9f9f9;
+  }
   
   //div{
   //  font-family: "prodfont", sans-serif;

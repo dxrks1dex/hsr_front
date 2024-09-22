@@ -434,10 +434,12 @@ export const FirstTeam = ({ firstUid, secondUid }: Props) => {
                   fill="white"
                 />
               </svg>
-              <MainTimerTextStyle>{totalTimer}</MainTimerTextStyle>{" "}
-              <div>reserve time</div>
+              <MainTimerTextStyle>{totalTimer}</MainTimerTextStyle>
+              <div className="self-end mb-1.5 ml-1.5">reserve time</div>
             </TimerSection>
-            <div>total cost: {firstPlayerTotalCost}</div>
+            <div className="self-end mb-1.5">
+              total cost: {firstPlayerTotalCost}
+            </div>
             {/*<PenaltyTimerText className="text-white text-lg mt-5 font-bold">*/}
             {/*  Pick value: {secondPlayerTotalCost}*/}
             {/*</PenaltyTimerText>*/}
