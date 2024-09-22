@@ -162,7 +162,7 @@ export const FinalStageOutput = ({
         </StyledTextContainer>
         <PickSection currentPlayer={currentPlayerForStyle}>
           {charactersIcons.map((character, index) => (
-            <div key={index}>
+            <StyledCharacterContainer key={index}>
               {character.icon && (
                 <StyledCharacterAndConeSection
                   currentPlayerForStyled={currentPlayerForStyle}
@@ -240,13 +240,17 @@ export const FinalStageOutput = ({
                   )}
                 </StyledCharacterAndConeSection>
               )}
-            </div>
+            </StyledCharacterContainer>
           ))}
         </PickSection>
       </BanAndPickContainer>
     </StyledPickAndBanContainer>
   );
 };
+
+const StyledCharacterContainer = styled.div`
+  margin-bottom: 3%;
+`;
 
 const StyledFlexStart = styled.div<{ currentPlayerForStyle: number }>`
   display: flex;
@@ -291,8 +295,10 @@ const StyledVariable = styled.div`
 
 const StyledPickText = styled.div`
   font-size: 32px;
-  font-weight: 500;
+  font-weight: 400;
   opacity: 80%;
+
+  margin-bottom: -10px;
 `;
 
 const StyledPickCost = styled.div`
@@ -330,7 +336,8 @@ const StyledCharactersCard = styled(CharactersCard)<{
 //     currentPlayer === 1 ? "translate(15%, -200%)" : "translate(10%, -200%)"};
 const StyledCharacterCost = styled(CharacterCost)<{ currentPlayer: number }>`
   font-size: 20px;
-  transform: translate(15%, -190%);
+  transform: ${({ currentPlayer }) =>
+    currentPlayer === 1 ? "translate(15%, -190%)" : "translate(215%, -190%)"};
 
   display: flex;
   flex-direction: ${({ currentPlayer }) =>
@@ -562,7 +569,8 @@ const RankForPickedOrBannedCharacters = styled(RankForCharacters)<{
   //margin-top: 3.9%;
   //margin-left: 0;
 
-  transform: translate(290%, 90%);
+  transform: ${({ currentPlayer }) =>
+    currentPlayer === 1 ? "translate(290%, 90%)" : "translate(20%, 90%)"};
 
   font-size: 20px;
 
@@ -674,8 +682,11 @@ const StyledAnimatedPicksOrBans2 = styled(StyledDefaultPicksOrBans2)`
   animation: ${pulseAnimation} 1.5s infinite ease-in-out;
 `;
 
-const StyledRankForCone = styled(RankForPickedOrBannedCharacters)`
-  transform: translate(290%, 90%);
+const StyledRankForCone = styled(RankForPickedOrBannedCharacters)<{
+  currentPlayer: number;
+}>`
+  transform: ${({ currentPlayer }) =>
+    currentPlayer === 1 ? "translate(15%, 90%)" : "translate(290%, 90%)"};
 
   font-size: 16px;
 
@@ -683,7 +694,8 @@ const StyledRankForCone = styled(RankForPickedOrBannedCharacters)`
 `;
 
 const StyledConeCost = styled(StyledCharacterCost)`
-  transform: translate(10%, -200%);
+  transform: ${({ currentPlayer }) =>
+    currentPlayer === 1 ? "translate(230%, -200%)" : "translate(10%, -200%)"};
 
   font-size: 16px;
 

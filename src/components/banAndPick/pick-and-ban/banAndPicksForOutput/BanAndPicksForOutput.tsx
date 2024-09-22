@@ -133,11 +133,28 @@ export const BanAndPicksForOutput = ({
                   {/*  {character.rank}*/}
                   {/*</RankForPickedOrBannedCharacters2>*/}
                   <StyledPickedOrBannedCharacter
+                    index={index}
                     playerForStyle={currentPlayerForStyle}
                     characterRarity={character.rarity}
                     src={`${ICON_DEFAULT_URL}/${character.icon}`}
                     onError={(e) => (e.currentTarget.src = freeCharacter.icon)}
                   />
+                  <StyledCharacterOperationContainer
+                    playerForStyle={currentPlayerForStyle}
+                  >
+                    <svg
+                      width="21"
+                      height="42"
+                      viewBox="0 0 21 42"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M21 0C9.40202 0 0 9.40202 0 21C0 32.598 9.40202 42 21 42V0Z"
+                        fill={`${index === 0 || index === 3 ? "#E31D1D" : "#18FFCB"}`}
+                      />
+                    </svg>
+                  </StyledCharacterOperationContainer>
                 </StyledCharactersBanCard>
               ) : currentPlayerForStyle !== currentPlayer &&
                 globalStage !== "pick" &&
@@ -212,6 +229,16 @@ export const BanAndPicksForOutput = ({
     </StyledPickAndBanContainer>
   );
 };
+
+const StyledCharacterOperationContainer = styled.div<{
+  playerForStyle: number;
+}>`
+  position: absolute;
+  transform: ${({ playerForStyle }) =>
+    playerForStyle === 2 ? "scaleX(-1)" : "none"};
+  //top: 0;
+  margin-left: ${({ playerForStyle }) => (playerForStyle === 1 ? "8%" : "-8%")};
+`;
 
 const StyledTimerText = styled.div<{ timerColor: string }>`
   font-size: 30px;
@@ -328,9 +355,6 @@ const StyledCharactersBanCard = styled(CharacterCard)<{
     playerForStyle === 1 && "10px"};
   border-top-right-radius: ${({ playerForStyle }) =>
     playerForStyle === 2 && "10px"};
-
-  filter: ${({ index }) =>
-    index === 0 || index === 3 ? "grayscale(100%)" : "none"};
 
   svg {
     filter: none;
@@ -495,6 +519,7 @@ const BanSection = styled.div<{ currentPlayer: number }>`
 const StyledPickedOrBannedCharacter = styled(CharacterImage)<{
   playerForStyle: number;
   characterRarity: number;
+  index: number;
 }>`
   height: 79px;
   width: 158px;
@@ -513,6 +538,9 @@ const StyledPickedOrBannedCharacter = styled(CharacterImage)<{
     playerForStyle === 2 ? "20px" : "0xpx"};
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
+
+  filter: ${({ index }) =>
+    index === 0 || index === 3 ? "grayscale(100%)" : "none"};
 
   box-shadow:
     rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,

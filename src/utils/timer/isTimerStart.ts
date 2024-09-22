@@ -35,107 +35,16 @@ export const isTimerStart = ({
     return;
   }
 
-  // switch (true) {
-  //   case pickedCharactersSecondPlayer.length === 8:
-  //     startPickOrBanForSecondPlayer(false);
-  //     startPickOrBanForFirstPlayer(false);
-  //     setCurrentPlayer(1);
-  //     break;
-  //
-  //   case pickedCharactersFirstPlayer.length === 8:
-  //     startPickOrBanForSecondPlayer(true);
-  //     startPickOrBanForFirstPlayer(false);
-  //     setCurrentPlayer(2);
-  //     break;
-  //
-  //   case pickedCharactersSecondPlayer.length === 7:
-  //     startPickOrBanForSecondPlayer(false);
-  //     startPickOrBanForFirstPlayer(true);
-  //     setCurrentPlayer(1);
-  //     break;
-  //
-  //   case pickedCharactersFirstPlayer.length === 6:
-  //     startPickOrBanForSecondPlayer(true);
-  //     startPickOrBanForFirstPlayer(false);
-  //     setCurrentPlayer(2);
-  //     break;
-  //
-  //   case pickedCharactersSecondPlayer.length === 5:
-  //     startPickOrBanForSecondPlayer(false);
-  //     startPickOrBanForFirstPlayer(true);
-  //     setCurrentPlayer(1);
-  //     break;
-  //
-  //   case pickedCharactersFirstPlayer.length === 4:
-  //     startPickOrBanForSecondPlayer(true);
-  //     startPickOrBanForFirstPlayer(false);
-  //     setCurrentPlayer(2);
-  //     break;
-  //
-  //   case pickedCharactersSecondPlayer.length === 3:
-  //     startPickOrBanForSecondPlayer(false);
-  //     startPickOrBanForFirstPlayer(true);
-  //     console.log("7 IF");
-  //     setCurrentPlayer(1);
-  //     break;
-  //
-  //   case bannedCharactersSecondPlayer.length === 2:
-  //     startPickOrBanForSecondPlayer(true);
-  //     startPickOrBanForFirstPlayer(false);
-  //     console.log("6 IF");
-  //     setCurrentPlayer(2);
-  //     break;
-  //
-  //   case bannedCharactersFirstPlayer.length === 2:
-  //     startPickOrBanForSecondPlayer(false);
-  //     startPickOrBanForFirstPlayer(true);
-  //     console.log("5 IF");
-  //     setCurrentPlayer(1);
-  //     break;
-  //
-  //   case pickedCharactersSecondPlayer.length === 2:
-  //     startPickOrBanForSecondPlayer(false);
-  //     startPickOrBanForFirstPlayer(true);
-  //     console.log("4 IF");
-  //     setCurrentPlayer(1);
-  //     break;
-  //
-  //   case pickedCharactersFirstPlayer.length === 1:
-  //     startPickOrBanForSecondPlayer(true);
-  //     startPickOrBanForFirstPlayer(false);
-  //     console.log("3 IF");
-  //     setCurrentPlayer(2);
-  //     break;
-  //
-  //   case bannedCharactersFirstPlayer.length === 1 &&
-  //     pickedCharactersFirstPlayer.length < 1:
-  //     startPickOrBanForSecondPlayer(false);
-  //     startPickOrBanForFirstPlayer(true);
-  //     console.log("2 IF");
-  //     setCurrentPlayer(1);
-  //     break;
-  //
-  //   case bannedCharactersSecondPlayer.length === 1 &&
-  //     pickedCharactersFirstPlayer.length === 0:
-  //     startPickOrBanForSecondPlayer(true);
-  //     startPickOrBanForFirstPlayer(false);
-  //     console.log("1 IF");
-  //     setCurrentPlayer(2);
-  //     break;
-  //
-  //   default:
-  //     console.log("No matching case found.");
-  //     break;
-  // }
+  if (
+    bannedCharactersSecondPlayer.length === 0 &&
+    bannedCharactersFirstPlayer.length === 0
+  ) {
+    startPickOrBanForSecondPlayer(false);
+    startPickOrBanForFirstPlayer(false);
+    console.log("0 IF");
 
-  // if (bannedCharactersSecondPlayer.length === 0 &&
-  //     bannedCharactersFirstPlayer.length === 0) {
-  //   startPickOrBanForSecondPlayer(true);
-  //   startPickOrBanForFirstPlayer(false);
-  //   console.log("0 IF");
-  //
-  //   setCurrentPlayer(2);
-  // }
+    setCurrentPlayer(2);
+  }
 
   if (
     bannedCharactersSecondPlayer.length === 1 &&

@@ -1048,9 +1048,21 @@ export function VerticalIndicator({
         </svg>
       </SVGContainer>
       <TextForVision>Элементов в массиве: {items.length}/20</TextForVision>
+      <ScreenOverlay />
     </LineDiv>
   );
 }
+
+const ScreenOverlay = styled.div`
+  position: fixed;
+  bottom: 0;
+  //left: 0;
+  width: 36.1%;
+  height: 50px;
+  background: linear-gradient(to top, black, rgba(0, 0, 0, 0));
+  pointer-events: none;
+  z-index: 980;
+`;
 
 const TextForVision = styled.div`
   opacity: 0%;
