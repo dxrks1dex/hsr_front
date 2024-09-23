@@ -284,17 +284,31 @@ const StyledCharacterImageContainer = styled.div<{
   align-items: center;
   justify-content: center;
 
-  // background-color: {(props) =>
-  //   props.characterRarity === 4
-  //     ? "rgba(128, 0, 128, 0.25)"
-  //     : "rgba(207,181,59, 0.25)"};
-  //
-  //border-top-left-radius: 8px;
-  //border-top-right-radius: 8px;
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to left, #483d2b, rgba(0, 0, 0, 0) 55%);
+    pointer-events: none; /* Чтобы затемнение не перекрывало интерактивность */
+    z-index: 89;
+    filter: blur(0px);
+  }
 
-  // box-shadow: 0px 0px 5px 2px
-  //   {(props) =>
-  //     props.characterRarity === 4 ? "#54458560" : "rgba(207,181,59, 0.25)"};
+  &::before {
+    left: 0;
+    background: linear-gradient(to right, #483d2b, rgba(0, 0, 0, 0) 55%);
+
+    filter: blur(0px);
+  }
+
+  &::after {
+    right: 0;
+    background: linear-gradient(to left, #483d2b rgba(0, 0, 0, 0) 75%);
+    filter: blur(0px);
+  }
 `;
 
 const StyledTimerText = styled.div<{ timerColor: string }>`
@@ -582,7 +596,7 @@ const StyledPickedOrBannedCharacter = styled(CharacterImage)<{
   index: number;
 }>`
   height: 110px;
-  width: 100%;
+  width: 132px;
 
   //--tw-backdrop-blur: blur(12px);
   //backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness)
@@ -600,6 +614,9 @@ const StyledPickedOrBannedCharacter = styled(CharacterImage)<{
 
   filter: ${({ index }) =>
     index === 0 || index === 3 ? "grayscale(100%)" : "none"};
+
+  object-fit: cover;
+  object-position: top;
 `;
 
 const StyledTimerSection = styled.div`
