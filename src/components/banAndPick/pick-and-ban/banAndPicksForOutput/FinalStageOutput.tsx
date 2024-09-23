@@ -145,13 +145,9 @@ export const FinalStageOutput = ({
   return (
     <StyledPickAndBanContainer currentPlayer={currentPlayerForStyle}>
       <StyledUserNickname playerForStyle={currentPlayerForStyle}>
-        <StyledFirstNickname>
-          {firstUserNickname.toUpperCase()}
-        </StyledFirstNickname>
+        <StyledFirstNickname>{firstUserNickname}</StyledFirstNickname>
         <PlusSection>+</PlusSection>
-        <StyledSecondNickname>
-          {secondUserNickname.toUpperCase()}
-        </StyledSecondNickname>
+        <StyledSecondNickname>{secondUserNickname}</StyledSecondNickname>
       </StyledUserNickname>
       <BanAndPickContainer currentPlayer={currentPlayerForStyle}>
         <StyledTextContainer currentPlayerForStyle={currentPlayerForStyle}>

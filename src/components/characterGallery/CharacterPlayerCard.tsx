@@ -260,8 +260,9 @@ const RankWrapper = styled.div`
 
 const PlayerRank = styled.div<{ player: number }>`
   background-color: ${({ player }) =>
-    player === 1 ? "rgba(0, 0, 0, 0.7)" : "white"};
-  color: ${({ player }) => (player === 1 ? "white" : "rgba(0, 0, 0, 0.7)")};
+    player === 1 ? "rgba(0, 0, 0, 255)" : "rgba(255, 255, 255, 255)"};
+  color: ${({ player }) =>
+    player === 1 ? "rgba(255, 255, 255, 255)" : "rgba(0, 0, 0, 255)"};
   font-size: 14px;
   padding: 1px 4px;
   border-radius: 3px;
