@@ -133,7 +133,7 @@ export const FinalStageOutput = ({
     const loadImages = async () => {
       const srcPromises = charactersArray.map((character) =>
         convertPngToJpg(
-          `${ICON_DEFAULT_URL}/image/light_cone_portrait/${character.lightCone?.id}.png`,
+          `https://github.com/dxrks1dex/cone_prev/tree/main/conePictures/${character.lightCone?.id}.jpg`,
         ),
       );
       const images = await Promise.all(srcPromises);
@@ -192,8 +192,9 @@ export const FinalStageOutput = ({
                       </StyledRankForCone>
                       <StyledCharacterCone
                         playerForStyle={currentPlayerForStyle}
-                        src={`${ICON_DEFAULT_URL}/image/light_cone_portrait/${character.lightCone?.id}.png`}
+                        src={`https://raw.githubusercontent.com/dxrks1dex/cone_prev/main/conePictures/${character.lightCone?.id}.jpg`}
                       />
+
                       <StyledConeCost currentPlayer={currentPlayerForStyle}>
                         {character.lightCone?.rank === 0
                           ? character.lightCone?.cost
@@ -244,8 +245,9 @@ export const FinalStageOutput = ({
                       </StyledRankForCone>
                       <StyledCharacterCone
                         playerForStyle={currentPlayerForStyle}
-                        src={`${ICON_DEFAULT_URL}/image/light_cone_portrait/${character.lightCone?.id}.png`}
+                        src={`https://raw.githubusercontent.com/dxrks1dex/cone_prev/main/conePictures/${character.lightCone?.id}.jpg`}
                       />
+
                       <StyledConeCost currentPlayer={currentPlayerForStyle}>
                         {character.lightCone?.rank === 0
                           ? character.lightCone?.cost
@@ -286,26 +288,38 @@ const StyledCharacterImageContainer = styled.div<{
   align-items: center;
   justify-content: center;
 
-  &::before {
+  &::before,
+  &::after {
     content: "";
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
+    width: 50%;
     height: 100%;
-
     background: linear-gradient(
       to right,
       ${({ playerForStyle }) => (playerForStyle === 1 ? "#31a8ff" : "#c84a32")},
-      rgba(0, 0, 0, 0) 35%,
-      rgba(0, 0, 0, 0) 75%,
-      ${({ playerForStyle }) => (playerForStyle === 1 ? "#31a8ff" : "#c84a32")}
+      rgba(0, 0, 0, 0) 75%
     );
-
     pointer-events: none; /* Чтобы затемнение не перекрывало интерактивность */
-
     z-index: 89;
+    filter: blur(0px);
   }
+
+  &::before {
+    left: 0;
+    filter: blur(0px);
+  }
+
+  &::after {
+    right: 0;
+    background: linear-gradient(
+      to left,
+      ${({ playerForStyle }) => (playerForStyle === 1 ? "#31a8ff" : "#c84a32")},
+      rgba(0, 0, 0, 0) 75%
+    );
+    filter: blur(0px);
+  }
+
   // background-color: {(props) =>
   //   props.characterRarity === 4
   //     ? "rgba(128, 0, 128, 0.25)"
@@ -508,7 +522,7 @@ const StyledCharacterCone = styled(ConesForCharacters)<{
   //box-shadow: 0 5px 45px rgba(0, 0, 150, 0.1);
 
   object-fit: cover;
-  object-position: top;
+  //object-position: top;
 `;
 
 const roundAnimation = keyframes`

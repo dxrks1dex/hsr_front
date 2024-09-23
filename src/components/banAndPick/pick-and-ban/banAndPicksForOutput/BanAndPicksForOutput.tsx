@@ -135,13 +135,20 @@ export const BanAndPicksForOutput = ({
                   {/*>*/}
                   {/*  {character.rank}*/}
                   {/*</RankForPickedOrBannedCharacters2>*/}
-                  <StyledPickedOrBannedCharacter
-                    index={index}
+                  <StyledCharacterImageContainer
                     playerForStyle={currentPlayerForStyle}
-                    characterRarity={character.rarity}
-                    src={`${ICON_DEFAULT_URL}/${character.icon}`}
-                    onError={(e) => (e.currentTarget.src = freeCharacter.icon)}
-                  />
+                    index={index}
+                  >
+                    <StyledPickedOrBannedCharacter
+                      index={index}
+                      playerForStyle={currentPlayerForStyle}
+                      characterRarity={character.rarity}
+                      src={`${ICON_DEFAULT_URL}/${character.icon}`}
+                      onError={(e) =>
+                        (e.currentTarget.src = freeCharacter.icon)
+                      }
+                    />
+                  </StyledCharacterImageContainer>
                   <StyledCharacterOperationContainer
                     playerForStyle={currentPlayerForStyle}
                   >
@@ -243,6 +250,51 @@ const StyledCharacterOperationContainer = styled.div<{
     playerForStyle === 2 ? "scaleX(-1)" : "none"};
   //top: 0;
   margin-left: ${({ playerForStyle }) => (playerForStyle === 1 ? "8%" : "-8%")};
+`;
+
+const StyledCharacterImageContainer = styled.div<{
+  playerForStyle: number;
+  index: number;
+}>`
+  height: 79px;
+  width: 158px;
+  border: 3px solid white;
+
+  --tw-backdrop-blur: blur(12px);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness)
+    var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale)
+    var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert)
+    var(--tw-backdrop-opacity) var(--tw-backdrop-saturate)
+    var(--tw-backdrop-sepia);
+
+  border-top-left-radius: ${({ playerForStyle }) =>
+    playerForStyle === 1 ? "20px" : "0px"};
+  border-top-right-radius: ${({ playerForStyle }) =>
+    playerForStyle === 2 ? "20px" : "0xpx"};
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+    rgba(0, 0, 0, 0.9) 0px 18px 36px -18px inset;
+
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // background-color: {(props) =>
+  //   props.characterRarity === 4
+  //     ? "rgba(128, 0, 128, 0.25)"
+  //     : "rgba(207,181,59, 0.25)"};
+  //
+  //border-top-left-radius: 8px;
+  //border-top-right-radius: 8px;
+
+  // box-shadow: 0px 0px 5px 2px
+  //   {(props) =>
+  //     props.characterRarity === 4 ? "#54458560" : "rgba(207,181,59, 0.25)"};
 `;
 
 const StyledTimerText = styled.div<{ timerColor: string }>`
@@ -529,16 +581,15 @@ const StyledPickedOrBannedCharacter = styled(CharacterImage)<{
   characterRarity: number;
   index: number;
 }>`
-  height: 79px;
-  width: 158px;
-  border: 3px solid white;
+  height: 110px;
+  width: 100%;
 
-  --tw-backdrop-blur: blur(12px);
-  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness)
-    var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale)
-    var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert)
-    var(--tw-backdrop-opacity) var(--tw-backdrop-saturate)
-    var(--tw-backdrop-sepia);
+  //--tw-backdrop-blur: blur(12px);
+  //backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness)
+  //  var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale)
+  //  var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert)
+  //  var(--tw-backdrop-opacity) var(--tw-backdrop-saturate)
+  //  var(--tw-backdrop-sepia);
 
   border-top-left-radius: ${({ playerForStyle }) =>
     playerForStyle === 1 ? "20px" : "0px"};
@@ -549,10 +600,6 @@ const StyledPickedOrBannedCharacter = styled(CharacterImage)<{
 
   filter: ${({ index }) =>
     index === 0 || index === 3 ? "grayscale(100%)" : "none"};
-
-  box-shadow:
-    rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
-    rgba(0, 0, 0, 0.9) 0px 18px 36px -18px inset;
 `;
 
 const StyledTimerSection = styled.div`
