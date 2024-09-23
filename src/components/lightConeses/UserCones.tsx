@@ -67,12 +67,12 @@ export const UserCones = ({
     if (characterCone) setConeRank(characterCone?.rank);
   }, [characterCone]);
 
-  useEffect(() => {
-    if (selectedCone) {
-      updateDataForPlayers();
-      setIsLightConesOpen(false);
-    }
-  }, [selectedCone, updateDataForPlayers]);
+  // useEffect(() => {
+  //   if (selectedCone) {
+  //     updateDataForPlayers();
+  //     setIsLightConesOpen(false);
+  //   }
+  // }, [selectedCone, updateDataForPlayers]);
 
   const onConesClicked = async (coneData: LightConeData) => {
     console.log("cone", coneData);
