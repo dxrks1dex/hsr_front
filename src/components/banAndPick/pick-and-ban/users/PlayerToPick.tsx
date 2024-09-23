@@ -1,7 +1,7 @@
 import { CharacterData } from "@/types/interface";
 import { useFetchUserData } from "@/fetch/fetch";
 import { CharacterCard } from "@/components/characters/CharacterCard";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import {
   createPickOrBansForFirstUser,
@@ -124,7 +124,7 @@ export const PlayerToPick = ({
     }
   }, [playerTotalCost, firstCircleCount, secondCircleCount, deathCount]);
 
-  const updateDataForPlayers = async () => {
+  const updateDataForPlayers = useCallback(async () => {
     const playerData = {
       picked: filteredCharacters,
       uid: uid,
@@ -164,7 +164,17 @@ export const PlayerToPick = ({
         console.error("Failed to update picks and bans on the server:", error);
       }
     }
-  };
+  }, [
+    banned,
+    deathCount,
+    filteredCharacters,
+    firstCircleCount,
+    firstPlayerNickname,
+    player,
+    queryClient,
+    secondCircleCount,
+    uid,
+  ]);
 
   if (isLoading) {
     return <div>Loading...</div>;

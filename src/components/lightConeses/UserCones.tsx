@@ -24,10 +24,12 @@ import { charactersData } from "@/fetch/api/data/characterIdData";
 import {
   CharacterCost,
   ConesForCharacters,
+  GlobalButton,
   RankForCharacters,
 } from "@/styles/userStyles";
 import { ChangeConeRank } from "@/components/lightConeses/ChangeConeRank";
 import { addLightCone } from "@/components/lightConeses/addLightCone";
+import { deleteLightCone } from "@/components/lightConeses/deleteLightCone";
 
 interface Props {
   characterId: string;
@@ -67,12 +69,12 @@ export const UserCones = ({
     if (characterCone) setConeRank(characterCone?.rank);
   }, [characterCone]);
 
-  // useEffect(() => {
-  //   if (selectedCone) {
-  //     updateDataForPlayers();
-  //     setIsLightConesOpen(false);
-  //   }
-  // }, [selectedCone, updateDataForPlayers]);
+  useEffect(() => {
+    if (selectedCone) {
+      updateDataForPlayers();
+      setIsLightConesOpen(false);
+    }
+  }, [selectedCone, updateDataForPlayers]);
 
   const onConesClicked = async (coneData: LightConeData) => {
     console.log("cone", coneData);
@@ -102,6 +104,10 @@ export const UserCones = ({
 
       setSelectedCone(characterCone);
     }
+  };
+
+  const onConeDelete = () => {
+    deleteLightCone({ characterId, setCharactersForUser });
   };
 
   const onRankChange = (value: number) => {
@@ -161,6 +167,9 @@ export const UserCones = ({
             className="bg-slate-700 p-2 text-white rounded-md flex flex-col absolute left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-y-auto"
             ref={wrapperRef}
           >
+            <StyledConeDeleteButton onClick={() => onConeDelete()}>
+              Delete
+            </StyledConeDeleteButton>
             <input
               className="px-3 py-1 bg-gray-600 text-white rounded-md mb-5"
               value={filter}
@@ -195,6 +204,18 @@ export const UserCones = ({
     </div>
   );
 };
+
+const StyledConeDeleteButton = styled(GlobalButton)`
+  background-color: #c84a32;
+
+  margin-bottom: 5px;
+  width: 50%;
+
+  &:hover {
+    width: 100%;
+    background-color: #ff4f3b;
+  }
+`;
 
 const StyledCharacterCone = styled(ConesForCharacters)<{
   playerForStyle: number;
