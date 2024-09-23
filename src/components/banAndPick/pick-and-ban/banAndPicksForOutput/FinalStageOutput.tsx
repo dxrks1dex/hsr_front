@@ -15,6 +15,7 @@ import React, { useEffect, useState } from "react";
 import { freeCharacter } from "@/common/freeCharacter";
 import { VerticalIndicator } from "@/components/VertecalArrow/VerticalIndicator";
 import { calculateCost } from "@/utils/cost/calculateCost";
+import { convertPngToJpg } from "@/utils/convertPngToJpg";
 
 interface Props {
   currentPlayer: number;
@@ -44,6 +45,8 @@ export const FinalStageOutput = ({
   const [firstCircleCount, setFirstCircleCount] = useState(0);
   const [secondCircleCount, setSecondCircleCount] = useState(0);
   const [deathCount, setDeathCountCount] = useState(0);
+
+  const [imageSrcs, setImageSrcs] = useState<string[]>([]);
 
   const [charactersArray, setCharactersArray] = useState<CharacterData[]>([]);
 
@@ -104,7 +107,8 @@ export const FinalStageOutput = ({
       setPenaltyCircles(
         player.firstCircleCount +
           player.secondCircleCount +
-          (playerTotalCost + player.deathCount - 30) / 6,
+          (playerTotalCost - 30) / 6 +
+          player.deathCount / 2,
       );
 
       console.log("first Player");
@@ -112,7 +116,8 @@ export const FinalStageOutput = ({
       setPenaltyCircles(
         player.firstCircleCount +
           player.secondCircleCount +
-          (playerTotalCost + player.deathCount - 30) / 4,
+          (playerTotalCost - 30) / 4 +
+          player.deathCount / 2,
       );
 
       console.log("first Player");
@@ -123,6 +128,19 @@ export const FinalStageOutput = ({
     player.secondCircleCount,
     player.deathCount,
   ]);
+
+  useEffect(() => {
+    const loadImages = async () => {
+      const srcPromises = charactersArray.map((character) =>
+        convertPngToJpg(
+          `${ICON_DEFAULT_URL}/image/light_cone_portrait/${character.lightCone?.id}.png`,
+        ),
+      );
+      const images = await Promise.all(srcPromises);
+      setImageSrcs(images);
+    };
+    loadImages();
+  }, [charactersArray]);
 
   return (
     <StyledPickAndBanContainer currentPlayer={currentPlayerForStyle}>
@@ -151,7 +169,7 @@ export const FinalStageOutput = ({
               <StyledPickCost>{player.secondCircleCount}</StyledPickCost>
             </div>
             <div>
-              <StyledPickText>deaths</StyledPickText>
+              <StyledPickText>overtime</StyledPickText>
               <StyledPickCost>{player.deathCount}</StyledPickCost>
             </div>
           </StyledVariable>
@@ -186,10 +204,7 @@ export const FinalStageOutput = ({
                       </StyledConeCost>
                     </StyledCharacterConeContainer>
                   )}
-                  <StyledCharactersCard
-                    playerForStyle={currentPlayerForStyle}
-                    index={index}
-                  >
+                  <StyledCharactersCard playerForStyle={currentPlayerForStyle}>
                     <div>
                       {index === 0 || index === 3 ? null : (
                         <RankForPickedOrBannedCharacters
@@ -198,16 +213,19 @@ export const FinalStageOutput = ({
                           E{character.rank}
                         </RankForPickedOrBannedCharacters>
                       )}
-
-                      <StyledCharacterCard
+                      <StyledCharacterImageContainer
                         playerForStyle={currentPlayerForStyle}
                         characterRarity={character.rarity}
-                        src={`${ICON_DEFAULT_URL}/${character.icon}`}
-                        onError={(e) =>
-                          (e.currentTarget.src = freeCharacter.icon)
-                        }
-                      />
-
+                      >
+                        <StyledCharacterCard
+                          index={index}
+                          playerForStyle={currentPlayerForStyle}
+                          src={`${ICON_DEFAULT_URL}/${character.icon}`}
+                          onError={(e) =>
+                            (e.currentTarget.src = freeCharacter.icon)
+                          }
+                        />
+                      </StyledCharacterImageContainer>
                       {index === 0 || index === 3 ? null : (
                         <StyledCharacterCost
                           currentPlayer={currentPlayerForStyle}
@@ -247,6 +265,60 @@ export const FinalStageOutput = ({
     </StyledPickAndBanContainer>
   );
 };
+
+const StyledCharacterImageContainer = styled.div<{
+  playerForStyle: number;
+  characterRarity: number;
+}>`
+  width: 139px;
+  height: 70px;
+
+  border-top-left-radius: ${({ playerForStyle }) =>
+    playerForStyle === 2 && "10px"};
+  border-top-right-radius: ${({ playerForStyle }) =>
+    playerForStyle === 1 && "10px"};
+
+  border: 2px solid #fff;
+
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: linear-gradient(
+      to right,
+      ${({ playerForStyle }) => (playerForStyle === 1 ? "#31a8ff" : "#c84a32")},
+      rgba(0, 0, 0, 0) 35%,
+      rgba(0, 0, 0, 0) 75%,
+      ${({ playerForStyle }) => (playerForStyle === 1 ? "#31a8ff" : "#c84a32")}
+    );
+
+    pointer-events: none; /* Чтобы затемнение не перекрывало интерактивность */
+
+    z-index: 89;
+  }
+  // background-color: {(props) =>
+  //   props.characterRarity === 4
+  //     ? "rgba(128, 0, 128, 0.25)"
+  //     : "rgba(207,181,59, 0.25)"};
+  backdrop-filter: blur(12px);
+  //
+  //border-top-left-radius: 8px;
+  //border-top-right-radius: 8px;
+
+  // box-shadow: 0px 0px 5px 2px
+  //   {(props) =>
+  //     props.characterRarity === 4 ? "#54458560" : "rgba(207,181,59, 0.25)"};
+`;
 
 const StyledCharacterContainer = styled.div`
   margin-bottom: 3%;
@@ -320,13 +392,9 @@ const StyledPickResult = styled.div`
 
 const StyledCharactersCard = styled(CharactersCard)<{
   playerForStyle: number;
-  index: number;
 }>`
   display: flex;
   justify-content: space-between;
-
-  filter: ${({ index }) =>
-    index === 0 || index === 3 ? "grayscale(100%)" : "none"};
 
   svg {
     filter: none;
@@ -438,6 +506,9 @@ const StyledCharacterCone = styled(ConesForCharacters)<{
   //border-bottom-right-radius: 5px;
 
   //box-shadow: 0 5px 45px rgba(0, 0, 150, 0.1);
+
+  object-fit: cover;
+  object-position: top;
 `;
 
 const roundAnimation = keyframes`
@@ -481,17 +552,16 @@ const StyledCharactersBanCard = styled(CharacterCard)`
 
 const StyledCharacterCard = styled.img<{
   playerForStyle: number;
-  characterRarity: number;
+  index: number;
 }>`
-  width: 139px;
-  height: 70px;
+  width: 116px;
+  height: 98px;
+  //width: 100%;
 
-  border-top-left-radius: ${({ playerForStyle }) =>
-    playerForStyle === 2 && "10px"};
-  border-top-right-radius: ${({ playerForStyle }) =>
-    playerForStyle === 1 && "10px"};
+  border: none;
 
-  border: 2px solid #fff;
+  filter: ${({ index }) =>
+    index === 0 || index === 3 ? "grayscale(100%)" : "none"};
 
   // background-color: {(props) =>
   //   props.characterRarity === 4

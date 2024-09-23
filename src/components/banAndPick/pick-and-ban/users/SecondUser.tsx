@@ -306,7 +306,6 @@ export const SecondUser = ({
               fourthPlayerFilteredCharacters={secondUserData.characters}
             />
           </div>
-          <ScreenOverlay />
         </div>
         <StyledPlayerBanAndPick>
           <BanAndPicksForOutput

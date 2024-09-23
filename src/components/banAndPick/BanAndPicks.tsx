@@ -81,6 +81,7 @@ export const BanAndPicks = ({
   const [timer, setTimer] = useState(30);
   const [charactersArray, setCharactersArray] = useState<CharacterData[]>([]);
   const [timerColor, setTimerColor] = useState("white");
+  const [pulseColor, setPulseColor] = useState("#e4dac3");
 
   const {
     data: { mainTimer },
@@ -201,8 +202,10 @@ export const BanAndPicks = ({
   useEffect(() => {
     if (mainTimer <= 5) {
       setTimerColor("#C84A32");
+      setPulseColor("#C84A32");
     } else {
       setTimerColor("white");
+      setPulseColor("#e4dac3");
     }
   }, [mainTimer]);
 
@@ -410,6 +413,7 @@ export const BanAndPicks = ({
                 (index === 0 ||
                   (index === 3 && bannedCharacters.length === 1)) ? (
                 <StyledAnimatedPicksOrBans
+                  colour={pulseColor}
                   playerForStyle={currentPlayerForStyle}
                 >
                   <div className="flex mb-1">
@@ -440,6 +444,7 @@ export const BanAndPicks = ({
                 globalStage === "pick" &&
                 index === pickedCharacters.length + bannedCharacters.length ? (
                 <StyledAnimatedPicksOrBans
+                  colour={pulseColor}
                   playerForStyle={currentPlayerForStyle}
                 >
                   <div className="flex mb-1">
@@ -632,12 +637,12 @@ const StyledUserNickname = styled.div<{ playerForStyle: number }>`
     props.playerForStyle === 1 ? "translateX(-160%)" : "translateX(100%)"};
 `;
 
-const pulseAnimation = keyframes`
+const pulseAnimation = (colour: string) => keyframes`
   0% {
     transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 0 0 ${colour};
   }
-
+//rgba(255, 255, 255, 0.6)
   70% {
     transform: scale(1);
     box-shadow: 0 0 0 10px rgba(116, 255, 118, 0);
@@ -649,14 +654,14 @@ const pulseAnimation = keyframes`
   }
 `;
 
-const StyledArrowAnimateContainer = styled.div`
-  background-color: #acafff;
-  height: 10px;
-
-  width: 50px;
-
-  animation: ${pulseAnimation} 1.5s infinite ease-in-out;
-`;
+// const StyledArrowAnimateContainer = styled.div`
+//   background-color: #acafff;
+//   height: 10px;
+//
+//   width: 50px;
+//
+//   animation: ${pulseAnimation} 1.5s infinite ease-in-out;
+// `;
 
 const StyledCharactersBanCard = styled(CharacterCard)<{
   playerForStyle: number;
@@ -937,14 +942,16 @@ const rotate = keyframes`  from {
     transform: rotate(360deg);
   }`;
 
-const StyledAnimatedPicksOrBans = styled(StyledDefaultPicksOrBans)`
-  border: 3px solid #e4dac3;
+const StyledAnimatedPicksOrBans = styled(StyledDefaultPicksOrBans)<{
+  colour: string;
+}>`
+  border: 3px solid ${({ colour }) => colour};
 
-  //::before {
-  animation: ${pulseAnimation} 1.5s infinite ease-in-out;
+  //::before {#e4dac3
+  animation: ${({ colour }) => pulseAnimation(colour)} 1.5s infinite ease-in-out;
   //}
 `;
-
-const StyledAnimatedPicksOrBansForBan = styled(StyledDefaultPicksOrBansForBan)`
-  animation: ${pulseAnimation} 1.5s infinite ease-in-out;
-`;
+//
+// const StyledAnimatedPicksOrBansForBan = styled(StyledDefaultPicksOrBansForBan)`
+//   animation: ${pulseAnimation} 1.5s infinite ease-in-out;
+// `;

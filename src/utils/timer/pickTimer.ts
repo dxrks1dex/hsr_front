@@ -50,18 +50,25 @@ export const usePickTimer = ({
         setPenaltyTimer((prevSeconds) => prevSeconds - 1);
       }, 1000);
 
-      if (penaltyTimer === 0) {
-        clearInterval(totalTimer);
-      }
+      // if (penaltyTimer === 0) {
+      //   clearInterval(totalTimer);
+      // }
 
       return () => clearInterval(totalTimer);
     }
   }, [isPickStarted, timer, penaltyTimer, setPenaltyTimer]);
 
   const formatTime = (time: number) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    const isNegative = time < 0;
+    const absoluteTime = Math.abs(time);
+    const minutes = Math.floor(absoluteTime / 60);
+    const seconds = absoluteTime % 60;
+
+    const formattedMinutes = isNegative ? `-${minutes}` : minutes;
+
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+
+    return `${formattedMinutes}:${formattedSeconds}`;
   };
 
   return {

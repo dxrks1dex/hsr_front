@@ -1048,7 +1048,6 @@ export function VerticalIndicator({
         </svg>
       </SVGContainer>
       <TextForVision>Элементов в массиве: {items.length}/20</TextForVision>
-      <ScreenOverlay />
     </LineDiv>
   );
 }

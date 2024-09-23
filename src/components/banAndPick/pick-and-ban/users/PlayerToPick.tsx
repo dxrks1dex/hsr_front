@@ -107,7 +107,8 @@ export const PlayerToPick = ({
       setPenaltyCircles(
         firstCircleCount +
           secondCircleCount +
-          (playerTotalCost + deathCount - 30) / 6,
+          (playerTotalCost - 30) / 6 +
+          deathCount / 2,
       );
 
       console.log("first Player");
@@ -115,7 +116,8 @@ export const PlayerToPick = ({
       setPenaltyCircles(
         firstCircleCount +
           secondCircleCount +
-          (playerTotalCost + deathCount - 30) / 4,
+          (playerTotalCost - 30) / 4 +
+          deathCount / 2,
       );
 
       console.log("first Player");
@@ -224,11 +226,11 @@ export const PlayerToPick = ({
               </StyledInputSection>
             </div>
             <div>
-              <StyledPickText>deaths</StyledPickText>
+              <StyledPickText>overtime</StyledPickText>
               <StyledInputSection currentPlayerForStyle={player}>
                 <StyledPickCost>{deathCount}</StyledPickCost>
                 <div>
-                  <p className="text-white/55 text-[9px]">Death count:</p>
+                  <p className="text-white/55 text-[9px]">Overtime:</p>
                   <PlayerInput
                     type={"number"}
                     onChange={(e) => setDeathCountCount(Number(e.target.value))}

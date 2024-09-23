@@ -61,6 +61,17 @@ export const isTimerStart = ({
     bannedCharactersFirstPlayer.length === 1 &&
     pickedCharactersFirstPlayer.length < 1
   ) {
+    startPickOrBanForSecondPlayer(true);
+    startPickOrBanForFirstPlayer(false);
+
+    console.log("2 IF - picked L: ", pickedCharactersFirstPlayer.length);
+    setCurrentPlayer(1);
+  }
+
+  if (
+    bannedCharactersFirstPlayer.length === 1 &&
+    bannedCharactersSecondPlayer.length === 1
+  ) {
     startPickOrBanForSecondPlayer(false);
     startPickOrBanForFirstPlayer(true);
 
@@ -92,11 +103,14 @@ export const isTimerStart = ({
     setCurrentPlayer(1);
   }
 
-  // if (pickedCharactersFirstPlayer.length === 2) {
-  //   startPickOrBanForSecondPlayer(true);
-  //   startPickOrBanForFirstPlayer(false);
-  //   setCurrentPlayer(2);
-  // }
+  if (
+    pickedCharactersFirstPlayer.length === 2 &&
+    pickedCharactersSecondPlayer.length === 2
+  ) {
+    startPickOrBanForSecondPlayer(true);
+    startPickOrBanForFirstPlayer(false);
+    setCurrentPlayer(1);
+  }
 
   if (bannedCharactersFirstPlayer.length === 2) {
     startPickOrBanForSecondPlayer(false);
@@ -107,6 +121,17 @@ export const isTimerStart = ({
   }
 
   if (bannedCharactersSecondPlayer.length === 2) {
+    startPickOrBanForSecondPlayer(false);
+    startPickOrBanForFirstPlayer(true);
+    console.log("6 IF");
+
+    setCurrentPlayer(2);
+  }
+
+  if (
+    bannedCharactersSecondPlayer.length === 2 &&
+    bannedCharactersFirstPlayer.length === 2
+  ) {
     startPickOrBanForSecondPlayer(true);
     startPickOrBanForFirstPlayer(false);
     console.log("6 IF");

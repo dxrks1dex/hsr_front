@@ -11,7 +11,7 @@ import {
   subscribeOnPickAndBanUpdates,
   unsubscribeFromUpdates,
 } from "@/fetch/api/update/update";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useFetchPickAndBans } from "@/fetch/fetch";
 import { VerticalIndicator } from "@/components/VertecalArrow/VerticalIndicator";
 
@@ -62,9 +62,21 @@ export const Output = () => {
       />
 
       {/*<VideoBackground src="/bg.mp4" autoPlay loop muted />*/}
+      <ScreenOverlay />
     </StyledUsersSection>
   );
 };
+
+const ScreenOverlay = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 224px;
+  background: linear-gradient(to top, black, rgba(0, 0, 0, 0));
+  pointer-events: none;
+  z-index: 999;
+`;
 
 const StyledUsersSection = styled.section`
   display: grid;
