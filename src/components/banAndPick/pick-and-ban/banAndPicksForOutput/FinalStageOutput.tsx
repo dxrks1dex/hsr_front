@@ -351,7 +351,7 @@ const StyledCharacterAndConeSection = styled.div<{
     currentPlayerForStyled === 1 ? "flex-end" : "flex-start"};
   position: relative;
 
-  margin-bottom: 5px;
+  //margin-bottom: 5px;
 `;
 
 const StyledTextContainer = styled.div<{ currentPlayerForStyle: number }>`
@@ -414,21 +414,27 @@ const StyledCharactersCard = styled(CharactersCard)<{
 //     currentPlayer === 1 ? "translate(15%, -200%)" : "translate(10%, -200%)"};
 const StyledCharacterCost = styled(CharacterCost)<{ currentPlayer: number }>`
   font-size: 20px;
+  font-weight: 600;
+
   transform: ${({ currentPlayer }) =>
-    currentPlayer === 1 ? "translate(15%, -190%)" : "translate(215%, -190%)"};
+    currentPlayer === 1 ? "translate(15%, -245%)" : "translate(215%, -245%)"};
 
   display: flex;
   flex-direction: ${({ currentPlayer }) =>
     currentPlayer === 1
       ? "row"
       : "row-reverse"}; /* Направление для игрока 2 справа налево */
-  align-items: ${({ currentPlayer }) =>
-    currentPlayer === 1 ? "flex-start" : "flex-end"};
+  // align-items: {({ currentPlayer }) =>
+  //   currentPlayer === 1 ? "flex-start" : "flex-end"};
 
+  height: 26px;
+  align-items: center;
   width: 42px;
 
   background-color: #000000;
-  padding: 2px;
+  //padding: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
 `;
 
 const StyledRow = styled.div<{ playerForStyle: number }>`
@@ -650,13 +656,20 @@ const RankForPickedOrBannedCharacters = styled(RankForCharacters)<{
   //margin-left: 0;
 
   transform: ${({ currentPlayer }) =>
-    currentPlayer === 1 ? "translate(290%, 90%)" : "translate(20%, 90%)"};
+    currentPlayer === 1 ? "translate(290%, 145%)" : "translate(20%, 145%)"};
 
   font-size: 20px;
+  font-weight: 600;
+
+  height: 26px;
+
+  align-items: center;
 
   width: 34px;
   background-color: #000000;
-  padding: 2px;
+  //padding: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
 `;
 
 const RankForPickedOrBannedCharacters2 = styled(RankForCharacters)<{
@@ -766,7 +779,7 @@ const StyledRankForCone = styled(RankForPickedOrBannedCharacters)<{
   currentPlayer: number;
 }>`
   transform: ${({ currentPlayer }) =>
-    currentPlayer === 1 ? "translate(15%, 90%)" : "translate(290%, 90%)"};
+    currentPlayer === 1 ? "translate(10%, 115%)" : "translate(300%, 115%)"};
 
   font-size: 16px;
 
@@ -775,7 +788,7 @@ const StyledRankForCone = styled(RankForPickedOrBannedCharacters)<{
 
 const StyledConeCost = styled(StyledCharacterCost)`
   transform: ${({ currentPlayer }) =>
-    currentPlayer === 1 ? "translate(230%, -200%)" : "translate(10%, -200%)"};
+    currentPlayer === 1 ? "translate(230%, -210%)" : "translate(10%, -210%)"};
 
   font-size: 16px;
 
