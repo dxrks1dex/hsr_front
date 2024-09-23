@@ -272,11 +272,11 @@ const StyledCharacterImageContainer = styled.div<{
   height: 70px;
 
   border-top-left-radius: ${({ playerForStyle }) =>
-    playerForStyle === 2 && "10px"};
+    playerForStyle === 2 && "20px"};
   border-top-right-radius: ${({ playerForStyle }) =>
-    playerForStyle === 1 && "10px"};
+    playerForStyle === 1 && "20px"};
 
-  border: 2px solid #fff;
+  border: 3px solid #fff;
 
   overflow: hidden;
 
