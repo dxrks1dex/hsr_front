@@ -192,7 +192,7 @@ export const FinalStageOutput = ({
                       </StyledRankForCone>
                       <StyledCharacterCone
                         playerForStyle={currentPlayerForStyle}
-                        src={`https://raw.githubusercontent.com/dxrks1dex/cone_prev/main/conePictures/${character.lightCone?.id}.jpg`}
+                        src={`https://raw.githubusercontent.com/dxrks1dex/cone_prev/main/conePictures/second/${character.lightCone?.id}.jpg`}
                       />
 
                       <StyledConeCost currentPlayer={currentPlayerForStyle}>
@@ -245,7 +245,7 @@ export const FinalStageOutput = ({
                       </StyledRankForCone>
                       <StyledCharacterCone
                         playerForStyle={currentPlayerForStyle}
-                        src={`https://raw.githubusercontent.com/dxrks1dex/cone_prev/main/conePictures/${character.lightCone?.id}.jpg`}
+                        src={`https://raw.githubusercontent.com/dxrks1dex/cone_prev/main/conePictures/second/${character.lightCone?.id}.jpg`}
                       />
 
                       <StyledConeCost currentPlayer={currentPlayerForStyle}>
