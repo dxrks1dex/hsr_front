@@ -206,20 +206,46 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
   ]);
 
   useEffect(() => {
-    if (
-      dataForFirstUserFromDB &&
-      dataForFirstUserFromDB.characters &&
-      !isLoadingForFirstUserFromDB
-    ) {
-      setSecondPlayerFilteredCharacters(dataForFirstUserFromDB.characters);
+    const transformCharacterId = (characters: CharacterData[]) => {
+      return characters.map((character) => {
+        let transformedCharacter = { ...character };
+
+        if (character.id === "8001") {
+          transformedCharacter = {
+            ...character,
+            id: "8002",
+            icon: character.icon.replace("8001", "8002"),
+          };
+        } else if (character.id === "8003") {
+          transformedCharacter = {
+            ...character,
+            id: "8004",
+            icon: character.icon.replace("8003", "8004"),
+          };
+        } else if (character.id === "8005") {
+          transformedCharacter = {
+            ...character,
+            id: "8006",
+            icon: character.icon.replace("8005", "8006"),
+          };
+        }
+
+        return transformedCharacter;
+      });
+    };
+
+    if (dataForFirstUserFromDB && dataForFirstUserFromDB.characters) {
+      const transformedFirstUserCharacters = transformCharacterId(
+        dataForFirstUserFromDB.characters,
+      );
+      setSecondPlayerFilteredCharacters(transformedFirstUserCharacters);
     }
 
-    if (
-      dataForSecondUserFromDB &&
-      dataForSecondUserFromDB.characters &&
-      !isLoadingForSecondUserFromDB
-    ) {
-      setFourthPlayerFilteredCharacters(dataForSecondUserFromDB.characters);
+    if (dataForSecondUserFromDB && dataForSecondUserFromDB.characters) {
+      const transformedSecondUserCharacters = transformCharacterId(
+        dataForSecondUserFromDB.characters,
+      );
+      setFourthPlayerFilteredCharacters(transformedSecondUserCharacters);
     }
   }, [
     dataForFirstUserFromDB,

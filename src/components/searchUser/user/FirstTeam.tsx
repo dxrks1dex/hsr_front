@@ -198,12 +198,46 @@ export const FirstTeam = ({ firstUid, secondUid }: Props) => {
   ]);
 
   useEffect(() => {
+    const transformCharacterId = (characters: CharacterData[]) => {
+      return characters.map((character) => {
+        let transformedCharacter = { ...character };
+
+        if (character.id === "8001") {
+          transformedCharacter = {
+            ...character,
+            id: "8002",
+            icon: character.icon.replace("8001", "8002"),
+          };
+        } else if (character.id === "8003") {
+          transformedCharacter = {
+            ...character,
+            id: "8004",
+            icon: character.icon.replace("8003", "8004"),
+          };
+        } else if (character.id === "8005") {
+          transformedCharacter = {
+            ...character,
+            id: "8006",
+            icon: character.icon.replace("8005", "8006"),
+          };
+        }
+
+        return transformedCharacter;
+      });
+    };
+
     if (dataForFirstUserFromDB && dataForFirstUserFromDB.characters) {
-      setFirstPlayerFilteredCharacters(dataForFirstUserFromDB.characters);
+      const transformedFirstUserCharacters = transformCharacterId(
+        dataForFirstUserFromDB.characters,
+      );
+      setFirstPlayerFilteredCharacters(transformedFirstUserCharacters);
     }
 
     if (dataForSecondUserFromDB && dataForSecondUserFromDB.characters) {
-      setThirdPlayerFilteredCharacters(dataForSecondUserFromDB.characters);
+      const transformedSecondUserCharacters = transformCharacterId(
+        dataForSecondUserFromDB.characters,
+      );
+      setThirdPlayerFilteredCharacters(transformedSecondUserCharacters);
     }
   }, [
     dataForFirstUserFromDB,
