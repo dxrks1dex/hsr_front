@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useLightConeContext } from "@/context/useLightConeContext";
 import { useCharactersContext } from "@/context/useCharactersContext";
 import { GlobalButton, GlobalInput } from "@/components/styled/userStyles";
+import { ExampleComponent } from "@/components/Test";
 
 export const MainPage = () => {
   const [firstUserUid, setFirstUserUid] = useState<string | null>(null);
@@ -133,6 +134,7 @@ export const MainPage = () => {
       >
         Picks output
       </GlobalButton>
+      {/*<ExampleComponent />*/}
     </StyledMainPageContainer>
   );
 };

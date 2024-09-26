@@ -117,6 +117,8 @@ export const TeamDisplay = styled.div<{ player: number }>`
   margin-bottom: 4%;
   // margin-right: ${({ player }) => player === 1 && "4%"};
   // margin-left: ${({ player }) => player === 2 && "5%"};
+
+  height: 70px;
 `;
 
 export const CharacterImage = styled.img<{ characterRarity: number }>`

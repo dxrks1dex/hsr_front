@@ -316,18 +316,7 @@ const StyledCharacterImageContainer = styled.div<{
     filter: blur(0px);
   }
 
-  // background-color: {(props) =>
-  //   props.characterRarity === 4
-  //     ? "rgba(128, 0, 128, 0.25)"
-  //     : "rgba(207,181,59, 0.25)"};
   backdrop-filter: blur(12px);
-  //
-  //border-top-left-radius: 8px;
-  //border-top-right-radius: 8px;
-
-  // box-shadow: 0px 0px 5px 2px
-  //   {(props) =>
-  //     props.characterRarity === 4 ? "#54458560" : "rgba(207,181,59, 0.25)"};
 `;
 
 const StyledCharacterContainer = styled.div`
@@ -351,7 +340,7 @@ const StyledCharacterAndConeSection = styled.div<{
     currentPlayerForStyled === 1 ? "flex-end" : "flex-start"};
   position: relative;
 
-  //margin-bottom: 5px;
+  margin-bottom: 6px;
 `;
 
 const StyledTextContainer = styled.div<{ currentPlayerForStyle: number }>`
@@ -406,6 +395,8 @@ const StyledCharactersCard = styled(CharactersCard)<{
   display: flex;
   justify-content: space-between;
 
+  margin-right: 0;
+
   svg {
     filter: none;
   }
@@ -456,6 +447,8 @@ const StyledUserNickname = styled.div<{ playerForStyle: number }>`
   justify-content: ${({ playerForStyle }) =>
     playerForStyle === 1 ? "flex-start" : "flex-end"};
   align-content: center;
+
+  margin-top: 2%;
 
   margin-left: ${({ playerForStyle }) => (playerForStyle === 1 ? "3%" : "0%")};
   margin-right: ${({ playerForStyle }) => (playerForStyle === 1 ? "0%" : "3%")};
@@ -594,23 +587,6 @@ const StyledCharacterCard = styled.img<{
 `;
 
 const StyledPickAndBanContainer = styled.div<{ currentPlayer: number }>`
-  //position: absolute;
-
-  //--tw-translate-y: 50%;
-  //transform: translate(var(--tw-translate-x), var(--tw-translate-y))
-  //  rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y))
-  //  scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  //
-  //--tw-translate-x: 50%;
-
-  //left: 50%;
-
-  // top: {(props) => (props.currentPlayer === 1 ? "420px" : "700px")};
-
-  // display: flex;
-  // flex-direction: {({ currentPlayer }) =>
-  //   currentPlayer === 1 ? "row-reverse" : "row"};
-
   align-self: center;
 
   background-color: ${({ currentPlayer }) =>
@@ -741,7 +717,7 @@ const StyledDefaultPicksOrBans = styled.div`
   border-radius: 0.375rem /* 6px */;
   background-color: rgb(241 245 249 / 0.05);
 
-  margin-right: 16px;
+  //margin-right: 16px;
 
   --tw-backdrop-blur: blur(12px);
   backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness)
