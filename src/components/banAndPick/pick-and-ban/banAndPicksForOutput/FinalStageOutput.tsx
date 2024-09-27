@@ -182,7 +182,9 @@ export const FinalStageOutput = ({
                   currentPlayerForStyled={currentPlayerForStyle}
                 >
                   {currentPlayerForStyle === 1 && character.lightCone?.id && (
-                    <StyledCharacterConeContainer>
+                    <StyledCharacterConeContainer
+                      playerForStyle={currentPlayerForStyle}
+                    >
                       <StyledRankForCone currentPlayer={currentPlayer}>
                         S{character.lightCone.rank + 1}
                       </StyledRankForCone>
@@ -235,7 +237,9 @@ export const FinalStageOutput = ({
                     </div>
                   </StyledCharactersCard>
                   {currentPlayerForStyle === 2 && character.lightCone?.id && (
-                    <StyledCharacterConeContainer>
+                    <StyledCharacterConeContainer
+                      playerForStyle={currentPlayerForStyle}
+                    >
                       <StyledRankForCone currentPlayer={currentPlayer}>
                         S{character.lightCone.rank + 1}
                       </StyledRankForCone>
@@ -329,7 +333,12 @@ const StyledFlexStart = styled.div<{ currentPlayerForStyle: number }>`
     currentPlayerForStyle === 1 ? "flex-end" : "flex-end"};
 `;
 
-const StyledCharacterConeContainer = styled.div``;
+const StyledCharacterConeContainer = styled.div<{ playerForStyle: number }>`
+  margin-right: ${({ playerForStyle }) => playerForStyle === 1 && "10px"};
+  margin-left: ${({ playerForStyle }) => playerForStyle === 2 && "15px"};
+
+  margin-bottom: ${({ playerForStyle }) => playerForStyle === 1 && "-1px"};
+`;
 
 const StyledCharacterAndConeSection = styled.div<{
   currentPlayerForStyled: number;
@@ -502,7 +511,6 @@ const StyledCharacterCone = styled(ConesForCharacters)<{
   border: 2px solid #fff;
 
   margin-top: 0;
-  margin-right: 10px;
 
   width: 120px;
   height: 60px;
