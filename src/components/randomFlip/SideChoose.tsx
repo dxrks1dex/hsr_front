@@ -9,7 +9,7 @@ export const SideChoose = () => {
   const handleClick = () => {
     const roll = Math.floor(Math.random() * 100) + 1;
     setRollValue(roll);
-    const randomValue = roll < 50 ? "Red side" : "Blue side";
+    const randomValue = roll < 50 ? "Решка" : "Орёл";
     setResult(randomValue);
   };
 
@@ -17,9 +17,7 @@ export const SideChoose = () => {
     <div>
       <StyledCoinButton onClick={handleClick}>Roll side</StyledCoinButton>
       {result ? (
-        <StyledSideText color={result === "Red side" ? "#C84A32" : "#31A8FF"}>
-          {result} ({rollValue})
-        </StyledSideText>
+        <StyledSideText>{result}</StyledSideText>
       ) : (
         <StyledDefaultText>Win side</StyledDefaultText>
       )}
@@ -62,8 +60,8 @@ const StyledDefaultText = styled.div`
   border-right: 5px;
 `;
 
-const StyledSideText = styled.div<{ color: string }>`
-  color: ${({ color }) => color};
+const StyledSideText = styled.div`
+  color: white;
 
   background-color: #3e3e3e;
 

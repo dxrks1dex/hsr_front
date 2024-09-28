@@ -118,54 +118,18 @@ export const CharactersDisplay = ({
       fourthPlayerLevel,
     };
   });
-  //const allCharacterIds = new Set([
-  //   ...secondPlayerFilteredCharacters.map((char) => {
-  //     if (char.id === 8002 || char.id === 8003) return 8001; // Объединяем id 8001 с 8002 и 8003
-  //     if (char.id === 8004 || char.id === 8005) return 8003; // Объединяем id 8003 с 8004 и 8005
-  //     if (char.id === 8006) return 8005; // Объединяем id 8005 с 8006
-  //     return char.id;
-  //   }),
-  //   ...fourthPlayerFilteredCharacters.map((char) => {
-  //     if (char.id === 8002 || char.id === 8003) return 8001;
-  //     if (char.id === 8004 || char.id === 8005) return 8003;
-  //     if (char.id === 8006) return 8005;
-  //     return char.id;
-  //   }),
-  // ]);
-  //
-  // const combinedCharacters = Array.from(allCharacterIds).map((id) => {
-  //   const secondPlayerCharacter = secondPlayerFilteredCharacters.find(
-  //     (char) => char.id === id || (id === 8001 && (char.id === 8002 || char.id === 8003)) || (id === 8003 && (char.id === 8004 || char.id === 8005)) || (id === 8005 && char.id === 8006)
-  //   );
-  //   const fourthPlayerCharacter = fourthPlayerFilteredCharacters.find(
-  //     (char) => char.id === id || (id === 8001 && (char.id === 8002 || char.id === 8003)) || (id === 8003 && (char.id === 8004 || char.id === 8005)) || (id === 8005 && char.id === 8006)
-  //   );
-  //
-  //   const character = secondPlayerCharacter || fourthPlayerCharacter;
-  //   const secondPlayerRank = secondPlayerCharacter?.rank ?? -1;
-  //   const fourthPlayerRank = fourthPlayerCharacter?.rank ?? -1;
-  //   const secondPlayerLevel = secondPlayerCharacter?.level;
-  //   const fourthPlayerLevel = fourthPlayerCharacter?.level;
-  //
-  //   return {
-  //     character,
-  //     secondPlayerRank,
-  //     fourthPlayerRank,
-  //     secondPlayerLevel,
-  //     fourthPlayerLevel,
-  //   };
-  // });
+
   return (
     <CharacterGrid>
       {combinedCharacters
         .sort((a, b) => {
-          const rarityA = a.character?.rarity ?? 0; // Если rank не определен, использовать 0
+          const rarityA = a.character?.rarity ?? 0;
           const rarityB = b.character?.rarity ?? 0;
 
           const rankComparison = rarityB - rarityA;
 
           if (rankComparison === 0) {
-            const elementA = a.character?.element ?? ""; // Если element не определен, использовать пустую строку
+            const elementA = a.character?.element ?? "";
             const elementB = b.character?.element ?? "";
 
             return elementA.localeCompare(elementB);

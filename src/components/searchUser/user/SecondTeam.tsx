@@ -93,6 +93,7 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
       secondPlayerPickedCharacters,
       firstPlayerBannedCharacters,
       isSecondPlayerBanOrPick,
+      isFirstPlayerBanOrPick,
       secondPlayerTotalCost,
       globalStage,
       secondPlayerFilteredCharacters,
@@ -274,6 +275,27 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
       console.log("8");
       console.log("secondPlayerPickedCharacters 8");
 
+      return;
+    }
+
+    // if (
+    //   isSecondPlayerBanOrPick &&
+    //   !isFirstPlayerBanOrPick &&
+    //   globalStage === "ban"
+    // ) {
+    //   // firstPlayerPickOrBan(true);
+    //   console.log("isFirstPlayerBanOrPick: ", isFirstPlayerBanOrPick);
+    //
+    //   secondPlayerPickOrBan(false);
+    //   firstPlayerPickOrBan(true);
+    //
+    //   return;
+    // }
+
+    if (!isSecondPlayerBanOrPick && globalStage === "pick") {
+      console.log("globalStage: ", globalStage);
+
+      secondPlayerPickOrBan(false);
       return;
     }
 
