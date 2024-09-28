@@ -278,23 +278,17 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
       return;
     }
 
-    // if (
-    //   isSecondPlayerBanOrPick &&
-    //   !isFirstPlayerBanOrPick &&
-    //   globalStage === "ban"
-    // ) {
-    //   // firstPlayerPickOrBan(true);
-    //   console.log("isFirstPlayerBanOrPick: ", isFirstPlayerBanOrPick);
-    //
-    //   secondPlayerPickOrBan(false);
-    //   firstPlayerPickOrBan(true);
-    //
-    //   return;
-    // }
+    if (!isFirstPlayerBanOrPick && globalStage === "ban") {
+      // firstPlayerPickOrBan(true);
+      console.log("isFirstPlayerBanOrPick: ", isFirstPlayerBanOrPick);
+
+      secondPlayerPickOrBan(false);
+      firstPlayerPickOrBan(true);
+
+      return;
+    }
 
     if (!isSecondPlayerBanOrPick && globalStage === "pick") {
-      console.log("globalStage: ", globalStage);
-
       secondPlayerPickOrBan(false);
       return;
     }
