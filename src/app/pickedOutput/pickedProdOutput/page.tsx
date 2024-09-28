@@ -187,6 +187,8 @@ const StyledPickOutputContainer = styled.div`
   justify-content: center;
   align-items: center;
 
+  //font-family: "Barlow", sans-serif;
+
   &::before {
     content: "";
     position: absolute;

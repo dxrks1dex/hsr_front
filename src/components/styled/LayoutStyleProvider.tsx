@@ -20,12 +20,12 @@ const LayoutStyle = styled.body`
   background-color: #c48353;
 `;
 const GlobalStyle = createGlobalStyle`
-  //@font-face {
-  //  font-family: "prodfont";
-  //  src: url("/SDK_SC_Web.ttf") format("truetype");
-  //}
-
-  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700&display=swap');
+  @font-face {
+    font-family: "Barlow";
+    src: url("/Barlow-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+  }
 
   * {
     margin: 0;
@@ -37,8 +37,4 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Barlow', sans-serif;
     background-color: #f9f9f9;
   }
-  
-  //div{
-  //  font-family: "prodfont", sans-serif;
-  //}
 `;

@@ -391,11 +391,15 @@ const StyledPickResultText = styled.div`
   font-size: 46px;
 
   font-weight: 500;
+
+  margin-bottom: -40px;
 `;
 
 const StyledPickResult = styled.div`
   font-size: 120px;
   font-weight: 700;
+
+  margin-bottom: -30px;
 `;
 
 const StyledCharactersCard = styled(CharactersCard)<{
@@ -648,6 +652,7 @@ const RankForPickedOrBannedCharacters = styled(RankForCharacters)<{
   height: 26px;
 
   align-items: center;
+  justify-content: center;
 
   width: 34px;
   background-color: #000000;

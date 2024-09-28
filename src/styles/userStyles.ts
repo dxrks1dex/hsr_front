@@ -412,11 +412,6 @@ export const UsersContainerToAdd = styled.div`
 `;
 
 export const CustomFontDiv = styled.div`
-  @font-face {
-    font-family: "prodfont";
-    src: url("/SDK_SC_Web.ttf") format("truetype");
-  }
-
   font-family: "prodfont", sans-serif;
 
   height: 100%;
