@@ -6,6 +6,7 @@ import { useLightConeContext } from "@/context/useLightConeContext";
 import { useCharactersContext } from "@/context/useCharactersContext";
 import { GlobalButton, GlobalInput } from "@/components/styled/userStyles";
 import { ExampleComponent } from "@/components/Test";
+import { SideChoose } from "@/components/randomFlip/SideChoose";
 
 export const MainPage = () => {
   const [firstUserUid, setFirstUserUid] = useState<string | null>(null);
@@ -39,6 +40,8 @@ export const MainPage = () => {
   return (
     <StyledMainPageContainer>
       <StyledContainer>
+        <SideChoose />
+
         <StyledBanAndPickDiv>
           <StyledTeamInputContainer>
             <GlobalInput
@@ -87,6 +90,16 @@ export const MainPage = () => {
             To ban and pick screen
           </StyledBanAndPickButton>
         </StyledButtonContainerAction>
+        <StyledButtonContainerAction>
+          <GlobalButton onClick={() => router.push("/pickedOutput")}>
+            Picks
+          </GlobalButton>
+          <GlobalButton
+            onClick={() => router.push("/pickedOutput/pickedProdOutput")}
+          >
+            Picks output
+          </GlobalButton>
+        </StyledButtonContainerAction>
       </StyledContainer>
       <StyledInputContainer>
         <StyledNewUserInput
@@ -126,14 +139,7 @@ export const MainPage = () => {
           Change characters
         </GlobalButton>
       </StyledButtonContainer>
-      <GlobalButton onClick={() => router.push("/pickedOutput")}>
-        Picks
-      </GlobalButton>
-      <GlobalButton
-        onClick={() => router.push("/pickedOutput/pickedProdOutput")}
-      >
-        Picks output
-      </GlobalButton>
+
       {/*<ExampleComponent />*/}
     </StyledMainPageContainer>
   );
