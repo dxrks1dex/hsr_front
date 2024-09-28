@@ -16,10 +16,12 @@ export const SideChoose = () => {
   return (
     <div>
       <StyledCoinButton onClick={handleClick}>Roll side</StyledCoinButton>
-      {result && (
+      {result ? (
         <StyledSideText color={result === "Red side" ? "#C84A32" : "#31A8FF"}>
           {result} ({rollValue})
         </StyledSideText>
+      ) : (
+        <StyledDefaultText>Win side</StyledDefaultText>
       )}
     </div>
   );
@@ -45,6 +47,19 @@ const StyledCoinButton = styled.div`
     background-color: #3e3e3e;
     color: white;
   }
+`;
+
+const StyledDefaultText = styled.div`
+  background-color: #3e3e3e;
+
+  color: white;
+
+  font-weight: 700;
+  font-size: 4rem;
+
+  padding: 2px;
+
+  border-right: 5px;
 `;
 
 const StyledSideText = styled.div<{ color: string }>`
