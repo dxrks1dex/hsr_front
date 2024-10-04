@@ -101,7 +101,7 @@ export function VerticalIndicator({
               x="58"
               y="86"
               width="6"
-              height="52"
+              height="50"
               fill="#18FFCB"
             />
 
@@ -116,7 +116,7 @@ export function VerticalIndicator({
               x="58"
               y="136"
               width="6"
-              height="44"
+              height="42"
               fill="#18FFCB"
             />
 
@@ -131,7 +131,7 @@ export function VerticalIndicator({
               x="58"
               y="178"
               width="6"
-              height="49"
+              height="47"
               fill="#18FFCB"
             />
 
@@ -146,7 +146,7 @@ export function VerticalIndicator({
               x="58"
               y="225"
               width="6"
-              height="47"
+              height="45"
               fill="#18FFCB"
             />
 
@@ -161,7 +161,7 @@ export function VerticalIndicator({
               x="58"
               y="358"
               width="6"
-              height="50"
+              height="48"
               fill="#18FFCB"
             />
 
@@ -178,7 +178,7 @@ export function VerticalIndicator({
               x="58"
               y="406"
               width="6"
-              height="50"
+              height="48"
               fill="#18FFCB"
             />
 
@@ -193,7 +193,7 @@ export function VerticalIndicator({
               x="58"
               y="454"
               width="6"
-              height="50"
+              height="48"
               fill="#18FFCB"
             />
 
@@ -208,7 +208,7 @@ export function VerticalIndicator({
               x="58"
               y="502"
               width="6"
-              height="50"
+              height="48"
               fill="#18FFCB"
             />
 
@@ -223,7 +223,7 @@ export function VerticalIndicator({
               x="58"
               y="550"
               width="6"
-              height="50"
+              height="48"
               fill="#18FFCB"
             />
 
@@ -313,7 +313,7 @@ export function VerticalIndicator({
               x="58"
               y="818"
               width="6"
-              height="52"
+              height="48"
               fill="#18FFCB"
             />
 
@@ -328,7 +328,7 @@ export function VerticalIndicator({
               x="58"
               y="868"
               width="6"
-              height="52"
+              height="48"
               fill="#18FFCB"
             />
 
@@ -358,7 +358,7 @@ export function VerticalIndicator({
               x="58"
               y="270"
               width="6.1"
-              height="46"
+              height="42"
               fill="#E31D1D"
             />
             <rect
@@ -372,7 +372,7 @@ export function VerticalIndicator({
               x="58"
               y="314"
               width="6.1"
-              height="46"
+              height="42"
               fill="#E31D1D"
             />
 
