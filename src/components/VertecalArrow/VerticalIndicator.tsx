@@ -322,8 +322,8 @@ export function VerticalIndicator({
                 firstPlayerPickedLength === 8 && secondPlayerPickedLength === 7
                   ? "1"
                   : secondPlayerPickedLength >= 8
-                    ? "0.7"
-                    : "0.4"
+                    ? "1"
+                    : "0.3"
               }
               x="58"
               y="868"
