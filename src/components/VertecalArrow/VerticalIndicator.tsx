@@ -101,7 +101,7 @@ export function VerticalIndicator({
               x="58"
               y="86"
               width="6"
-              height="50"
+              height={firstPlayerPickedLength >= 1 ? "52" : "50"}
               fill="#18FFCB"
             />
 
@@ -116,7 +116,7 @@ export function VerticalIndicator({
               x="58"
               y="136"
               width="6"
-              height="42"
+              height={firstPlayerPickedLength >= 1 ? "44" : "42"}
               fill="#18FFCB"
             />
 
@@ -131,7 +131,7 @@ export function VerticalIndicator({
               x="58"
               y="178"
               width="6"
-              height="47"
+              height={secondPlayerPickedLength >= 2 ? "49" : "47"}
               fill="#18FFCB"
             />
 
@@ -146,7 +146,7 @@ export function VerticalIndicator({
               x="58"
               y="225"
               width="6"
-              height="45"
+              height={firstPlayerPickedLength >= 2 ? "47" : "45"}
               fill="#18FFCB"
             />
 
@@ -161,7 +161,7 @@ export function VerticalIndicator({
               x="58"
               y="358"
               width="6"
-              height="48"
+              height={secondPlayerPickedLength >= 3 ? "50" : "48"}
               fill="#18FFCB"
             />
 
@@ -178,7 +178,7 @@ export function VerticalIndicator({
               x="58"
               y="406"
               width="6"
-              height="48"
+              height={firstPlayerPickedLength >= 3 ? "50" : "48"}
               fill="#18FFCB"
             />
 
@@ -193,7 +193,7 @@ export function VerticalIndicator({
               x="58"
               y="454"
               width="6"
-              height="48"
+              height={firstPlayerPickedLength >= 4 ? "50" : "48"}
               fill="#18FFCB"
             />
 
@@ -208,7 +208,7 @@ export function VerticalIndicator({
               x="58"
               y="502"
               width="6"
-              height="48"
+              height={secondPlayerPickedLength >= 4 ? "50" : "48"}
               fill="#18FFCB"
             />
 
@@ -223,7 +223,7 @@ export function VerticalIndicator({
               x="58"
               y="550"
               width="6"
-              height="48"
+              height={secondPlayerPickedLength >= 5 ? "50" : "48"}
               fill="#18FFCB"
             />
 
@@ -238,7 +238,7 @@ export function VerticalIndicator({
               x="58"
               y="598"
               width="6"
-              height="46"
+              height={firstPlayerPickedLength >= 5 ? "48" : "46"}
               fill="#18FFCB"
             />
 
@@ -253,7 +253,7 @@ export function VerticalIndicator({
               x="58"
               y="642"
               width="6"
-              height="46"
+              height={firstPlayerPickedLength >= 6 ? "48" : "46"}
               fill="#18FFCB"
             />
 
@@ -268,7 +268,7 @@ export function VerticalIndicator({
               x="58"
               y="686"
               width="6"
-              height="46"
+              height={secondPlayerPickedLength >= 6 ? "48" : "46"}
               fill="#18FFCB"
             />
 
@@ -283,7 +283,7 @@ export function VerticalIndicator({
               x="58"
               y="730"
               width="6"
-              height="46"
+              height={secondPlayerPickedLength >= 7 ? "48" : "46"}
               fill="#18FFCB"
             />
 
@@ -298,7 +298,7 @@ export function VerticalIndicator({
               x="58"
               y="774"
               width="6"
-              height="46"
+              height={firstPlayerPickedLength >= 7 ? "48" : "46"}
               fill="#18FFCB"
             />
 
@@ -313,7 +313,7 @@ export function VerticalIndicator({
               x="58"
               y="818"
               width="6"
-              height="48"
+              height={firstPlayerPickedLength >= 8 ? "50" : "48"}
               fill="#18FFCB"
             />
 
@@ -328,7 +328,7 @@ export function VerticalIndicator({
               x="58"
               y="868"
               width="6"
-              height="48"
+              height={secondPlayerPickedLength >= 8 ? "50" : "48"}
               fill="#18FFCB"
             />
 
@@ -344,7 +344,7 @@ export function VerticalIndicator({
               x="58"
               y="43"
               width="6.1"
-              height="45"
+              height={secondPlayerBannedLength >= 1 ? "47" : "45"}
               fill="#E31D1D"
             />
             <rect
@@ -358,7 +358,7 @@ export function VerticalIndicator({
               x="58"
               y="270"
               width="6.1"
-              height="42"
+              height={secondPlayerBannedLength >= 2 ? "44" : "42"}
               fill="#E31D1D"
             />
             <rect
@@ -372,7 +372,7 @@ export function VerticalIndicator({
               x="58"
               y="314"
               width="6.1"
-              height="42"
+              height={firstPlayerBannedLength >= 2 ? "44" : "42"}
               fill="#E31D1D"
             />
 
