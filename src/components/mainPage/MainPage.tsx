@@ -38,112 +38,122 @@ export const MainPage = () => {
   }, [pathname, setCharactersForUser, setConeForUser]);
 
   return (
-    <StyledMainPageContainer>
-      <StyledContainer>
-        <SideChoose />
+    <StyledMainPageColour>
+      <StyledMainPageContainer>
+        <StyledContainer>
+          <SideChoose />
 
-        <StyledBanAndPickDiv>
-          <StyledTeamInputContainer>
-            <GlobalInput
-              team={1}
-              type={"number"}
-              placeholder={"First Uid"}
-              onChange={(e) => setFirstUserUid(e.target.value)}
-              inputMode={"text"}
-            />
-            <GlobalInput
-              team={1}
-              type={"number"}
-              placeholder={"Third Uid"}
-              onChange={(e) => setSecondUserUid(e.target.value)}
-              inputMode={"text"}
-            />
-          </StyledTeamInputContainer>
-          <StyledTeamInputContainer>
-            <GlobalInput
-              team={2}
-              type={"number"}
-              placeholder={"Second Uid"}
-              onChange={(e) => setThirdUserUid(e.target.value)}
-              inputMode={"text"}
-            />
-            <GlobalInput
-              team={2}
-              type={"number"}
-              placeholder={"Fourth Uid"}
-              onChange={(e) => setFourthUserUid(e.target.value)}
-              inputMode={"text"}
-            />
-          </StyledTeamInputContainer>
-        </StyledBanAndPickDiv>
-        <StyledButtonContainerAction>
-          <StyledBanAndPickButton
+          <StyledBanAndPickDiv>
+            <StyledTeamInputContainer>
+              <GlobalInput
+                team={1}
+                type={"number"}
+                placeholder={"First Uid"}
+                onChange={(e) => setFirstUserUid(e.target.value)}
+                inputMode={"text"}
+              />
+              <GlobalInput
+                team={1}
+                type={"number"}
+                placeholder={"Third Uid"}
+                onChange={(e) => setSecondUserUid(e.target.value)}
+                inputMode={"text"}
+              />
+            </StyledTeamInputContainer>
+            <StyledTeamInputContainer>
+              <GlobalInput
+                team={2}
+                type={"number"}
+                placeholder={"Second Uid"}
+                onChange={(e) => setThirdUserUid(e.target.value)}
+                inputMode={"text"}
+              />
+              <GlobalInput
+                team={2}
+                type={"number"}
+                placeholder={"Fourth Uid"}
+                onChange={(e) => setFourthUserUid(e.target.value)}
+                inputMode={"text"}
+              />
+            </StyledTeamInputContainer>
+          </StyledBanAndPickDiv>
+          <StyledButtonContainerAction>
+            <StyledBanAndPickButton
+              onClick={() =>
+                router.push(
+                  `/q?user1=${firstUserUid}&user2=${thirdUserUid}&user3=${secondUserUid}&user4=${fourthUserUid}`,
+                )
+              }
+            >
+              To ban and pick action
+            </StyledBanAndPickButton>
+            <StyledBanAndPickButton
+              onClick={() => router.push(`/pick-and-bans`)}
+            >
+              To ban and pick screen
+            </StyledBanAndPickButton>
+          </StyledButtonContainerAction>
+          <StyledButtonContainerAction>
+            <GlobalButton onClick={() => router.push("/pickedOutput")}>
+              Picks
+            </GlobalButton>
+            <GlobalButton
+              onClick={() => router.push("/pickedOutput/pickedProdOutput")}
+            >
+              Picks output
+            </GlobalButton>
+          </StyledButtonContainerAction>
+        </StyledContainer>
+        <StyledInputContainer>
+          <StyledNewUserInput
+            team={1}
+            type={"number"}
+            placeholder={"New user uid"}
+            onChange={(e) => setNewUserUid(e.target.value)}
+            inputMode={"text"}
+          />
+          <StyledNewUserInput
+            team={1}
+            placeholder={"New user name"}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+        </StyledInputContainer>
+        <StyledButtonContainer>
+          <GlobalButton
             onClick={() =>
               router.push(
-                `/q?user1=${firstUserUid}&user2=${thirdUserUid}&user3=${secondUserUid}&user4=${fourthUserUid}`,
+                `/userOperations/q?op=addNewUser&uid=${newUserUid}&nickname=${userName}`,
               )
             }
           >
-            To ban and pick action
-          </StyledBanAndPickButton>
-          <StyledBanAndPickButton onClick={() => router.push(`/pick-and-bans`)}>
-            To ban and pick screen
-          </StyledBanAndPickButton>
-        </StyledButtonContainerAction>
-        <StyledButtonContainerAction>
-          <GlobalButton onClick={() => router.push("/pickedOutput")}>
-            Picks
+            Reg new user
           </GlobalButton>
           <GlobalButton
-            onClick={() => router.push("/pickedOutput/pickedProdOutput")}
+            onClick={() =>
+              router.push(`/userOperations/q?op=changeUser&uid=${newUserUid}`)
+            }
           >
-            Picks output
+            Change User
           </GlobalButton>
-        </StyledButtonContainerAction>
-      </StyledContainer>
-      <StyledInputContainer>
-        <StyledNewUserInput
-          team={1}
-          type={"number"}
-          placeholder={"New user uid"}
-          onChange={(e) => setNewUserUid(e.target.value)}
-          inputMode={"text"}
-        />
-        <StyledNewUserInput
-          team={1}
-          placeholder={"New user name"}
-          onChange={(e) => setUserName(e.target.value)}
-        />
-      </StyledInputContainer>
-      <StyledButtonContainer>
-        <GlobalButton
-          onClick={() =>
-            router.push(
-              `/userOperations/q?op=addNewUser&uid=${newUserUid}&nickname=${userName}`,
-            )
-          }
-        >
-          Reg new user
-        </GlobalButton>
-        <GlobalButton
-          onClick={() =>
-            router.push(`/userOperations/q?op=changeUser&uid=${newUserUid}`)
-          }
-        >
-          Change User
-        </GlobalButton>
-        <GlobalButton onClick={() => router.push(`/changeLightCone`)}>
-          Change light cones
-        </GlobalButton>
-        <GlobalButton onClick={() => router.push(`/changeCharacters`)}>
-          Change characters
-        </GlobalButton>
-      </StyledButtonContainer>
+          <GlobalButton onClick={() => router.push(`/changeLightCone`)}>
+            Change light cones
+          </GlobalButton>
+          <GlobalButton onClick={() => router.push(`/changeCharacters`)}>
+            Change characters
+          </GlobalButton>
+        </StyledButtonContainer>
 
-      {/*<ExampleComponent />*/}
-    </StyledMainPageContainer>
+        {/*<ExampleComponent />*/}
+      </StyledMainPageContainer>
+    </StyledMainPageColour>
   );
 };
+
+const StyledMainPageColour = styled.div`
+  background-color: #c48353;
+
+  min-height: 100vh;
+`;
 
 const StyledTeamInputContainer = styled.div`
   display: flex;
@@ -159,7 +169,10 @@ const StyledMainPageContainer = styled.div`
   max-width: 35%;
 
   margin-left: 35%;
-  margin-top: 10%;
+  //margin-top: 10%;
+  padding-top: 10%;
+
+  //background-color: #c48353;
 `;
 
 const StyledContainer = styled.div`

@@ -98,7 +98,7 @@ const StyledUsersSection = styled.section`
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    filter: blur(10px); // Размытие только для фона
+    filter: blur(10px);
     z-index: -1;
   }
 `;

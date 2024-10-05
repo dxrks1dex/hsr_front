@@ -83,9 +83,9 @@ export function VerticalIndicator({
     <LineDiv>
       <SVGContainer>
         <svg
-          width="121"
+          width="124"
           height="908"
-          viewBox="0 0 121 908"
+          viewBox="0 0 124 908"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -668,13 +668,13 @@ export function VerticalIndicator({
 
             {firstPlayerBannedLength === 1 && secondPlayerBannedLength === 0 ? (
               <>
-                <path d="M86.4775 51L120.391 66L86.4775 81V51Z" fill="white" />
+                <path d="M89.7822 51L123.695 66L89.7822 81V51Z" fill="white" />
                 <path
-                  d="M68.2169 51L79.9561 56.1923V60.1304H73.4343V71.8696H79.9561V75.8077L68.2169 81V51Z"
+                  d="M71.5216 51L83.2607 56.1923V60.1304H76.739V71.8696H83.2607V75.8077L71.5216 81V51Z"
                   fill="#EC664B"
                 />
                 <rect
-                  x="61.6953"
+                  x="64.330"
                   y="62.7393"
                   width="16.9565"
                   height="6.52174"
@@ -700,15 +700,15 @@ export function VerticalIndicator({
             {firstPlayerPickedLength === 2 && secondPlayerBannedLength === 1 ? (
               <>
                 <path
-                  d="M86.4785 289L120.392 304L86.4785 319V289Z"
+                  d="M89.7832 289L123.696 304L89.7832 319V289Z"
                   fill="white"
                 />
                 <path
-                  d="M68.2179 289L79.957 294.192V298.13H73.4353V309.87H79.957V313.808L68.2179 319V289Z"
+                  d="M71.5226 289L83.2617 294.192V298.13H76.74V309.87H83.2617V313.808L71.5226 319V289Z"
                   fill="#EC664B"
                 />
                 <rect
-                  x="61.6963"
+                  x="64.330"
                   y="300.739"
                   width="16.9565"
                   height="6.52174"
@@ -734,15 +734,15 @@ export function VerticalIndicator({
             {firstPlayerPickedLength === 1 && secondPlayerPickedLength === 0 ? (
               <>
                 <path
-                  d="M86.4785 143L120.392 158L86.4785 173V143Z"
+                  d="M89.7832 143L123.696 158L89.7832 173V143Z"
                   fill="white"
                 />
                 <path
-                  d="M68.2179 143L79.957 148.192V152.13H73.4353V163.87H79.957V167.808L68.2179 173V143Z"
+                  d="M71.5226 143L83.2617 148.192V152.13H76.74V163.87H83.2617V167.808L71.5226 173V143Z"
                   fill="#18FFCB"
                 />
                 <rect
-                  x="61.6963"
+                  x="64.330"
                   y="154.739"
                   width="16.9565"
                   height="6.52174"
@@ -768,15 +768,15 @@ export function VerticalIndicator({
             {firstPlayerPickedLength === 1 && secondPlayerPickedLength === 1 ? (
               <>
                 <path
-                  d="M86.4785 198L120.392 213L86.4785 228V198Z"
+                  d="M89.7832 198L123.696 213L89.7832 228V198Z"
                   fill="white"
                 />
                 <path
-                  d="M68.2179 198L79.957 203.192V207.13H73.4353V218.87H79.957V222.808L68.2179 228V198Z"
+                  d="M71.5226 198L83.2617 203.192V207.13H76.74V218.87H83.2617V222.808L71.5226 228V198Z"
                   fill="#18FFCB"
                 />
                 <rect
-                  x="61.6963"
+                  x="64.330"
                   y="209.739"
                   width="16.9565"
                   height="6.52174"
@@ -802,15 +802,15 @@ export function VerticalIndicator({
             {firstPlayerBannedLength === 2 && secondPlayerPickedLength === 2 ? (
               <>
                 <path
-                  d="M86.4785 380L120.392 395L86.4785 410V380Z"
+                  d="M89.7832 380L123.696 395L89.7832 410V380Z"
                   fill="white"
                 />
                 <path
-                  d="M68.2179 380L79.957 385.192V389.13H73.4353V400.87H79.957V404.808L68.2179 410V380Z"
+                  d="M71.5226 380L83.2617 385.192V389.13H76.74V400.87H83.2617V404.808L71.5226 410V380Z"
                   fill="#18FFCB"
                 />
                 <rect
-                  x="61.6963"
+                  x="64.330"
                   y="391.739"
                   width="16.9565"
                   height="6.52174"
@@ -836,15 +836,15 @@ export function VerticalIndicator({
             {firstPlayerPickedLength === 4 && secondPlayerPickedLength === 4 ? (
               <>
                 <path
-                  d="M86.4785 561L120.392 576L86.4785 591V561Z"
+                  d="M89.7832 561L123.696 576L89.7832 591V561Z"
                   fill="white"
                 />
                 <path
-                  d="M68.2179 561L79.957 566.192V570.13H73.4353V581.87H79.957V585.808L68.2179 591V561Z"
+                  d="M71.5226 561L83.2617 566.192V570.13H76.74V581.87H83.2617V585.808L71.5226 591V561Z"
                   fill="#18FFCB"
                 />
                 <rect
-                  x="61.6963"
+                  x="64.330"
                   y="572.739"
                   width="16.9565"
                   height="6.52174"
@@ -870,15 +870,15 @@ export function VerticalIndicator({
             {firstPlayerPickedLength === 6 && secondPlayerPickedLength === 6 ? (
               <>
                 <path
-                  d="M86.4785 745L120.392 760L86.4785 775V745Z"
+                  d="M89.7832 745L123.696 760L89.7832 775V745Z"
                   fill="white"
                 />
                 <path
-                  d="M68.2179 745L79.957 750.192V754.13H73.4353V765.87H79.957V769.808L68.2179 775V745Z"
+                  d="M71.5226 745L83.2617 750.192V754.13H76.74V765.87H83.2617V769.808L71.5226 775V745Z"
                   fill="#18FFCB"
                 />
                 <rect
-                  x="61.6963"
+                  x="64.330"
                   y="756.739"
                   width="16.9565"
                   height="6.52174"
@@ -904,15 +904,15 @@ export function VerticalIndicator({
             {firstPlayerPickedLength === 4 && secondPlayerPickedLength === 3 ? (
               <>
                 <path
-                  d="M86.4775 506L120.391 521L86.4775 536V506Z"
+                  d="M89.7822 506L123.695 521L89.7822 536V506Z"
                   fill="white"
                 />
                 <path
-                  d="M68.2169 506L79.9561 511.192V515.13H73.4343V526.87H79.9561V530.808L68.2169 536V506Z"
+                  d="M71.5216 506L83.2607 511.192V515.13H76.739V526.87H83.2607V530.808L71.5216 536V506Z"
                   fill="#18FFCB"
                 />
                 <rect
-                  x="61.6953"
+                  x="64.330"
                   y="517.739"
                   width="16.9565"
                   height="6.52174"
@@ -938,15 +938,15 @@ export function VerticalIndicator({
             {firstPlayerPickedLength === 6 && secondPlayerPickedLength === 5 ? (
               <>
                 <path
-                  d="M86.4785 688L120.392 703L86.4785 718V688Z"
+                  d="M89.7832 688L123.696 703L89.7832 718V688Z"
                   fill="white"
                 />
                 <path
-                  d="M68.2179 688L79.957 693.192V697.13H73.4353V708.87H79.957V712.808L68.2179 718V688Z"
+                  d="M71.5226 688L83.2617 693.192V697.13H76.74V708.87H83.2617V712.808L71.5226 718V688Z"
                   fill="#18FFCB"
                 />
                 <rect
-                  x="61.6963"
+                  x="64.330"
                   y="699.739"
                   width="16.9565"
                   height="6.52174"
@@ -972,15 +972,15 @@ export function VerticalIndicator({
             {firstPlayerPickedLength === 8 && secondPlayerPickedLength === 7 ? (
               <>
                 <path
-                  d="M86.4785 874L120.392 889L86.4785 904V874Z"
+                  d="M89.7832 874L123.696 889L89.7832 904V874Z"
                   fill="white"
                 />
                 <path
-                  d="M68.2179 874L79.957 879.192V883.13H73.4353V894.87H79.957V898.808L68.2179 904V874Z"
+                  d="M71.5226 874L83.2617 879.192V883.13H76.74V894.87H83.2617V898.808L71.5226 904V874Z"
                   fill="#18FFCB"
                 />
                 <rect
-                  x="61.6963"
+                  x="65.330"
                   y="885.739"
                   width="16.9565"
                   height="6.52174"
@@ -1037,12 +1037,12 @@ export function VerticalIndicator({
           </g>
           <defs>
             <clipPath id="clip0_353_3115">
-              <rect width="119.232" height="908" fill="white" />
+              <rect width="124.232" height="908" fill="white" />
             </clipPath>
           </defs>
         </svg>
       </SVGContainer>
-      <TextForVision>Элементов в массиве: {items.length}/20</TextForVision>
+      {/*<TextForVision>Элементов в массиве: {items.length}/20</TextForVision>*/}
     </LineDiv>
   );
 }
@@ -1059,7 +1059,7 @@ const ScreenOverlay = styled.div`
 `;
 
 const TextForVision = styled.div`
-  opacity: 0%;
+  opacity: 0;
 `;
 
 const SVGContainer = styled.div`

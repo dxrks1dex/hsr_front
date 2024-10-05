@@ -76,6 +76,7 @@ const StyledUsersSection = styled.section`
     background-size: cover;
     background-position: center;
     filter: blur(10px);
+
     z-index: -1;
   }
 `;
