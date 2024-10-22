@@ -103,20 +103,20 @@ export const FinalStageOutput = ({
   }, [player.picked]);
 
   useEffect(() => {
-    if (playerTotalCost <= 30) {
+    if (playerTotalCost <= 40) {
       setPenaltyCircles(
         player.firstCircleCount +
           player.secondCircleCount +
-          (playerTotalCost - 30) / 6 +
+          (playerTotalCost - 40) / 6 +
           player.deathCount / 2,
       );
 
       console.log("first Player");
-    } else if (playerTotalCost > 30) {
+    } else if (playerTotalCost > 40) {
       setPenaltyCircles(
         player.firstCircleCount +
           player.secondCircleCount +
-          (playerTotalCost - 30) / 4 +
+          (playerTotalCost - 40) / 4 +
           player.deathCount / 2,
       );
 

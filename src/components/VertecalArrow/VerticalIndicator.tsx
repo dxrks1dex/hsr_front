@@ -384,7 +384,7 @@ export function VerticalIndicator({
                 />
                 <path
                   d="M52.1747 12L40.4355 17.1923V21.1304H46.9573V32.8696H40.4355V36.8077L52.1747 42V12Z"
-                  fill="#EC664B"
+                  fill="#E31D1D"
                 />
                 <rect
                   width="16.9565"
@@ -416,7 +416,7 @@ export function VerticalIndicator({
                 />
                 <path
                   d="M52.1747 322L40.4355 327.192V331.13H46.9573V342.87H40.4355V346.808L52.1747 352V322Z"
-                  fill="#EC664B"
+                  fill="#E31D1D"
                 />
                 <rect
                   width="16.9565"
@@ -671,7 +671,7 @@ export function VerticalIndicator({
                 <path d="M89.7822 51L123.695 66L89.7822 81V51Z" fill="white" />
                 <path
                   d="M71.5216 51L83.2607 56.1923V60.1304H76.739V71.8696H83.2607V75.8077L71.5216 81V51Z"
-                  fill="#EC664B"
+                  fill="#E31D1D"
                 />
                 <rect
                   x="64.330"
@@ -705,7 +705,7 @@ export function VerticalIndicator({
                 />
                 <path
                   d="M71.5226 289L83.2617 294.192V298.13H76.74V309.87H83.2617V313.808L71.5226 319V289Z"
-                  fill="#EC664B"
+                  fill="#E31D1D"
                 />
                 <rect
                   x="64.330"
