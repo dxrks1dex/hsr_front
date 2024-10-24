@@ -9,6 +9,7 @@ import { UserCones } from "@/components/lightConeses/UserCones";
 import React, {
   Dispatch,
   SetStateAction,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -55,7 +56,7 @@ export const CharacterCard = ({
   const characterRankRef = useRef(characterRank);
   characterRankRef.current = characterRank;
 
-  const onRankChoose = async () => {
+  const onRankChoose = useCallback(async () => {
     setIsCharacterChangeRankOpen(false);
 
     if (character) {
@@ -70,7 +71,7 @@ export const CharacterCard = ({
 
       setPendingCharacterId(character.id);
     }
-  };
+  }, [character, characterRank, setFilteredCharacters]);
 
   const onRankChange = (value: number) => {
     setCharacterRank(value);

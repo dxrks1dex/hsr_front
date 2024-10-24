@@ -89,22 +89,18 @@ export const UserCones = ({
     setIsConeChangeRankOpen(true);
   };
 
-  const onRankChoose = () => {
+  const onRankChoose = useCallback(() => {
     setIsConeChangeRankOpen(false);
-
     if (characterCone) {
-      console.log(coneRank);
-
       addLightCone({
         coneRank,
         coneData: characterCone,
         setCharactersForUser,
         characterId,
       });
-
       setSelectedCone(characterCone);
     }
-  };
+  }, [coneRank, characterCone, setCharactersForUser, characterId]);
 
   const onConeDelete = () => {
     deleteLightCone({ characterId, setCharactersForUser });
