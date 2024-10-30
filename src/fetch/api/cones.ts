@@ -39,7 +39,7 @@ const coneNamesMap: Record<string, string> = {
   "Inherently Unjust Destiny": "Aventurine",
   "Reforged Remembrance": "Black Swan BS",
   "Earthly Escapade": "Sparkle Hanabi",
-  "Sleep Like the Dead": "Yanching",
+  "Sleep Like the Dead": "Yanqing",
   "She Already Shut Her Eyes": "Fu Xuan FX",
   "Before Dawn": "Jing Yuan JY",
   "The Unreachable Side": "Blade",
@@ -53,6 +53,7 @@ const coneNamesMap: Record<string, string> = {
   "In the Night": "Seele",
   "Night on the Milky Way": "Himeko",
   "Dance! Dance! Dance!": "DDD",
+  "Ninjutsu Inscription: Dazzling Evilbreaker": "Rappa",
 };
 
 export const getLightCone = async (id: string | null) => {
