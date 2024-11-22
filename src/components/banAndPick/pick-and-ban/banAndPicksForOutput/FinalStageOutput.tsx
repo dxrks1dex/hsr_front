@@ -16,6 +16,7 @@ import { freeCharacter } from "@/common/freeCharacter";
 import { VerticalIndicator } from "@/components/VertecalArrow/VerticalIndicator";
 import { calculateCost } from "@/utils/cost/calculateCost";
 import { convertPngToJpg } from "@/utils/convertPngToJpg";
+import { ScreenshotButton } from "@/components/screanShotButton/ScreenshotButton";
 
 interface Props {
   currentPlayer: number;
@@ -264,6 +265,7 @@ export const FinalStageOutput = ({
           ))}
         </PickSection>
       </BanAndPickContainer>
+      {/*<ScreenshotButton />*/}
     </StyledPickAndBanContainer>
   );
 };

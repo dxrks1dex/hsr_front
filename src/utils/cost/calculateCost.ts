@@ -25,13 +25,9 @@ export const calculateCost = async ({
     if (character?.lightCone?.rankCost) {
       let coneCost = character.lightCone?.cost;
       let coneRankCost =
-        character.lightCone?.rankCost[character.lightCone.rank - 1];
+        character.lightCone?.rankCost[character.lightCone.rank];
 
-      if (character?.lightCone?.rank === 0) {
-        totalCost += coneCost;
-      } else {
-        totalCost += coneRankCost;
-      }
+      totalCost += coneRankCost;
     }
 
     console.log(totalCost);
