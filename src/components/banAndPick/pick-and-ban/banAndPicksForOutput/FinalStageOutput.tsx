@@ -218,6 +218,7 @@ export const FinalStageOutput = ({
                         characterRarity={character.rarity}
                       >
                         <StyledCharacterCard
+                          characterId={character.id}
                           index={index}
                           playerForStyle={currentPlayerForStyle}
                           src={`${ICON_DEFAULT_URL}/${character.icon}`}
@@ -576,12 +577,15 @@ const StyledCharactersBanCard = styled(CharacterCard)`
 const StyledCharacterCard = styled.img<{
   playerForStyle: number;
   index: number;
+  characterId: string;
 }>`
   width: 116px;
   height: 98px;
   //width: 100%;
 
   border: none;
+
+  object-fit: ${({ characterId }) => characterId === "0" && "contain"};
 
   filter: ${({ index }) =>
     index === 0 || index === 3 ? "grayscale(100%)" : "none"};
