@@ -7,6 +7,7 @@ import { useCharactersContext } from "@/context/useCharactersContext";
 import { GlobalButton, GlobalInput } from "@/components/styled/userStyles";
 import { ExampleComponent } from "@/components/Test";
 import { SideChoose } from "@/components/randomFlip/SideChoose";
+import { ChangeTimer } from "@/utils/timer/ChangeTimer";
 
 export const MainPage = () => {
   const [firstUserUid, setFirstUserUid] = useState<string | null>(null);
@@ -40,6 +41,8 @@ export const MainPage = () => {
   return (
     <StyledMainPageColour>
       <StyledMainPageContainer>
+        <ChangeTimer isPickStarted={false} />
+
         <StyledContainer>
           <SideChoose />
 

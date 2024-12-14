@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { MainTimerTextStyle, TimerSection } from "@/styles/userStyles";
-import { PenaltyTimerText } from "@/components/styled/userStyles";
+import { GlobalButton, PenaltyTimerText } from "@/components/styled/userStyles";
 import { applyTimer } from "@/fetch/api/timer/timerUpdate";
 import { useFetchTimer } from "@/fetch/fetch";
+import styled from "styled-components";
 
 interface Props {
   isPickStarted: boolean;
@@ -87,25 +88,26 @@ export const ChangeTimer = ({ isPickStarted }: Props) => {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <TimerSection>
-      <PenaltyTimerText>
-        {String(penaltyMinutes).padStart(2, "0")}:
-        {String(penaltySeconds).padStart(2, "0")}
-      </PenaltyTimerText>
+    <StyledChangeTimer>
       <div>
-        <h2>Penalty timer</h2>
-        <input
-          type="number"
-          value={penaltyMinutes}
-          onChange={(e) => setPenaltyMinutes(Number(e.target.value))}
-          placeholder="Минуты"
-        />
-        <input
-          type="number"
-          value={penaltySeconds}
-          onChange={(e) => setPenaltySeconds(Number(e.target.value))}
-          placeholder="Секунды"
-        />
+        <div>
+          <div>Минуты</div>
+          <StyledTimerInput
+            type="number"
+            value={penaltyMinutes}
+            onChange={(e) => setPenaltyMinutes(Number(e.target.value))}
+            placeholder="Минуты"
+          />
+        </div>
+        <div>
+          <div>Секунды</div>
+          <StyledTimerInput
+            type="number"
+            value={penaltySeconds}
+            onChange={(e) => setPenaltySeconds(Number(e.target.value))}
+            placeholder="Секунды"
+          />
+        </div>
       </div>
       {/*<div>*/}
       {/*  <h2>Основной таймер</h2>*/}
@@ -122,7 +124,43 @@ export const ChangeTimer = ({ isPickStarted }: Props) => {
       {/*    placeholder="Секунды"*/}
       {/*  />*/}
       {/*</div>*/}
-      <button onClick={handleUpdate}>Update timer</button>
-    </TimerSection>
+      <StyledUpdateTimerSection>
+        <PenaltyTimerText>
+          {String(penaltyMinutes).padStart(2, "0")}:
+          {String(penaltySeconds).padStart(2, "0")}
+        </PenaltyTimerText>
+        <StyledUpdateTimerButton onClick={handleUpdate}>
+          Update timer
+        </StyledUpdateTimerButton>
+      </StyledUpdateTimerSection>
+    </StyledChangeTimer>
   );
 };
+
+const StyledChangeTimer = styled(TimerSection)`
+  flex-direction: column;
+
+  width: 40%;
+  align-self: center;
+
+  margin-top: -20%;
+`;
+
+const StyledTimerInput = styled.input`
+  border-radius: 5px;
+  color: black;
+  padding-left: 5px;
+`;
+
+const StyledUpdateTimerSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+
+  margin-top: 10px;
+`;
+
+const StyledUpdateTimerButton = styled(GlobalButton)`
+  height: 40px;
+`;

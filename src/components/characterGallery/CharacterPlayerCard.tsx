@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React from "react";
+import React, { useEffect } from "react";
 import { CharacterData } from "@/types/interface";
 import {
   CharacterCost,
@@ -9,6 +9,8 @@ import {
 import { ICON_DEFAULT_URL } from "@/utils/ICON_DEFAULT_URL";
 import legendaryImage from "@/pic/legendary_raity.jpg";
 import epicImage from "@/pic/epic_rar.jpg";
+import { freeCharacter } from "@/common/freeCharacter";
+import { ensureFreeCharacterExists } from "@/fetch/api/characters";
 
 interface ICharacterPlayerCard {
   character: CharacterData | undefined;
@@ -60,13 +62,16 @@ export const CharacterPlayerCard = ({
         </RankWrapper>
         <CharacterImage
           characterRarity={character.rarity}
-          src={`${ICON_DEFAULT_URL}/${character?.icon}`}
+          src={
+            character.id === "0"
+              ? `${character?.icon}`
+              : `${ICON_DEFAULT_URL}/${character?.icon}`
+          }
           onClick={() => {
             fn && fn(character);
           }}
         />
         <LevelWrapper>
-          {/* Отображаем уровни */}
           {secondPlayerLevel !== undefined ? (
             <PlayerRank player={1}>
               <div>{`Lv${secondPlayerLevel}`}</div>
@@ -119,6 +124,16 @@ export const CharactersDisplay = ({
     };
   });
 
+  const freeCharacterCard = freeCharacter
+    ? {
+        character: freeCharacter,
+        secondPlayerRank: -1,
+        fourthPlayerRank: -1,
+        secondPlayerLevel: undefined,
+        fourthPlayerLevel: undefined,
+      }
+    : null;
+
   return (
     <CharacterGrid>
       {combinedCharacters
@@ -161,6 +176,18 @@ export const CharactersDisplay = ({
             />
           ),
         )}
+      {freeCharacterCard && (
+        <CharacterPlayerCard
+          key={freeCharacterCard.character?.id}
+          index={0}
+          character={freeCharacterCard.character}
+          secondPlayerRank={freeCharacterCard.secondPlayerRank}
+          fourthPlayerRank={freeCharacterCard.fourthPlayerRank}
+          secondPlayerLevel={freeCharacterCard.secondPlayerLevel}
+          fourthPlayerLevel={freeCharacterCard.fourthPlayerLevel}
+          fn={onCharacterClick}
+        />
+      )}
     </CharacterGrid>
   );
 };

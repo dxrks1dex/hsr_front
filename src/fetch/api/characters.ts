@@ -2,6 +2,7 @@ import { DATA_SOURCE_URL } from "@/fetch/api/DATA_SOURCE_URL";
 import { IUserData } from "@/fetch/api/users";
 import { CharacterData } from "@/types/interface";
 import { CharacterInfo } from "@/fetch/api/data/characterIdData";
+import { freeCharacter } from "@/common/freeCharacter";
 
 export const getCharacter = async (id: string | null) => {
   try {
@@ -176,6 +177,44 @@ export const addAllCharactersToDB = async ({
 
     console.log("All characters added to the database successfully");
     return "All characters added to the database successfully";
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+};
+
+export const ensureFreeCharacterExists = async () => {
+  try {
+    const existingCharacter = await getCharacter(freeCharacter.id);
+
+    if (existingCharacter) {
+      console.log("Character already exists:", existingCharacter);
+      return existingCharacter;
+    }
+  } catch (error) {
+    console.log("Character not found, adding new one...");
+    const newCharacter = await addCharacter(freeCharacter);
+    return newCharacter;
+  }
+};
+
+export const addCharacter = async (character: CharacterData) => {
+  try {
+    const response = await fetch(`${DATA_SOURCE_URL}/characters`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(character),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to add character");
+    }
+
+    const createdCharacter = await response.json();
+    console.log("Added character:", createdCharacter);
+
+    return createdCharacter;
   } catch (error) {
     throw new Error((error as Error).message);
   }
