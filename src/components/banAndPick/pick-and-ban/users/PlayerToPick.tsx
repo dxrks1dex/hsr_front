@@ -8,6 +8,8 @@ import {
   createPickOrBansForFourthUser,
   createPickOrBansForSecondUser,
   createPickOrBansForThirdUser,
+  updatePickOrBansForFirstUserById,
+  updatePickOrBansForSecondUserById,
 } from "@/fetch/api/pickAndBans";
 import { useQueryClient } from "react-query";
 import { calculateCost } from "@/utils/cost/calculateCost";
@@ -32,6 +34,8 @@ interface Props {
   secondCircleCountFromDb: number;
   deathCountFromDb: number;
 
+  gameId: string | null;
+
   picked: CharacterData[];
   banned: CharacterData[];
 }
@@ -46,6 +50,7 @@ export const PlayerToPick = ({
   secondCircleCountFromDb,
   firstCircleCountFromDb,
   deathCountFromDb,
+  gameId,
 }: Props) => {
   const [playerTotalCost, setPlayerTotalCost] = useState(0);
   const [penaltyCircles, setPenaltyCircles] = useState(0);
@@ -139,27 +144,33 @@ export const PlayerToPick = ({
 
     if (player === 1) {
       try {
-        const firstPlayerResponse = createPickOrBansForFirstUser(playerData);
+        const firstPlayerResponse = updatePickOrBansForFirstUserById(
+          gameId,
+          playerData,
+        );
 
         console.log(
           "Successfully updated picks and bans on the server:",
           firstPlayerResponse,
         );
 
-        queryClient.refetchQueries("pickAndBans");
+        queryClient.refetchQueries(`game/pickAndBan/${gameId}`);
       } catch (error) {
         console.error("Failed to update picks and bans on the server:", error);
       }
     } else if (player === 2) {
       try {
-        const firstPlayerResponse = createPickOrBansForSecondUser(playerData);
+        const firstPlayerResponse = updatePickOrBansForSecondUserById(
+          gameId,
+          playerData,
+        );
 
         console.log(
           "Successfully updated picks and bans on the server:",
           firstPlayerResponse,
         );
 
-        queryClient.refetchQueries("pickAndBans");
+        queryClient.refetchQueries(`game/pickAndBan/${gameId}`);
       } catch (error) {
         console.error("Failed to update picks and bans on the server:", error);
       }
@@ -170,6 +181,7 @@ export const PlayerToPick = ({
     filteredCharacters,
     firstCircleCount,
     firstPlayerNickname,
+    gameId,
     player,
     queryClient,
     secondCircleCount,

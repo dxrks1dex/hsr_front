@@ -42,6 +42,8 @@ import { BanAndPicks } from "@/components/banAndPick/BanAndPicks";
 import {
   createPickOrBansForFirstUser,
   createPickOrBansForThirdUser,
+  updatePickOrBansForFirstUserById,
+  updatePickOrBansForThirdUserById,
 } from "@/fetch/api/pickAndBans";
 import { useQueryClient } from "react-query";
 import { freeCharacter } from "@/common/freeCharacter";
@@ -54,15 +56,17 @@ import timerImage from "@/pic/Timer.png";
 import plusImage from "@/pic/plus.jpg";
 import { ChangeTimer } from "@/utils/timer/ChangeTimer";
 import { useTimerContext } from "@/context/useTimerContext";
+import { LoadingAnimation } from "@/components/common/LoadingAnimation";
 
 interface Props {
   firstUid: string | null;
   secondUid: string | null;
+  gameId: string | null;
 
   currentPlayer: number;
 }
 
-export const FirstTeam = ({ firstUid, secondUid }: Props) => {
+export const FirstTeam = ({ firstUid, secondUid, gameId }: Props) => {
   const [isCircleOpen, setIsCircleOpen] = useState(true);
   const [firstCircleCount, setFirstCircleCount] = useState(0);
   const [secondCircleCount, setSecondCircleCount] = useState(0);
@@ -78,6 +82,8 @@ export const FirstTeam = ({ firstUid, secondUid }: Props) => {
   const [defaultTimer, setDefaultTimer] = useState(0);
 
   const queryClient = useQueryClient();
+
+  console.log(gameId);
 
   const {
     data: { mainTimer },
@@ -376,13 +382,15 @@ export const FirstTeam = ({ firstUid, secondUid }: Props) => {
       };
 
       try {
-        const firstPlayerResponse =
-          createPickOrBansForFirstUser(firstPickAndBansData);
+        const firstPlayerResponse = updatePickOrBansForFirstUserById(
+          gameId,
+          firstPickAndBansData,
+        );
         console.log(
           "Successfully updated picks and bans on the server:",
           firstPlayerResponse,
         );
-        queryClient.refetchQueries("pickAndBans");
+        queryClient.refetchQueries(`game/pickAndBan/${gameId}`);
       } catch (error) {
         console.error("Failed to update picks and bans on the server:", error);
       }
@@ -401,15 +409,17 @@ export const FirstTeam = ({ firstUid, secondUid }: Props) => {
       };
 
       try {
-        const secondPlayerResponse =
-          createPickOrBansForThirdUser(thirdPickAndBansData);
+        const secondPlayerResponse = updatePickOrBansForThirdUserById(
+          gameId,
+          thirdPickAndBansData,
+        );
 
         console.log(
           "Successfully updated picks and bans on the server:",
           secondPlayerResponse,
         );
 
-        queryClient.refetchQueries("pickAndBans");
+        queryClient.refetchQueries(`game/pickAndBan/${gameId}`);
       } catch (error) {
         console.error("Failed to update picks and bans on the server:", error);
       }
@@ -430,6 +440,7 @@ export const FirstTeam = ({ firstUid, secondUid }: Props) => {
     isLoadingForSecondUserFromDB,
     thirdPlayerFilteredCharacters,
     secondUid,
+    gameId,
   ]);
 
   useEffect(() => {
@@ -459,7 +470,7 @@ export const FirstTeam = ({ firstUid, secondUid }: Props) => {
   // }, [timer, firstPlayerPickOrBan, secondPlayerBannedCharacters, timerReset]);
 
   if (isLoadingForFirstUserFromDB || isLoadingForSecondUserFromDB)
-    return <div>Loading...</div>;
+    return <LoadingAnimation />;
 
   if (dBFirstUserError || dBSecondUserError)
     return <div style={{ color: "snow" }}>User not fount</div>;

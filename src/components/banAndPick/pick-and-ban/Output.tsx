@@ -12,15 +12,25 @@ import {
   unsubscribeFromUpdates,
 } from "@/fetch/api/update/update";
 import React, { useEffect } from "react";
-import { useFetchPickAndBans } from "@/fetch/fetch";
+import { useFetchPickAndBans, useGetAllPickAndBansById } from "@/fetch/fetch";
 import { VerticalIndicator } from "@/components/VertecalArrow/VerticalIndicator";
+import { useSearchParams } from "next/navigation";
+import { LoadingAnimation } from "@/components/common/LoadingAnimation";
 
 export const Output = () => {
-  const { data, isLoading, isError, refetch } = useFetchPickAndBans();
+  const searchParams = useSearchParams();
+  const gameId = searchParams.get("gameId");
+  const { data, isLoading, isError, refetch } =
+    useGetAllPickAndBansById(gameId);
+
+  const { data: testData, isLoading: testLoading } =
+    useGetAllPickAndBansById(gameId);
 
   const {
     data: { globalStage },
   } = useCharactersContext();
+
+  console.log("game id: ", gameId, "game data:", testData);
 
   useEffect(() => {
     const handleUpdate = () => {
@@ -35,17 +45,17 @@ export const Output = () => {
   }, [refetch]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingAnimation />;
   }
 
   if (isError) {
     return <div>Error loading data</div>;
   }
 
-  const firstPlayer = data[0]?.firstPlayer || {};
-  const secondPlayer = data[0]?.secondPlayer || {};
-  const thirdPlayer = data[0]?.thirdPlayer || {};
-  const fourthPlayer = data[0]?.fourthPlayer || {};
+  const firstPlayer = data?.firstPlayer || {};
+  const secondPlayer = data?.secondPlayer || {};
+  const thirdPlayer = data?.thirdPlayer || {};
+  const fourthPlayer = data?.fourthPlayer || {};
 
   return (
     <StyledUsersSection>
@@ -54,7 +64,7 @@ export const Output = () => {
         secondUserData={thirdPlayer}
         secondTeamForResetTimer={secondPlayer}
       />
-      <VerticalIndicator currentPlayer={1} />
+      <VerticalIndicator gameId={gameId} />
       <SecondUser
         secondUserData={fourthPlayer}
         firstUserData={secondPlayer}

@@ -39,6 +39,8 @@ import {
   createPickOrBansForFirstUser,
   createPickOrBansForFourthUser,
   createPickOrBansForSecondUser,
+  updatePickOrBansForFourthUserById,
+  updatePickOrBansForSecondUserById,
 } from "@/fetch/api/pickAndBans";
 import { useQueryClient } from "react-query";
 import { freeCharacter } from "@/common/freeCharacter";
@@ -48,17 +50,19 @@ import {
 } from "@/components/characterGallery/CharacterPlayerCard";
 import { getCharacter } from "@/fetch/api/characters";
 import timerImage from "@/pic/Timer.png";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useTimerContext } from "@/context/useTimerContext";
+import { LoadingAnimation } from "@/components/common/LoadingAnimation";
 
 interface Props {
   firstUid: string | null;
   secondUid: string | null;
+  gameId: string | null;
 
   currentPlayer: number;
 }
 
-export const SecondTeam = ({ firstUid, secondUid }: Props) => {
+export const SecondTeam = ({ firstUid, secondUid, gameId }: Props) => {
   const [isCircleOpen, setIsCircleOpen] = useState(false);
   const [firstCircleCount, setFirstCircleCount] = useState(0);
   const [secondCircleCount, setSecondCircleCount] = useState(0);
@@ -358,14 +362,16 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
       };
 
       try {
-        const firstPlayerResponse =
-          createPickOrBansForSecondUser(firstPickAndBansData);
+        const firstPlayerResponse = updatePickOrBansForSecondUserById(
+          gameId,
+          firstPickAndBansData,
+        );
         console.log(
           "Successfully updated picks and bans on the server:",
           firstPlayerResponse,
         );
 
-        queryClient.refetchQueries("pickAndBans");
+        queryClient.refetchQueries(`game/pickAndBan/${gameId}`);
       } catch (error) {
         console.error("Failed to update picks and bans on the server:", error);
       }
@@ -384,7 +390,8 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
       };
 
       try {
-        const secondPlayerResponse = createPickOrBansForFourthUser(
+        const secondPlayerResponse = updatePickOrBansForFourthUserById(
+          gameId,
           fourthPickAndBansData,
         );
 
@@ -393,7 +400,7 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
           secondPlayerResponse,
         );
 
-        queryClient.refetchQueries("pickAndBans");
+        queryClient.refetchQueries(`game/pickAndBan/${gameId}`);
       } catch (error) {
         console.error("Failed to update picks and bans on the server:", error);
       }
@@ -414,6 +421,7 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
     isLoadingForSecondUserFromDB,
     fourthPlayerFilteredCharacters,
     secondUid,
+    gameId,
   ]);
 
   useEffect(() => {
@@ -442,7 +450,7 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
   const router = useRouter();
 
   if (isLoadingForFirstUserFromDB || isLoadingForSecondUserFromDB)
-    return <div>Loading...</div>;
+    return <LoadingAnimation />;
 
   if (dBFirstUserError) return <div>First user not fount</div>;
 
@@ -451,7 +459,9 @@ export const SecondTeam = ({ firstUid, secondUid }: Props) => {
   return (
     <div className="p-5 duration-300">
       {secondPlayerPickedCharacters.length === 8 && (
-        <StyledNextStageButton onClick={() => router.push("/pickedOutput")}>
+        <StyledNextStageButton
+          onClick={() => router.push(`/pickedOutput/q?gameId=${gameId}`)}
+        >
           next stage
         </StyledNextStageButton>
       )}

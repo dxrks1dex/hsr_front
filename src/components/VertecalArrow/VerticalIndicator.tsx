@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { useFetchPickAndBans } from "@/fetch/fetch";
+import { useFetchPickAndBans, useGetAllPickAndBansById } from "@/fetch/fetch";
 import { CharacterData } from "@/types/interface";
 import {
   subscribeOnPickAndBanUpdates,
@@ -19,12 +19,8 @@ interface IPlayerData {
   nickname: string;
 }
 
-export function VerticalIndicator({
-  currentPlayer,
-}: {
-  currentPlayer: number;
-}) {
-  const { data, isLoading, refetch } = useFetchPickAndBans();
+export function VerticalIndicator({ gameId }: { gameId: string | null }) {
+  const { data, isLoading, refetch } = useGetAllPickAndBansById(gameId);
   useEffect(() => {
     const handleUpdate = () => {
       refetch();
@@ -50,8 +46,8 @@ export function VerticalIndicator({
 
   useEffect(() => {
     if (data && !isLoading) {
-      const firstPlayer = data[0]?.firstPlayer || {};
-      const secondPlayer = data[0]?.secondPlayer || {};
+      const firstPlayer = data?.firstPlayer || {};
+      const secondPlayer = data?.secondPlayer || {};
 
       const combinedPicks = [
         ...(firstPlayer.picked || []),

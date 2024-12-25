@@ -1,25 +1,31 @@
 "use client";
 
-import { useFetchPickAndBans } from "@/fetch/fetch";
+import { useFetchPickAndBans, useGetAllPickAndBansById } from "@/fetch/fetch";
 import { PlayerToPick } from "@/components/banAndPick/pick-and-ban/users/PlayerToPick";
 import styled, { keyframes } from "styled-components";
 import backgroundImage from "@/pic/bgimage.png";
+import { LoadingAnimation } from "@/components/common/LoadingAnimation";
+import React from "react";
+import { useSearchParams } from "next/navigation";
 
 export const PickedCharacters = () => {
-  const { data, isLoading, isError, refetch } = useFetchPickAndBans();
+  const searchParams = useSearchParams();
+  const gameId = searchParams.get("gameId");
+  const { data, isLoading, isError, refetch } =
+    useGetAllPickAndBansById(gameId);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingAnimation />;
   }
 
   if (isError) {
     return <div>Error loading data</div>;
   }
 
-  const firstPlayer = data[0]?.firstPlayer || {};
-  const secondPlayer = data[0]?.secondPlayer || {};
-  const thirdPlayer = data[0]?.thirdPlayer || {};
-  const fourthPlayer = data[0]?.fourthPlayer || {};
+  const firstPlayer = data?.firstPlayer || {};
+  const secondPlayer = data?.secondPlayer || {};
+  const thirdPlayer = data?.thirdPlayer || {};
+  const fourthPlayer = data?.fourthPlayer || {};
 
   const firstTeamPicked = firstPlayer.picked;
   const secondTeamPicked = secondPlayer.picked;
@@ -45,6 +51,7 @@ export const PickedCharacters = () => {
   return (
     <StyledPickedContainer>
       <PlayerToPick
+        gameId={gameId}
         deathCountFromDb={firstPlayerDeaths}
         firstCircleCountFromDb={firstPlayerFirstCircles}
         secondCircleCountFromDb={firstPlayerSecondCircles}
@@ -168,6 +175,7 @@ export const PickedCharacters = () => {
         </AnimatedSVG>
       </StyledStarDiv>
       <PlayerToPick
+        gameId={gameId}
         deathCountFromDb={secondPlayerDeaths}
         secondCircleCountFromDb={secondPlayerSecondCircles}
         firstCircleCountFromDb={secondPlayerFirstCircles}

@@ -111,3 +111,27 @@ const fetchTimer = async () => {
 export const useFetchTimer = () => {
   return useQuery(["timer"], () => fetchTimer());
 };
+
+const getAllPickAndBans = async () => {
+  const response = await fetch(`${DATA_SOURCE_URL}/game/pickAndBan/`, {
+    method: "GET",
+  });
+  return await response.json();
+};
+
+export const useGetAllPickAndBans = () => {
+  return useQuery(["game/pickAndBan"], () => getAllPickAndBans());
+};
+
+const getAllPickAndBansById = async (gameId: string | null) => {
+  const response = await fetch(`${DATA_SOURCE_URL}/game/pickAndBan/${gameId}`, {
+    method: "GET",
+  });
+  return await response.json();
+};
+
+export const useGetAllPickAndBansById = (gameId: string | null) => {
+  return useQuery([`game/pickAndBan/${gameId}`, gameId], () =>
+    getAllPickAndBansById(gameId),
+  );
+};

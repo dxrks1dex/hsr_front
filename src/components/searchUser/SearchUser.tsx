@@ -23,12 +23,23 @@ export const SearchUser = () => {
   const user3Uid = searchParams.get("user3");
   const user2Uid = searchParams.get("user2");
   const user4Uid = searchParams.get("user4");
+  const gameId = searchParams.get("gameId");
 
   return (
     <StyledUsersSection>
-      <FirstTeam firstUid={user1Uid} secondUid={user3Uid} currentPlayer={1} />
-      <VerticalIndicator currentPlayer={currentPlayer} />
-      <SecondTeam firstUid={user2Uid} secondUid={user4Uid} currentPlayer={2} />
+      <FirstTeam
+        firstUid={user1Uid}
+        secondUid={user3Uid}
+        currentPlayer={1}
+        gameId={gameId}
+      />
+      <VerticalIndicator gameId={gameId} />
+      <SecondTeam
+        firstUid={user2Uid}
+        secondUid={user4Uid}
+        currentPlayer={2}
+        gameId={gameId}
+      />
       {/*<VideoBackground src="/bg.mp4" autoPlay loop muted />*/}
       {/*  <ChangeTimer isPickStarted={isFirstPlayerBanOrPick} />*/}
 

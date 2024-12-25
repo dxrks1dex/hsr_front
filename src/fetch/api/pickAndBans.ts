@@ -18,6 +18,7 @@ export interface IPickAndBans {
   secondPlayer: IPlayerPickAndBans;
   thirdPlayer: IPlayerPickAndBans;
   fourthPlayer: IPlayerPickAndBans;
+  _id?: string;
 }
 
 export const getPickAndBan = async () => {
@@ -255,6 +256,206 @@ export const deleteAllPickAndBans = async () => {
     if (response.ok) {
       console.log("pickAndBan deleted");
     }
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+};
+
+export const getPickAndBanById = async (id: string) => {
+  try {
+    const response = await fetch(`${DATA_SOURCE_URL}/game/pickAndBan/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to get pick and ban data");
+    }
+
+    const pickAndBan = await response.json();
+    console.log("Got pick and ban data:", pickAndBan);
+
+    return pickAndBan;
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+};
+
+export const getAllPickAndBansById = async () => {
+  try {
+    const response = await fetch(`${DATA_SOURCE_URL}/game/pickAndBan/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to get pick and ban data");
+    }
+
+    const pickAndBan = await response.json();
+    console.log("Got pick and ban data:", pickAndBan);
+
+    return pickAndBan;
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+};
+
+export const updatePickOrBansForFirstUserById = async (
+  id: string | null,
+  pickAndBansData: IPlayerPickAndBans,
+) => {
+  try {
+    const response = await fetch(
+      `${DATA_SOURCE_URL}/game/pickAndBan/${id}/firstPlayer`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(pickAndBansData),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to update pick and bans for first player");
+    }
+
+    const updatedPickAndBans = await response.json();
+    console.log("Updated pick and bans for first player:", updatedPickAndBans);
+
+    return updatedPickAndBans;
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+};
+
+export const updatePickOrBansForSecondUserById = async (
+  id: string | null,
+  pickAndBansData: IPlayerPickAndBans,
+) => {
+  try {
+    console.log("game id: ", id);
+    const response = await fetch(
+      `${DATA_SOURCE_URL}/game/pickAndBan/${id}/secondPlayer`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(pickAndBansData),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to update pick and bans for second player");
+    }
+
+    const updatedPickAndBans = await response.json();
+    console.log("Updated pick and bans for second player:", updatedPickAndBans);
+
+    return updatedPickAndBans;
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+};
+
+export const updatePickOrBansForThirdUserById = async (
+  id: string | null,
+  pickAndBansData: IPlayerPickAndBans,
+) => {
+  try {
+    const response = await fetch(
+      `${DATA_SOURCE_URL}/game/pickAndBan/${id}/thirdPlayer`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(pickAndBansData),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to update pick and bans for third player");
+    }
+
+    const updatedPickAndBans = await response.json();
+    console.log("Updated pick and bans for third player:", updatedPickAndBans);
+
+    return updatedPickAndBans;
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+};
+
+export const updatePickOrBansForFourthUserById = async (
+  id: string | null,
+  pickAndBansData: IPlayerPickAndBans,
+) => {
+  try {
+    const response = await fetch(
+      `${DATA_SOURCE_URL}/game/pickAndBan/${id}/fourthPlayer`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(pickAndBansData),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to update pick and bans for fourth player");
+    }
+
+    const updatedPickAndBans = await response.json();
+    console.log("Updated pick and bans for fourth player:", updatedPickAndBans);
+
+    return updatedPickAndBans;
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+};
+
+export const createPickOrBansWithId = async (pickAndBansData: IPickAndBans) => {
+  try {
+    const response = await fetch(`${DATA_SOURCE_URL}/game/pickAndBan`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(pickAndBansData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to create new pick and ban data");
+    }
+
+    const newPickAndBan = await response.json();
+    console.log("New pick and ban created:", newPickAndBan);
+
+    return newPickAndBan;
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+};
+
+export const deletePickAndBanById = async (id: string) => {
+  try {
+    const response = await fetch(`${DATA_SOURCE_URL}/game/pickAndBan/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to delete pick and ban");
+    }
+
+    console.log("Pick and ban deleted");
   } catch (error) {
     throw new Error((error as Error).message);
   }
