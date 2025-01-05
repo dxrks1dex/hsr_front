@@ -108,20 +108,20 @@ export const PlayerToPick = ({
   }, [filteredCharacters]);
 
   useEffect(() => {
-    if (playerTotalCost <= 40) {
+    if (playerTotalCost <= 35) {
       setPenaltyCircles(
         firstCircleCount +
           secondCircleCount +
-          (playerTotalCost - 40) / 6 +
+          (playerTotalCost - 35) / 10 +
           deathCount / 2,
       );
 
       console.log("first Player");
-    } else if (playerTotalCost > 40) {
+    } else if (playerTotalCost > 35) {
       setPenaltyCircles(
         firstCircleCount +
           secondCircleCount +
-          (playerTotalCost - 40) / 4 +
+          (playerTotalCost - 35) / 5 +
           deathCount / 2,
       );
 
