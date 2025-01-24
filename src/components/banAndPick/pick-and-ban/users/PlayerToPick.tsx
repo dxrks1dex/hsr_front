@@ -219,7 +219,7 @@ export const PlayerToPick = ({
           <StyledVariable>
             <div>
               <StyledPickText>total cost</StyledPickText>
-              <StyledPickCost>{playerTotalCost}</StyledPickCost>
+              <StyledPickCost>{playerTotalCost..toFixed(2)}</StyledPickCost>
             </div>
             <StyledPickText>first room</StyledPickText>
             <StyledInputSection currentPlayerForStyle={player}>
