@@ -155,7 +155,7 @@ export const FinalStageOutput = ({
           <StyledVariable>
             <div>
               <StyledPickText>total cost</StyledPickText>
-              <StyledPickCost>{playerTotalCost}</StyledPickCost>
+              <StyledPickCost>{playerTotalCost.toFixed(2)}</StyledPickCost>
             </div>
             <div>
               <StyledPickText>first room</StyledPickText>
