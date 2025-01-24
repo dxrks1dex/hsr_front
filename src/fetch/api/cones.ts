@@ -54,6 +54,8 @@ const coneNamesMap: Record<string, string> = {
   "Night on the Milky Way": "Himeko",
   "Dance! Dance! Dance!": "DDD",
   "Ninjutsu Inscription: Dazzling Evilbreaker": "Rappa",
+"Time Woven Into Gold": "Aglaea",
+"Into the Unreachable Veil": "Herta 2"
 };
 
 export const getLightCone = async (id: string | null) => {
