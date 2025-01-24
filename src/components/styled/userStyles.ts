@@ -340,6 +340,19 @@ export const AddButton = styled(GlobalButton)`
   margin-top: 1%;
 `;
 
+export const ImportButton = styled(GlobalButton)`
+  width: 10%;
+
+  height: 30px;
+
+  &:hover {
+    width: 10%;
+  }
+`;
+
+export const ImportInput = styled(GlobalInput)`
+`;
+
 export const UsersContainerToAdd = styled.div`
   display: flex;
   flex-direction: column;

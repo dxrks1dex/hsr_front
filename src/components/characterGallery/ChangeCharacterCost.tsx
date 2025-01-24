@@ -114,7 +114,7 @@ export const ChangeCharacterCost = <T extends { id: string }>({
     fourthConstCost,
     fifthConstCost,
     sixConstCost,
-    onChangeRankCost,
+    // onChangeRankCost,
     characterItem.id,
     characterItem.rankCost,
   ]);
