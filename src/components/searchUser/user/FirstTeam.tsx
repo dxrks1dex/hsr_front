@@ -499,7 +499,7 @@ export const FirstTeam = ({ firstUid, secondUid, gameId }: Props) => {
               <div className="self-end mb-1.5 ml-1.5">reserve time</div>
             </TimerSection>
             <div className="self-end mb-1.5">
-              total cost: {firstPlayerTotalCost}
+              total cost: {firstPlayerTotalCost.toFixed(2)}
             </div>
             {/*<PenaltyTimerText className="text-white text-lg mt-5 font-bold">*/}
             {/*  Pick value: {secondPlayerTotalCost}*/}
