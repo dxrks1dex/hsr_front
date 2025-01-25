@@ -239,7 +239,7 @@ export const SecondUser = ({
         <div>
           <TimerSection>
             <div className="self-end mb-1.5">
-              total cost: {secondPlayerTotalCost}
+              total cost: {secondPlayerTotalCost.toFixed(2)}
             </div>
 
             <TimerSection>
