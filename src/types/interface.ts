@@ -38,3 +38,10 @@ export interface User {
   characters: CharacterData[];
   lightCones: LightConeData[];
 }
+
+export interface ISynergy {
+  _id?: string;
+  url: string;
+  name: string;
+  cost: number;
+}

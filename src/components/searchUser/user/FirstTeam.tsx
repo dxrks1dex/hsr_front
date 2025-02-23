@@ -379,6 +379,7 @@ export const FirstTeam = ({ firstUid, secondUid, gameId }: Props) => {
         deathCount: deathCount,
         stage: stage,
         nickname: dataForFirstUserFromDB.nickname,
+        synergy: [],
       };
 
       try {

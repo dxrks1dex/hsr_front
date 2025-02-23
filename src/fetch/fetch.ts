@@ -135,3 +135,25 @@ export const useGetAllPickAndBansById = (gameId: string | null) => {
     getAllPickAndBansById(gameId),
   );
 };
+
+const getSynergy = async () => {
+  const response = await fetch(`${DATA_SOURCE_URL}/synergy/`, {
+    method: "GET",
+  });
+  return await response.json();
+};
+
+export const useGetSynergy = () => {
+  return useQuery([`synergy`], () => getSynergy());
+};
+
+const getSynergyById = async (synId: string | null) => {
+  const response = await fetch(`${DATA_SOURCE_URL}/synergy/${synId}`, {
+    method: "GET",
+  });
+  return await response.json();
+};
+
+export const useGetSynergyById = (synId: string | null) => {
+  return useQuery([`synergy/${synId}`, synId], () => getSynergyById(synId));
+};

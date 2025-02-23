@@ -33,6 +33,9 @@ export const PickedCharacters = () => {
   const firstTeamBanned = firstPlayer.banned;
   const secondTeamBanned = secondPlayer.banned;
 
+  const firstSynergy = firstPlayer.synergy;
+  const secondSynergy = secondPlayer.synergy;
+
   const firstPlayerUid = firstPlayer.uid;
   const secondPlayerUid = secondPlayer.uid;
   const thirdPlayerUid = thirdPlayer.uid;
@@ -58,6 +61,7 @@ export const PickedCharacters = () => {
         uid={firstPlayerUid}
         picked={firstTeamPicked}
         banned={firstTeamBanned}
+        synergy={firstSynergy}
         firstPlayerNickname={firstPlayer.nickname}
         secondPlayerNickname={thirdPlayer.nickname}
         player={1}
@@ -182,6 +186,7 @@ export const PickedCharacters = () => {
         uid={secondPlayerUid}
         picked={secondTeamPicked}
         banned={secondTeamBanned}
+        synergy={secondSynergy}
         firstPlayerNickname={secondPlayer.nickname}
         player={2}
         secondPlayerNickname={fourthPlayer.nickname}

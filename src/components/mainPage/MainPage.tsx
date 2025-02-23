@@ -286,6 +286,9 @@ export const MainPage = () => {
           <GlobalButton onClick={() => router.push(`/changeCharacters`)}>
             Change characters
           </GlobalButton>
+          <GlobalButton onClick={() => router.push(`/synergy`)}>
+            Synergy
+          </GlobalButton>
         </StyledButtonContainer>
 
         {/*<ExampleComponent />*/}

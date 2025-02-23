@@ -1,4 +1,4 @@
-import { CharacterData } from "@/types/interface";
+import { CharacterData, ISynergy } from "@/types/interface";
 import { ICON_DEFAULT_URL } from "@/utils/ICON_DEFAULT_URL";
 import {
   CharacterCard,
@@ -31,6 +31,7 @@ interface Props {
     firstCircleCount: number;
     secondCircleCount: number;
     deathCount: number;
+    synergy: ISynergy[];
   };
 }
 
@@ -109,7 +110,13 @@ export const FinalStageOutput = ({
         player.firstCircleCount +
           player.secondCircleCount +
           (playerTotalCost - 35) / 10 +
-          player.deathCount / 2,
+          player.deathCount / 2 +
+          player.synergy.reduce((sum, item) => {
+            if (item && item.cost !== undefined) {
+              return sum + item.cost;
+            }
+            return sum;
+          }, 0),
       );
 
       console.log("first Player");
@@ -118,7 +125,13 @@ export const FinalStageOutput = ({
         player.firstCircleCount +
           player.secondCircleCount +
           (playerTotalCost - 35) / 5 +
-          player.deathCount / 2,
+          player.deathCount / 2 +
+          player.synergy.reduce((sum, item) => {
+            if (item && item.cost !== undefined) {
+              return sum + item.cost;
+            }
+            return sum;
+          }, 0),
       );
 
       console.log("first Player");
@@ -128,6 +141,7 @@ export const FinalStageOutput = ({
     player.firstCircleCount,
     player.secondCircleCount,
     player.deathCount,
+    player.synergy,
   ]);
 
   useEffect(() => {
@@ -175,6 +189,18 @@ export const FinalStageOutput = ({
             <StyledPickResult>{penaltyCircles.toFixed(4)}</StyledPickResult>
           </div>
         </StyledTextContainer>
+        <StyledSynergyContainer playerForStyle={currentPlayerForStyle}>
+          {player.synergy.map((synergyData) =>
+            synergyData === null ? (
+              ""
+            ) : (
+              <div key={synergyData?._id} className="mb-1.5">
+                <StyledSynergyImage src={synergyData?.url} alt={""} />
+                <StyledSynergyCost>{synergyData.cost}</StyledSynergyCost>
+              </div>
+            ),
+          )}
+        </StyledSynergyContainer>
         <PickSection currentPlayer={currentPlayerForStyle}>
           {charactersIcons.map((character, index) => (
             <StyledCharacterContainer key={index}>
@@ -270,6 +296,16 @@ export const FinalStageOutput = ({
     </StyledPickAndBanContainer>
   );
 };
+
+const StyledSynergyContainer = styled.div<{ playerForStyle: number }>`
+  display: flex;
+  flex-direction: column;
+  margin-top: 4%;
+  margin-left: ${({ playerForStyle }) => playerForStyle === 1 && "17%"};
+  margin-right: ${({ playerForStyle }) => playerForStyle === 2 && "17%"};
+
+  position: absolute;
+`;
 
 const StyledCharacterImageContainer = styled.div<{
   playerForStyle: number;
@@ -788,4 +824,37 @@ const StyledConeCost = styled(StyledCharacterCost)`
   font-size: 16px;
 
   width: 34px;
+`;
+
+const StyledSynergyImage = styled.img`
+  height: 68px;
+  width: 68px;
+  border-radius: 50%;
+  border: 2px dashed #fff;
+  object-fit: cover;
+`;
+
+const StyledSynergyCost = styled.div`
+  position: absolute;
+  z-index: 10;
+
+  transform: translate(50%, -180%);
+
+  font-size: 20px;
+  font-weight: 600;
+
+  height: 26px;
+  width: 34px;
+  border-radius: 0.375rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  background-color: #000000;
+  color: #fff;
+
+  padding-left: 2px;
+  padding-right: 2px;
 `;

@@ -1,4 +1,4 @@
-import { CharacterData } from "@/types/interface";
+import { CharacterData, ISynergy } from "@/types/interface";
 import { useFetchUserData } from "@/fetch/fetch";
 import { CharacterCard } from "@/components/characters/CharacterCard";
 import React, { useCallback, useEffect, useState } from "react";
@@ -23,6 +23,7 @@ import {
   PlusSection,
   RankForCharacters,
 } from "@/styles/userStyles";
+import { SynergyToAdd } from "@/fetch/synergy/SynergyToAdd";
 
 interface Props {
   uid: string | null;
@@ -38,6 +39,7 @@ interface Props {
 
   picked: CharacterData[];
   banned: CharacterData[];
+  synergy: ISynergy[];
 }
 
 export const PlayerToPick = ({
@@ -51,6 +53,7 @@ export const PlayerToPick = ({
   firstCircleCountFromDb,
   deathCountFromDb,
   gameId,
+  synergy,
 }: Props) => {
   const [playerTotalCost, setPlayerTotalCost] = useState(0);
   const [penaltyCircles, setPenaltyCircles] = useState(0);
@@ -61,6 +64,8 @@ export const PlayerToPick = ({
   const [filteredCharacters, setFilteredCharacters] = useState<CharacterData[]>(
     [],
   );
+
+  const [playerSynergys, setPlayerSynergys] = useState<(ISynergy | null)[]>([]);
 
   const { data, isLoading, isError } = useFetchUserData({ uid });
 
@@ -93,6 +98,10 @@ export const PlayerToPick = ({
   }, [picked, uid]);
 
   useEffect(() => {
+    setPlayerSynergys(synergy);
+  }, [synergy]);
+
+  useEffect(() => {
     if (secondCircleCountFromDb && firstCircleCountFromDb && deathCountFromDb) {
       setFirstCircleCount(firstCircleCountFromDb);
       setSecondCircleCount(secondCircleCountFromDb);
@@ -113,7 +122,13 @@ export const PlayerToPick = ({
         firstCircleCount +
           secondCircleCount +
           (playerTotalCost - 35) / 10 +
-          deathCount / 2,
+          deathCount / 2 +
+          playerSynergys.reduce((sum, item) => {
+            if (item && item.cost !== undefined) {
+              return sum + item.cost;
+            }
+            return sum;
+          }, 0),
       );
 
       console.log("first Player");
@@ -122,12 +137,24 @@ export const PlayerToPick = ({
         firstCircleCount +
           secondCircleCount +
           (playerTotalCost - 35) / 5 +
-          deathCount / 2,
+          deathCount / 2 +
+          playerSynergys.reduce((sum, item) => {
+            if (item && item.cost !== undefined) {
+              return sum + item.cost;
+            }
+            return sum;
+          }, 0),
       );
 
       console.log("first Player");
     }
-  }, [playerTotalCost, firstCircleCount, secondCircleCount, deathCount]);
+  }, [
+    playerTotalCost,
+    firstCircleCount,
+    secondCircleCount,
+    deathCount,
+    playerSynergys,
+  ]);
 
   const updateDataForPlayers = useCallback(async () => {
     const playerData = {
@@ -138,9 +165,10 @@ export const PlayerToPick = ({
       secondCircleCount: secondCircleCount,
       deathCount: deathCount,
       banned: banned,
+      synergy: playerSynergys,
     };
 
-    console.log("filteredCharacters: ", filteredCharacters);
+    console.log("playerData: ", playerData);
 
     if (player === 1) {
       try {
@@ -183,6 +211,7 @@ export const PlayerToPick = ({
     firstPlayerNickname,
     gameId,
     player,
+    playerSynergys,
     queryClient,
     secondCircleCount,
     uid,
@@ -269,6 +298,14 @@ export const PlayerToPick = ({
             <StyledPickResult>{penaltyCircles.toFixed(4)}</StyledPickResult>
           </div>
         </StyledTextContainer>
+        <StyledSynergySection>
+          <SynergyToAdd
+            currentPlayer={player}
+            updateDataForPlayers={updateDataForPlayers}
+            playersSynergy={synergy}
+            setPlayerSynergys={setPlayerSynergys}
+          />
+        </StyledSynergySection>
         <PickSection currentPlayer={player}>
           {filteredCharacters.map((character: CharacterData, index) => (
             <CharacterCard
@@ -286,6 +323,11 @@ export const PlayerToPick = ({
     </StyledPickAndBanContainer>
   );
 };
+
+const StyledSynergySection = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const StyledUpdatePlayerData = styled.button`
   background-color: #000000;
@@ -722,4 +764,24 @@ const StyledConeCost = styled(StyledCharacterCost)`
   transform: translate(10%, -190%);
 
   font-size: 18px;
+`;
+
+export const StyledSynergyPlus = styled.button`
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #444;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+
+  &:hover {
+    background-color: #666;
+  }
 `;

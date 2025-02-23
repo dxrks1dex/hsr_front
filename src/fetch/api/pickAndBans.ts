@@ -1,5 +1,5 @@
 import { DATA_SOURCE_URL } from "@/fetch/api/DATA_SOURCE_URL";
-import { CharacterData } from "@/types/interface";
+import { CharacterData, ISynergy } from "@/types/interface";
 
 interface IPlayerPickAndBans {
   characters?: CharacterData[];
@@ -11,6 +11,7 @@ interface IPlayerPickAndBans {
   stage?: "pick" | "ban" | null;
   uid: string | null;
   nickname: string;
+  synergy?: (ISynergy | null)[];
 }
 
 export interface IPickAndBans {
