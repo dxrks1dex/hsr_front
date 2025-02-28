@@ -1,7 +1,7 @@
 import { useGetSynergy } from "@/fetch/fetch";
 import { LoadingAnimation } from "@/components/common/LoadingAnimation";
 import { ISynergy } from "@/types/interface";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { UpdateSynergy } from "@/fetch/synergy/UpdateSynergy";
@@ -9,14 +9,19 @@ import { GlobalButton } from "@/components/styled/userStyles";
 import { SynergyCard } from "@/fetch/synergy/SynergyCard";
 
 export const SynergyList = () => {
+  const [synergyData, setSynergyData] = useState([]);
   const { data, isLoading, error, refetch } = useGetSynergy();
+
+  useEffect(() => {
+    setSynergyData(data);
+  }, [data]);
 
   if (isLoading) return <LoadingAnimation />;
   if (error) return <>An error has occurred: {(error as Error).message}</>;
 
   return (
     <SynegyContainer>
-      {data?.map((synergy: ISynergy) => (
+      {synergyData?.map((synergy: ISynergy) => (
         <SynergyCard synergy={synergy} key={synergy._id} refetch={refetch} />
       ))}
     </SynegyContainer>

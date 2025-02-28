@@ -97,6 +97,7 @@ export const FinalStageOutput = ({
 
   useEffect(() => {
     calculateCost({
+      playerSynergys: player.synergy,
       setTotalPickCost: setPlayerTotalCost,
       playerPickedCharactersOrCones: player.picked,
     });
@@ -110,13 +111,7 @@ export const FinalStageOutput = ({
         player.firstCircleCount +
           player.secondCircleCount +
           (playerTotalCost - 35) / 10 +
-          player.deathCount / 2 +
-          player.synergy.reduce((sum, item) => {
-            if (item && item.cost !== undefined) {
-              return sum + item.cost;
-            }
-            return sum;
-          }, 0),
+          player.deathCount / 2,
       );
 
       console.log("first Player");
@@ -125,13 +120,7 @@ export const FinalStageOutput = ({
         player.firstCircleCount +
           player.secondCircleCount +
           (playerTotalCost - 35) / 5 +
-          player.deathCount / 2 +
-          player.synergy.reduce((sum, item) => {
-            if (item && item.cost !== undefined) {
-              return sum + item.cost;
-            }
-            return sum;
-          }, 0),
+          player.deathCount / 2,
       );
 
       console.log("first Player");

@@ -24,6 +24,7 @@ export const updateSynergy = async (id: string, updatedData: ISynergy) => {
       body: JSON.stringify(updatedData),
     });
     if (!response.ok) throw new Error("Ошибка при обновлении связки");
+    console.log(updatedData);
     return await response.json();
   } catch (error) {
     console.error(error);

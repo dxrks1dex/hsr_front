@@ -111,10 +111,11 @@ export const PlayerToPick = ({
 
   useEffect(() => {
     calculateCost({
+      playerSynergys,
       setTotalPickCost: setPlayerTotalCost,
       playerPickedCharactersOrCones: filteredCharacters,
     });
-  }, [filteredCharacters]);
+  }, [filteredCharacters, playerSynergys]);
 
   useEffect(() => {
     if (playerTotalCost <= 35) {
@@ -122,13 +123,7 @@ export const PlayerToPick = ({
         firstCircleCount +
           secondCircleCount +
           (playerTotalCost - 35) / 10 +
-          deathCount / 2 +
-          playerSynergys.reduce((sum, item) => {
-            if (item && item.cost !== undefined) {
-              return sum + item.cost;
-            }
-            return sum;
-          }, 0),
+          deathCount / 2,
       );
 
       console.log("first Player");
@@ -137,13 +132,7 @@ export const PlayerToPick = ({
         firstCircleCount +
           secondCircleCount +
           (playerTotalCost - 35) / 5 +
-          deathCount / 2 +
-          playerSynergys.reduce((sum, item) => {
-            if (item && item.cost !== undefined) {
-              return sum + item.cost;
-            }
-            return sum;
-          }, 0),
+          deathCount / 2,
       );
 
       console.log("first Player");

@@ -26,8 +26,9 @@ export const SynergyForm = ({ setIsAddNewSynergy }: Props) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createSynergy({ url, name, cost });
-    queryClient.refetchQueries("synergy");
+    createSynergy({ url, name, cost }).then(() =>
+      queryClient.refetchQueries(`synergy`),
+    );
   };
 
   return (

@@ -1,14 +1,16 @@
-import { CharacterData, LightConeData } from "@/types/interface";
+import { CharacterData, ISynergy, LightConeData } from "@/types/interface";
 import { Dispatch, SetStateAction } from "react";
 
 interface Props {
   setTotalPickCost: Dispatch<SetStateAction<number>>;
   playerPickedCharactersOrCones: CharacterData[];
+  playerSynergys?: (ISynergy | null)[];
 }
 
 export const calculateCost = async ({
   playerPickedCharactersOrCones,
   setTotalPickCost,
+  playerSynergys,
 }: Props) => {
   let totalCost = 0;
 
@@ -33,5 +35,17 @@ export const calculateCost = async ({
     console.log(totalCost);
   });
 
-  setTotalPickCost(totalCost);
+  if (playerSynergys) {
+    setTotalPickCost(
+      totalCost +
+        playerSynergys.reduce((sum, item) => {
+          if (item && item.cost !== undefined) {
+            return sum + item.cost;
+          }
+          return sum;
+        }, 0),
+    );
+  } else {
+    setTotalPickCost(totalCost);
+  }
 };
