@@ -47,7 +47,6 @@ export const FinalStageOutput = ({
   const [firstCircleCount, setFirstCircleCount] = useState(0);
   const [secondCircleCount, setSecondCircleCount] = useState(0);
   const [deathCount, setDeathCountCount] = useState(0);
-
   const [imageSrcs, setImageSrcs] = useState<string[]>([]);
 
   const [charactersArray, setCharactersArray] = useState<CharacterData[]>([]);
@@ -103,7 +102,7 @@ export const FinalStageOutput = ({
     });
 
     console.log(player.picked);
-  }, [player.picked]);
+  }, [player.picked, player.synergy]);
 
   useEffect(() => {
     if (playerTotalCost <= 35) {
