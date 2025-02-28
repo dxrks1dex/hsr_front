@@ -815,8 +815,8 @@ const StyledConeCost = styled(StyledCharacterCost)`
 `;
 
 const StyledSynergyImage = styled.img`
-  height: 68px;
-  width: 68px;
+  height: 72px;
+  width: 72px;
   border-radius: 50%;
   border: 2px dashed #fff;
   object-fit: cover;
