@@ -815,8 +815,8 @@ const StyledConeCost = styled(StyledCharacterCost)`
 `;
 
 const StyledSynergyImage = styled.img`
-  height: 72px;
-  width: 72px;
+  height: 78px;
+  width: 78px;
   border-radius: 50%;
   border: 2px dashed #fff;
   object-fit: cover;
@@ -826,14 +826,16 @@ const StyledSynergyCost = styled.div`
   position: absolute;
   z-index: 10;
 
-  transform: translate(57%, -190%);
+  transform: translate(80%, -200%);
 
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
 
   height: 26px;
-  width: 34px;
-  border-radius: 0.375rem;
+  width: 30px;
+  //border-radius: 0.375rem;
+  border-radius: 5rem;
+  //border: 1px solid #31a8ff;
 
   display: flex;
   align-items: center;
