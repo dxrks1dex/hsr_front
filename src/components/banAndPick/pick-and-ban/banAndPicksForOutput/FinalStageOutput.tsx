@@ -826,7 +826,7 @@ const StyledSynergyCost = styled.div`
   position: absolute;
   z-index: 10;
 
-  transform: translate(50%, -180%);
+  transform: translate(57%, -190%);
 
   font-size: 20px;
   font-weight: 600;
