@@ -42,20 +42,14 @@ export const SynergyToAdd = ({
     });
 
     setIsSynergyOpen(false);
-    updateDataForPlayers();
     setSelectedIndex(null);
   };
-
-  useEffect(() => {
-    updateDataForPlayers();
-  }, [playersSynergy, updateDataForPlayers]);
 
   const onSynergyDelete = (index: number) => {
     const updatedSynergies: (null | ISynergy)[] = [...playersSynergy];
     updatedSynergies[index] = null;
 
     setPlayerSynergys(updatedSynergies);
-    updateDataForPlayers();
   };
 
   if (isLoading) return <LoadingAnimation />;
